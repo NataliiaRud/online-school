@@ -1,8 +1,22 @@
+# Added ignored files
+/shelf/
+/workspace.xml
+/db/
+/.idea
+/tmp
+target/
+output/
+release/
+debug/
+/out/
+*.log
+*~
+thumbs.db
+.DS_Store
+
 # Compiled class file
 *.class
 
-# Log file
-*.log
 
 # BlueJ files
 *.ctxt
