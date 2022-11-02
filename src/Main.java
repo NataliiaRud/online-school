@@ -14,6 +14,7 @@ public class Main {
         Lecture lecture2 = new Lecture (2, "Java Chapter2", teacher1, student1, homeAssignment2, addMaterial2);
         Lecture lecture3 = new Lecture (3, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3);
         Lecture lecture4 = new Lecture (4, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3);
+        Lecture lecture5 = new Lecture (5, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3);
         System.out.println(Lecture.lectureCounter);
     }
 }
