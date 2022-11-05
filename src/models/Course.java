@@ -1,7 +1,7 @@
 package models;
 
 public class Course {
-    private static int id;
+    public static int id;
     private String name;
     public static int courseCounter;
 
@@ -10,4 +10,8 @@ public class Course {
         this.name = name;
         courseCounter++;
     }
+    public int getId() {
+        return id;
+    }
+
 }
