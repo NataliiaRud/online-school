@@ -1,7 +1,7 @@
 package models;
 
 public class Students {
-    private static int id;
+    private int id;
     private String firstName;
     private String lastName;
     public static int studentsCounter;
@@ -11,5 +11,8 @@ public class Students {
         this.firstName = firstName;
         this.lastName = lastName;
         studentsCounter++;
+    }
+    public String getName() {
+        return this.lastName;
     }
 }

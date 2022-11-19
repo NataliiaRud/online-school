@@ -1,7 +1,7 @@
 package models;
 
 public class Course {
-    public static int id;
+    public int id;
     private String name;
     public static int courseCounter;
 

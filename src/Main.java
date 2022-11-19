@@ -1,33 +1,59 @@
 import models.*;
 
+import java.sql.SQLOutput;
+import java.util.Scanner;
+
+
 public class Main {
     public static void main(String[] args) {
-        Teacher teacher1= new Teacher(1, "John", "Doe");
-        Students student1= new Students(1, "Alex", "Smith");
-        HomeAssignment homeAssignment1= new HomeAssignment(1, "Develope a programm 1");
-        HomeAssignment homeAssignment2= new HomeAssignment(2, "Develope a programm 2");
-        HomeAssignment homeAssignment3= new HomeAssignment(3, "Develope a programm 3");
-        AddMaterials addMaterial1= new AddMaterials(1, "Book 1");
-        AddMaterials addMaterial2= new AddMaterials(2, "Book 2");
-        AddMaterials addMaterial3= new AddMaterials(3, "Book 3");
-        /*Lecture lecture1 = new Lecture (1, "Java Chapter1", teacher1, student1, homeAssignment1, addMaterial1);
-        Lecture lecture2 = new Lecture (2, "Java Chapter2", teacher1, student1, homeAssignment2, addMaterial2);
-        Lecture lecture3 = new Lecture (3, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3);
-        Lecture lecture4 = new Lecture (4, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3);
-        Lecture lecture5 = new Lecture (5, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3);*/
+
+        Teacher teacher1 = new Teacher(1, "John", "Doe");
+        Teacher teacher2 = new Teacher(2, "Larry", "Paige");
+        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh");
+        Students student1 = new Students(1, "Alex", "Smith");
+        Students student2 = new Students(2, "Xi", "Lee");
+        Students student3 = new Students(3, "Wishi", "Anan");
         Course course1 = new Course(1, "Java Basic");
+        Course course2 = new Course(2, "Java Advanced");
+        Course course3 = new Course(3, "Java Pro");
+        Scanner scanner = new Scanner(System.in);
 
-        Lecture lecture1 = new Lecture (1, "Java Chapter1", teacher1, student1, homeAssignment1, addMaterial1, course1.getId());
-        Lecture lecture2 = new Lecture (2, "Java Chapter2", teacher1, student1, homeAssignment2, addMaterial2, course1.getId());
-        Lecture lecture3 = new Lecture (3, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3, course1.getId());
-        Lecture lecture4 = new Lecture (4, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3, course1.getId());
-        Lecture lecture5 = new Lecture (5, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3, course1.getId());
-        Lecture lecture6 = new Lecture (6, "Java Chapter3", teacher1, student1, homeAssignment3, addMaterial3, course1.getId());
+        do {
+            System.out.println("To create a Lecture object, choose a course category, type the proper number:");
+            System.out.println("1: Course " + course1.id + ", Teacher: " + teacher1.getName() + ", Student: " + student1.getName());
+            System.out.println("2: Course " + course2.id + ", Teacher: " + teacher2.getName() + ", Student: " + student2.getName());
+            System.out.println("3: Course " + course3.id + ", Teacher: " + teacher3.getName() + ", Student: " + student3.getName());
 
-
-
-        System.out.println(lecture6.getCourseId());
-        System.out.println(Lecture.lectureCounter);
+            int categoryNumber = scanner.nextInt();
+            Lecture firstLecture = createLecture(teacher1, teacher2, teacher3, student1, student2, student3, course1, course2, course3, categoryNumber);
+            System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
+            System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
+            System.out.println("Would you like to create another lecture? yes/no");
+        }
+        while ("yes".equalsIgnoreCase(scanner.next()));
 
     }
+    private static Lecture createLecture(Teacher teacher1, Teacher teacher2, Teacher teacher3,
+                                         Students student1, Students student2, Students student3,
+                                         Course course1, Course course2, Course course3, int categoryNumber) {
+        Lecture lecture = null;         switch (categoryNumber) {
+            case 1:
+                lecture = Lecture.createLecture(1, "Java Chapter1", teacher1, student1, course1.getId());
+                break;
+            case 2:
+                lecture = Lecture.createLecture(2, "Java Chapter2", teacher2, student2, course2.getId());
+                break;
+            case 3:
+                lecture = Lecture.createLecture(3, "Java Chapter3", teacher3, student3, course3.getId());
+                break;             default:                 System.out.println("No such category exist");
+        }
+        return lecture;
+    }
 }
+
+
+
+
+
+
+
