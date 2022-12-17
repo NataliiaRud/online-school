@@ -17,7 +17,7 @@ public class Main {
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
         Scanner scanner = new Scanner(System.in);
-
+        int i = 0;
         do {
             System.out.println("To create a Lecture object, choose a course category, type the proper number:");
             System.out.println("1: Course " + course1.id + ", Teacher: " + teacher1.getName() + ", Student: " + student1.getName());
@@ -29,8 +29,9 @@ public class Main {
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
             System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
             System.out.println("Would you like to create another lecture? yes/no");
+            i++;
         }
-        while ("yes".equalsIgnoreCase(scanner.next()));
+        while ("yes".equalsIgnoreCase(scanner.next()) && i<8);
 
     }
     private static Lecture createLecture(Teacher teacher1, Teacher teacher2, Teacher teacher3,
