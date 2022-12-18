@@ -28,10 +28,10 @@ public class Main {
             Lecture firstLecture = createLecture(teacher1, teacher2, teacher3, student1, student2, student3, course1, course2, course3, categoryNumber);
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
             System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
-            System.out.println("Would you like to create another lecture? yes/no");
+            System.out.println("Would you like to create another lecture? y/n");
             i++;
         }
-        while ("yes".equalsIgnoreCase(scanner.next()) && i<8);
+        while ("y".equalsIgnoreCase(scanner.next()) && i<8);
 
     }
     private static Lecture createLecture(Teacher teacher1, Teacher teacher2, Teacher teacher3,
