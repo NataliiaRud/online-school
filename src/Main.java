@@ -1,6 +1,8 @@
 import models.*;
+import repository.LectureRepository;
 
 import java.sql.SQLOutput;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -18,6 +20,8 @@ public class Main {
         Course course3 = new Course(3, "Java Pro");
         Scanner scanner = new Scanner(System.in);
         int i = 0;
+
+        LectureRepository lectureRepository = new LectureRepository();
         do {
             System.out.println("To create a Lecture object, choose a course category, type the proper number:");
             System.out.println("1: Course " + course1.id + ", Teacher: " + teacher1.getName() + ", Student: " + student1.getName());
@@ -26,6 +30,9 @@ public class Main {
 
             int categoryNumber = scanner.nextInt();
             Lecture firstLecture = createLecture(teacher1, teacher2, teacher3, student1, student2, student3, course1, course2, course3, categoryNumber);
+
+            lectureRepository.addLecture(firstLecture);
+
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
             System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
             System.out.println("Would you like to create another lecture? y/n");
@@ -33,6 +40,7 @@ public class Main {
         }
         while ("y".equalsIgnoreCase(scanner.next()) && i<8);
 
+        System.out.println(Arrays.toString(lectureRepository.getAllLectures()));
     }
     private static Lecture createLecture(Teacher teacher1, Teacher teacher2, Teacher teacher3,
                                          Students student1, Students student2, Students student3,
@@ -51,7 +59,6 @@ public class Main {
         return lecture;
     }
 }
-
 
 
 
