@@ -1,12 +1,15 @@
 import models.*;
 import repository.LectureRepository;
+import service.LectureService;
 
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
 
 public class Main {
+
+    public static final String CHOOSE_LECTURE_PARAMETERS = "%s: Course %s, Teacher: %s, Student: %s%n";
+
     public static void main(String[] args) {
 
         Teacher teacher1 = new Teacher(1, "John", "Doe");
@@ -18,45 +21,87 @@ public class Main {
         Course course1 = new Course(1, "Java Basic");
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
-        Scanner scanner = new Scanner(System.in);
-        int i = 0;
 
         LectureRepository lectureRepository = new LectureRepository();
-        do {
+
+        // creating 3 lectures automatically
+        int i = 0;
+        for (int counter = 1; counter <= 3; counter++) {
+            CreateLectureWrapper wrapper = new CreateLectureWrapper(teacher1,
+                    teacher2,
+                    teacher3,
+                    student1,
+                    student2,
+                    student3,
+                    course1,
+                    course2,
+                    course3,
+                    counter); // using counter (1-3) as category number
+
+            Lecture firstLecture = createLecture(wrapper);
+            lectureRepository.addLecture(firstLecture);
+
+            i++;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
+        System.out.println("Would you like to create another lecture? yes/no");
+
+        while ("yes".equalsIgnoreCase(scanner.next()) && i<8) {
             System.out.println("To create a Lecture object, choose a course category, type the proper number:");
-            System.out.println("1: Course " + course1.id + ", Teacher: " + teacher1.getName() + ", Student: " + student1.getName());
-            System.out.println("2: Course " + course2.id + ", Teacher: " + teacher2.getName() + ", Student: " + student2.getName());
-            System.out.println("3: Course " + course3.id + ", Teacher: " + teacher3.getName() + ", Student: " + student3.getName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 1, course1.id, teacher1.getName(), student1.getName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 2, course2.id, teacher2.getName(), student2.getName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 3, course3.id, teacher3.getName(), student3.getName());
 
             int categoryNumber = scanner.nextInt();
-            Lecture firstLecture = createLecture(teacher1, teacher2, teacher3, student1, student2, student3, course1, course2, course3, categoryNumber);
 
+            CreateLectureWrapper wrapper = new CreateLectureWrapper(teacher1,
+                    teacher2,
+                    teacher3,
+                    student1,
+                    student2,
+                    student3,
+                    course1,
+                    course2,
+                    course3,
+                    categoryNumber);
+
+            Lecture firstLecture = createLecture(wrapper);
             lectureRepository.addLecture(firstLecture);
 
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
             System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
-            System.out.println("Would you like to create another lecture? y/n");
+            System.out.println("Would you like to create another lecture? yes/no");
             i++;
         }
-        while ("y".equalsIgnoreCase(scanner.next()) && i<8);
 
-        System.out.println(Arrays.toString(lectureRepository.getAllLectures()));
+        // System.out.println(Arrays.toString(lectureRepository.getAllLectures()));
+        System.out.println("Would you like to print lecture ids? yes/no");
+        if ("yes".equalsIgnoreCase(scanner.next())) {
+            LectureService lectureService = new LectureService(lectureRepository);
+            lectureService.printLectureIds();
+        }
     }
-    private static Lecture createLecture(Teacher teacher1, Teacher teacher2, Teacher teacher3,
-                                         Students student1, Students student2, Students student3,
-                                         Course course1, Course course2, Course course3, int categoryNumber) {
-        Lecture lecture = null;         switch (categoryNumber) {
+    private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
+        Lecture lecture = null;
+        switch (createLectureWrapper.categoryNumber()) {
             case 1:
-                lecture = Lecture.createLecture(1, "Java Chapter1", teacher1, student1, course1.getId());
+                lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(), createLectureWrapper.course1().getId());
                 break;
             case 2:
-                lecture = Lecture.createLecture(2, "Java Chapter2", teacher2, student2, course2.getId());
+                lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(), createLectureWrapper.course2().getId());
                 break;
             case 3:
-                lecture = Lecture.createLecture(3, "Java Chapter3", teacher3, student3, course3.getId());
+                lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(), createLectureWrapper.course3().getId());
                 break;             default:                 System.out.println("No such category exist");
         }
         return lecture;
+    }
+
+    private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Students student1,
+                                        Students student2, Students student3, Course course1, Course course2, Course course3,
+                                        int categoryNumber) {
     }
 }
 

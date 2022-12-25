@@ -14,4 +14,8 @@ public class Course {
         return id;
     }
 
+    public int getCourseId() {
+        return this.id;
+    }
+
 }
