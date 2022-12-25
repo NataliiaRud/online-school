@@ -18,4 +18,7 @@ public class Course {
         return this.id;
     }
 
+    public static Course createCourse(int id, String name) {
+        return new Course(id, name);
+    }
 }

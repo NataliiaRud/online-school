@@ -1,4 +1,5 @@
 import models.*;
+import repository.CourseRepository;
 import repository.LectureRepository;
 import service.LectureService;
 
@@ -21,6 +22,10 @@ public class Main {
         Course course1 = new Course(1, "Java Basic");
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
+
+        CourseRepository courseRepository = new CourseRepository();
+        Course course4 = Course.createCourse(4, "Java 18");
+        courseRepository.addCourse(course4);
 
         LectureRepository lectureRepository = new LectureRepository();
 
