@@ -30,5 +30,15 @@ public class Lecture {
         return this.id;
     }
 
+    @Override
+    public String toString() {
+        return "Lecture{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", teacher=" + teacher +
+                ", student=" + student +
+                ", courseId=" + courseId +
+                '}';
+    }
 }
 

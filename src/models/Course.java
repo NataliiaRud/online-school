@@ -14,4 +14,11 @@ public class Course {
         return id;
     }
 
+    public int getCourseId() {
+        return this.id;
+    }
+
+    public static Course createCourse(int id, String name) {
+        return new Course(id, name);
+    }
 }

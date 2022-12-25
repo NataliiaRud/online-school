@@ -15,4 +15,8 @@ public class Students {
     public String getName() {
         return this.lastName;
     }
+
+    public int getStudentsId() {
+        return this.id;
+    }
 }

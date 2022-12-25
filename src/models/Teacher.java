@@ -18,5 +18,9 @@ public class Teacher {
         return this.lastName;
     }
 
+    public int getTeacherId() {
+        return this.id;
+    }
+
 }
 

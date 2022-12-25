@@ -10,4 +10,7 @@ public class School {
         this.name = name;
         schoolCounter++;
     }
+    public int getSchoolId() {
+        return this.id;
+    }
 }
