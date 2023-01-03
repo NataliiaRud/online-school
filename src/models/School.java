@@ -1,7 +1,7 @@
 package models;
 
 public class School {
-    private static int id;
+    private int id;
     private String name;
     public static int schoolCounter;
 

@@ -1,5 +1,5 @@
 package models;
-import java.util.Scanner;
+
 
 public class Lecture {
     private int id;

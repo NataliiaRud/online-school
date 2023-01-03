@@ -1,12 +1,12 @@
 package models;
 
 public class AddMaterials {
-    private static int id;
+    private int id;
     private String materials;
     public static int addMaterialsCounter;
 
     public AddMaterials(int id, String materials) {
-        AddMaterials.id = id;
+        this.id = id;
         this.materials = materials;
         addMaterialsCounter++;
     }

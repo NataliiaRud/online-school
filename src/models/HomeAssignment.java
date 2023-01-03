@@ -1,12 +1,12 @@
 package models;
 
 public class HomeAssignment {
-    private static int id;
+    private int id;
     private String assignment;
     public static int homeAssignmentCounter;
 
     public HomeAssignment(int id, String assignment) {
-        HomeAssignment.id = id;
+        this.id = id;
         this.assignment = assignment;
         homeAssignmentCounter++;
     }

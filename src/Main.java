@@ -3,7 +3,7 @@ import repository.CourseRepository;
 import repository.LectureRepository;
 import service.LectureService;
 
-import java.util.Arrays;
+
 import java.util.Scanner;
 
 
@@ -81,7 +81,6 @@ public class Main {
             i++;
         }
 
-        // System.out.println(Arrays.toString(lectureRepository.getAllLectures()));
         System.out.println("Would you like to print lecture ids? yes/no");
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
