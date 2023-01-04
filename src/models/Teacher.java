@@ -5,7 +5,7 @@ public class Teacher {
     private String firstName;
     private String lastName;
 
-    public static int teacherCounter;
+    private static int teacherCounter;
 
 
     public Teacher(int id, String firstName, String lastName) {

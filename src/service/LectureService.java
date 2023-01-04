@@ -12,7 +12,7 @@ public class LectureService {
 
     public void printLectureIds() {
         Lecture[] lectures;
-        lectures = lectureRepository.getAllLectures();
+        lectures = lectureRepository.getAll();
 
         for (int i = 0; i < lectures.length; i++) {
             Lecture lecture = lectures[i];
