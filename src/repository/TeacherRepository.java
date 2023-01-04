@@ -1,17 +1,20 @@
 package repository;
+import models.Lecture;
 import models.Teacher;
 public class TeacherRepository {
     private Teacher[] teachers = new Teacher[0];
+    private Teacher[] newTeachers = new Teacher[0];
     private int lastIndex = -1;
     public void addLecture(Teacher teacher) {
-        Teacher[] newTeachers = new Teacher[3 * teachers.length / 2 + 1];
-        for (int i = 0; i < teachers.length; i++) {
-            newTeachers[i] = teachers[i];
-        }
         lastIndex++;
-        newTeachers[lastIndex] = teacher;
-        this.teachers = newTeachers;
+        if (lastIndex >= teachers.length) {
+        Teacher[] newTeachers = new Teacher[3 * teachers.length / 2 + 1];
+            System.arraycopy(teachers, 0, newTeachers, 0, teachers.length);
+//            this.teachers = newTeachers;
+        }
+        this.teachers[lastIndex] = teacher;
     }
+
     public Teacher getLecture(int teacherId) {
         for (int i = 0; i <= lastIndex; i++) {
             if (teachers[i].getTeacherId() == teacherId) {
