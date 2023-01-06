@@ -3,7 +3,7 @@ import repository.CourseRepository;
 import repository.LectureRepository;
 import service.LectureService;
 
-import java.util.Arrays;
+
 import java.util.Scanner;
 
 
@@ -25,7 +25,7 @@ public class Main {
 
         CourseRepository courseRepository = new CourseRepository();
         Course course4 = Course.createCourse(4, "Java 18");
-        courseRepository.addCourse(course4);
+        courseRepository.add(course4);
 
         LectureRepository lectureRepository = new LectureRepository();
 
@@ -44,20 +44,20 @@ public class Main {
                     counter); // using counter (1-3) as category number
 
             Lecture firstLecture = createLecture(wrapper);
-            lectureRepository.addLecture(firstLecture);
+            lectureRepository.add(firstLecture);
 
             i++;
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
+        System.out.println("You have created " + Lecture.getCounter() + " lectures total");
         System.out.println("Would you like to create another lecture? yes/no");
 
         while ("yes".equalsIgnoreCase(scanner.next()) && i<8) {
             System.out.println("To create a Lecture object, choose a course category, type the proper number:");
-            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 1, course1.id, teacher1.getName(), student1.getName());
-            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 2, course2.id, teacher2.getName(), student2.getName());
-            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 3, course3.id, teacher3.getName(), student3.getName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 1, course1.getId(), teacher1.getLastName(), student1.getLastName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 2, course2.getId(), teacher2.getLastName(), student2.getLastName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 3, course3.getId(), teacher3.getLastName(), student3.getLastName());
 
             int categoryNumber = scanner.nextInt();
 
@@ -73,19 +73,19 @@ public class Main {
                     categoryNumber);
 
             Lecture firstLecture = createLecture(wrapper);
-            lectureRepository.addLecture(firstLecture);
+            lectureRepository.add(firstLecture);
 
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
-            System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
+            System.out.println("You have created " + Lecture.getCounter() + " lectures total");
             System.out.println("Would you like to create another lecture? yes/no");
             i++;
         }
 
-        // System.out.println(Arrays.toString(lectureRepository.getAllLectures()));
         System.out.println("Would you like to print lecture ids? yes/no");
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
+
         }
     }
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {

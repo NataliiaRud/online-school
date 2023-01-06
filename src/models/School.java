@@ -1,16 +1,20 @@
 package models;
 
-public class School {
-    private static int id;
-    private String name;
-    public static int schoolCounter;
-
+public class School extends Base {
+    private static int counter;
     public School(int id, String name) {
-        this.id = id;
-        this.name = name;
-        schoolCounter++;
+        super(id, name);
+        counter++;
     }
-    public int getSchoolId() {
-        return this.id;
+    public School(int id) {
+        super(id);
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        School.counter = counter;
     }
 }

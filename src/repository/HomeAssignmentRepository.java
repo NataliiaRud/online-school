@@ -1,26 +1,46 @@
 package repository;
 import models.HomeAssignment;
-public class HomeAssignmentRepository {
+
+public class HomeAssignmentRepository extends BaseRepository<HomeAssignment> {
     private HomeAssignment[] homeAssignments = new HomeAssignment[0];
+
     private int lastIndex = -1;
-    public void addHomeAssignment(HomeAssignment homeAssignment) {
-        HomeAssignment[] newHomeAssignments = new HomeAssignment[3 * homeAssignments.length / 2 + 1];
-        for (int i = 0; i < homeAssignments.length; i++) {
-            newHomeAssignments[i] = homeAssignments[i];
-        }
+
+
+
+
+    @Override
+    public void add(HomeAssignment homeAssignment) {
         lastIndex++;
-        newHomeAssignments[lastIndex] = homeAssignment;
-        this.homeAssignments = newHomeAssignments;
+        if (lastIndex >= homeAssignments.length) {
+            HomeAssignment[] newHomeAssignments = new HomeAssignment[3 * homeAssignments.length / 2 + 1];
+            System.arraycopy(homeAssignments, 0, newHomeAssignments, 0, homeAssignments.length);
+            this.homeAssignments = newHomeAssignments;
+        }
+        this.homeAssignments[lastIndex] = homeAssignment;
     }
-    public HomeAssignment getHomeAssignment(int homeAssignmentId) {
+
+    @Override
+    public HomeAssignment getById(int id) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (homeAssignments[i].getHomeAssignmentId() == homeAssignmentId) {
+            if (homeAssignments[i].getId() == id) {
                 return homeAssignments[i];
             }
         }
         return null;
     }
-    public HomeAssignment[] getAllHomeAssignments() {
+
+    @Override
+    public HomeAssignment[] getAll() {
         return this.homeAssignments;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        for (int i = 0; i <= lastIndex; i++) {
+            if (homeAssignments[i].getId() == id) {
+                homeAssignments[i]=null;
+            }
+        }
     }
 }

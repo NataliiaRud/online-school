@@ -1,21 +1,18 @@
 package models;
 
-public class Course {
-    public int id;
-    private String name;
-    public static int courseCounter;
-
+public class Course extends Base {
+    private static int counter;
     public Course(int id, String name) {
-        this.id = id;
-        this.name = name;
-        courseCounter++;
-    }
-    public int getId() {
-        return id;
+        super(id, name);
+        counter++;
     }
 
-    public int getCourseId() {
-        return this.id;
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        Course.counter = counter;
     }
 
     public static Course createCourse(int id, String name) {
