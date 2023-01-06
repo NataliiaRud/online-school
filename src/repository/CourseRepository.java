@@ -18,7 +18,7 @@ public class CourseRepository {
 
     public Course getCourse(int courseId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (courses[i].getCourseId() == courseId) {
+            if (courses[i].getId() == courseId) {
                 return courses[i];
             }
         }

@@ -17,7 +17,7 @@ public class StudentsRepository {
 
     public Students getStudents(int studentsId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (studentsArray[i].getStudentsId() == studentsId) {
+            if (studentsArray[i].getId() == studentsId) {
                 return studentsArray[i];
             }
         }

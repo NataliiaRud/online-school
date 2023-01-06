@@ -18,7 +18,7 @@ public class HomeAssignmentRepository {
 
     public HomeAssignment getHomeAssignment(int homeAssignmentId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (homeAssignments[i].getHomeAssignmentId() == homeAssignmentId) {
+            if (homeAssignments[i].getId() == homeAssignmentId) {
                 return homeAssignments[i];
             }
         }

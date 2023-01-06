@@ -1,16 +1,28 @@
 package models;
 
-public class AddMaterials {
-    private int id;
+public class AddMaterials extends Base {
     private String materials;
-    public static int addMaterialsCounter;
-
+    private static int counter;
     public AddMaterials(int id, String materials) {
-        this.id = id;
+        super(id);
         this.materials = materials;
-        addMaterialsCounter++;
+        counter++;
     }
-    public int getAddMaterialsId() {
-        return this.id;
+
+    public String getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(String materials) {
+        this.materials = materials;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        AddMaterials.counter = counter;
     }
 }
+

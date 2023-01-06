@@ -50,14 +50,14 @@ public class Main {
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
+        System.out.println("You have created " + Lecture.getCounter() + " lectures total");
         System.out.println("Would you like to create another lecture? yes/no");
 
         while ("yes".equalsIgnoreCase(scanner.next()) && i<8) {
             System.out.println("To create a Lecture object, choose a course category, type the proper number:");
-            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 1, course1.id, teacher1.getName(), student1.getName());
-            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 2, course2.id, teacher2.getName(), student2.getName());
-            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 3, course3.id, teacher3.getName(), student3.getName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 1, course1.getId(), teacher1.getLastName(), student1.getLastName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 2, course2.getId(), teacher2.getLastName(), student2.getLastName());
+            System.out.printf(CHOOSE_LECTURE_PARAMETERS, 3, course3.getId(), teacher3.getLastName(), student3.getLastName());
 
             int categoryNumber = scanner.nextInt();
 
@@ -76,7 +76,7 @@ public class Main {
             lectureRepository.addLecture(firstLecture);
 
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
-            System.out.println("You have created " + Lecture.lectureCounter + " lectures total");
+            System.out.println("You have created " + Lecture.getCounter() + " lectures total");
             System.out.println("Would you like to create another lecture? yes/no");
             i++;
         }
@@ -85,6 +85,7 @@ public class Main {
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
+
         }
     }
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {

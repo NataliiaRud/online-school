@@ -19,7 +19,7 @@ public class AddMaterialsRepository {
 
     public AddMaterials getAddMaterials(int addMaterialsId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (addMaterialsArray[i].getAddMaterialsId() == addMaterialsId) {
+            if (addMaterialsArray[i].getId() == addMaterialsId) {
                 return addMaterialsArray[i];
             }
         }

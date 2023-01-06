@@ -24,7 +24,7 @@ public class LectureService {
             if (i > 0) {
                 System.out.print(" ");
             }
-            System.out.print(lecture.getLectureId());
+            System.out.print(lecture.getId());
         }
     }
 }

@@ -17,7 +17,7 @@ public class TeacherRepository {
 
     public Teacher getLecture(int teacherId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (teachers[i].getTeacherId() == teacherId) {
+            if (teachers[i].getId() == teacherId) {
                 return teachers[i];
             }
         }

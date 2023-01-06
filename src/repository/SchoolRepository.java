@@ -17,7 +17,7 @@ public class SchoolRepository {
 
     public School getSchool(int schoolId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (schools[i].getSchoolId() == schoolId) {
+            if (schools[i].getId() == schoolId) {
                 return schools[i];
             }
         }

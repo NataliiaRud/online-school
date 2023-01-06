@@ -1,16 +1,29 @@
 package models;
 
-public class HomeAssignment {
-    private int id;
+public class HomeAssignment extends Base {
+
     private String assignment;
-    public static int homeAssignmentCounter;
+    private static int counter;
 
     public HomeAssignment(int id, String assignment) {
-        this.id = id;
+        super(id);
         this.assignment = assignment;
-        homeAssignmentCounter++;
+        counter++;
     }
-    public int getHomeAssignmentId() {
-        return this.id;
+
+    public String getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(String assignment) {
+        this.assignment = assignment;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        HomeAssignment.counter = counter;
     }
 }

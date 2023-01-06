@@ -2,7 +2,7 @@ package repository;
 import models.Lecture;
 public class LectureRepository {
     private Lecture[] lectures = new Lecture[0];
-    private Lecture[] newLectures = new Lecture[0];
+//    private Lecture[] newLectures = new Lecture[0];
     private int lastIndex = -1;
     public void addLecture(Lecture lecture) {
         lastIndex++;
@@ -15,7 +15,7 @@ public class LectureRepository {
     }
     public Lecture getLecture(int lectureId) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (lectures[i].getLectureId() == lectureId) {
+            if (lectures[i].getId() == lectureId) {
                 return lectures[i];
             }
         }
