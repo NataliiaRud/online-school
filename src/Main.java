@@ -25,7 +25,7 @@ public class Main {
 
         CourseRepository courseRepository = new CourseRepository();
         Course course4 = Course.createCourse(4, "Java 18");
-        courseRepository.addCourse(course4);
+        courseRepository.add(course4);
 
         LectureRepository lectureRepository = new LectureRepository();
 
@@ -44,7 +44,7 @@ public class Main {
                     counter); // using counter (1-3) as category number
 
             Lecture firstLecture = createLecture(wrapper);
-            lectureRepository.addLecture(firstLecture);
+            lectureRepository.add(firstLecture);
 
             i++;
         }
@@ -73,7 +73,7 @@ public class Main {
                     categoryNumber);
 
             Lecture firstLecture = createLecture(wrapper);
-            lectureRepository.addLecture(firstLecture);
+            lectureRepository.add(firstLecture);
 
             System.out.println(firstLecture != null ? "You've created lecture " + firstLecture.toString() + " of course " + firstLecture.getCourseId() : "Lecture is null");
             System.out.println("You have created " + Lecture.getCounter() + " lectures total");

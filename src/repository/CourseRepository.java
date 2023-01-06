@@ -1,30 +1,46 @@
 package repository;
 import models.Course;
-import models.Lecture;
 
-public class CourseRepository {
+public class CourseRepository extends BaseRepository<Course> {
     private Course[] courses = new Course[0];
-    private Course[] newCourses = new Course[0];
+
     private int lastIndex = -1;
-    public void addCourse(Course course) {
+
+
+
+
+    @Override
+    public void add(Course course) {
         lastIndex++;
         if (lastIndex >= courses.length) {
-        Course[] newCourses = new Course[3 * courses.length / 2 + 1];
+            Course[] newCourses = new Course[3 * courses.length / 2 + 1];
             System.arraycopy(courses, 0, newCourses, 0, courses.length);
             this.courses = newCourses;
         }
         this.courses[lastIndex] = course;
     }
 
-    public Course getCourse(int courseId) {
+    @Override
+    public Course getById(int id) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (courses[i].getId() == courseId) {
+            if (courses[i].getId() == id) {
                 return courses[i];
             }
         }
         return null;
     }
-    public Course[] getAllCourses() {
+
+    @Override
+    public Course[] getAll() {
         return this.courses;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        for (int i = 0; i <= lastIndex; i++) {
+            if (courses[i].getId() == id) {
+                courses[i]=null;
+            }
+        }
     }
 }

@@ -1,29 +1,46 @@
 package repository;
-import models.Lecture;
 import models.Students;
-public class StudentsRepository {
+
+public class StudentsRepository extends BaseRepository<Students> {
     private Students[] studentsArray = new Students[0];
-    private Students[] newStudentsArray = new Students[0];
+
     private int lastIndex = -1;
-    public void addStudents(Students students) {
+
+
+
+
+    @Override
+    public void add(Students students) {
         lastIndex++;
-        if (lastIndex >= studentsArray.length) {
-        Students[] newStudentsArray = new Students[3 * studentsArray.length / 2 + 1];
+        if (lastIndex >= studentsArray .length) {
+            Students[] newStudentsArray  = new Students[3 * studentsArray.length / 2 + 1];
             System.arraycopy(studentsArray, 0, newStudentsArray, 0, studentsArray.length);
-//            this.studentsArray = newStudentsArray;
+            this.studentsArray = newStudentsArray;
         }
         this.studentsArray[lastIndex] = students;
     }
 
-    public Students getStudents(int studentsId) {
+    @Override
+    public Students getById(int id) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (studentsArray[i].getId() == studentsId) {
+            if (studentsArray[i].getId() == id) {
                 return studentsArray[i];
             }
         }
         return null;
     }
-    public Students[] getAllStudents() {
+
+    @Override
+    public Students[] getAll() {
         return this.studentsArray;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        for (int i = 0; i <= lastIndex; i++) {
+            if (studentsArray[i].getId() == id) {
+                studentsArray[i]=null;
+            }
+        }
     }
 }

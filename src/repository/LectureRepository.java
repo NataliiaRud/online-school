@@ -1,10 +1,16 @@
 package repository;
 import models.Lecture;
-public class LectureRepository {
+
+public class LectureRepository extends BaseRepository<Lecture> {
     private Lecture[] lectures = new Lecture[0];
-//    private Lecture[] newLectures = new Lecture[0];
+
     private int lastIndex = -1;
-    public void addLecture(Lecture lecture) {
+
+
+
+
+    @Override
+    public void add(Lecture lecture) {
         lastIndex++;
         if (lastIndex >= lectures.length) {
             Lecture[] newLectures = new Lecture[3 * lectures.length / 2 + 1];
@@ -13,15 +19,28 @@ public class LectureRepository {
         }
         this.lectures[lastIndex] = lecture;
     }
-    public Lecture getLecture(int lectureId) {
+
+    @Override
+    public Lecture getById(int id) {
         for (int i = 0; i <= lastIndex; i++) {
-            if (lectures[i].getId() == lectureId) {
+            if (lectures[i].getId() == id) {
                 return lectures[i];
             }
         }
         return null;
     }
+
+    @Override
     public Lecture[] getAll() {
         return this.lectures;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        for (int i = 0; i <= lastIndex; i++) {
+            if (lectures[i].getId() == id) {
+                lectures[i]=null;
+            }
+        }
     }
 }
