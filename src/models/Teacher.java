@@ -4,7 +4,7 @@ public class Teacher extends Person {
     private static int counter;
 
     public Teacher(int id, String firstName, String lastName, Role role, int courseId) {
-        super(id, firstName, lastName, role, courseId);
+        super(id, firstName, lastName, Role.TEACHER, courseId);
         counter++;
     }
 
@@ -15,7 +15,6 @@ public class Teacher extends Person {
     public static void setCounter(int counter) {
         Teacher.counter = counter;
     }
-
 
 
 }

@@ -10,11 +10,12 @@ public class Lecture extends Base {
     private static int counter;
 
 
-    public Lecture(int id, String name, Teacher teacher, Students student, int courseId) {
+    public Lecture(int id, String name, Teacher teacher, Students student, int courseId, int personId) {
         super(id, name);
         this.teacher = teacher;
        this.student = student;
        this.courseId = courseId;
+        this.personId = personId;
 counter++;
     }
 
@@ -22,8 +23,8 @@ counter++;
         return this.courseId;
     }
 
-    public static Lecture createLecture(int id, String name, Teacher teacher, Students student, int courseId) {
-        return new Lecture(id, name, teacher, student, courseId);
+    public static Lecture createLecture(int id, String name, Teacher teacher, Students student, int courseId, int personId) {
+        return new Lecture(id, name, teacher, student, courseId, personId);
     }
 
     @Override
