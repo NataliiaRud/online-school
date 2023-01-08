@@ -6,7 +6,9 @@ public class Lecture extends Base {
     private Teacher teacher;
     private Students student;
     private int courseId;
+    private int personId;
     private static int counter;
+
 
     public Lecture(int id, String name, Teacher teacher, Students student, int courseId) {
         super(id, name);
@@ -29,8 +31,8 @@ counter++;
         return "Lecture{" +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
-                ", teacher=" + teacher +
-                ", student=" + student +
+                ", teacher=" + this.teacher.getLastName() +
+                ", student=" + this.student.getLastName() +
                 ", courseId=" + courseId +
                 '}';
     }

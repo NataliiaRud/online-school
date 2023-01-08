@@ -13,12 +13,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Teacher teacher1 = new Teacher(1, "John", "Doe");
-        Teacher teacher2 = new Teacher(2, "Larry", "Paige");
-        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh");
-        Students student1 = new Students(1, "Alex", "Smith");
-        Students student2 = new Students(2, "Xi", "Lee");
-        Students student3 = new Students(3, "Wishi", "Anan");
+        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1);
+        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1);
+        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1);
+        Students student1 = new Students(1, "Alex", "Smith", 1);
+        Students student2 = new Students(2, "Xi", "Lee", 1);
+        Students student3 = new Students(3, "Wishi", "Anan", 1);
         Course course1 = new Course(1, "Java Basic");
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");

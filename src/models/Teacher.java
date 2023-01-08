@@ -1,32 +1,11 @@
 package models;
 
-public class Teacher extends Base {
-
-    private String firstName;
-    private String lastName;
+public class Teacher extends Person {
     private static int counter;
 
-    public Teacher(int id, String firstName, String lastName) {
-        super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Teacher(int id, String firstName, String lastName, Role role, int courseId) {
+        super(id, firstName, lastName, role, courseId);
         counter++;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public static int getCounter() {
@@ -36,5 +15,7 @@ public class Teacher extends Base {
     public static void setCounter(int counter) {
         Teacher.counter = counter;
     }
-}
 
+
+
+}
