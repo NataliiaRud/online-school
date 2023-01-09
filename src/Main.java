@@ -86,6 +86,7 @@ public class Main {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
 
+
         }
     }
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {

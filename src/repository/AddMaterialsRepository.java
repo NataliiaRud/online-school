@@ -1,7 +1,7 @@
 package repository;
 import models.AddMaterials;
 
-public class AddMaterialsRepository extends BaseRepository<AddMaterials> {
+public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     private AddMaterials[] addMaterialsArray = new AddMaterials[0];
 
     private int lastIndex = -1;
@@ -36,7 +36,7 @@ public class AddMaterialsRepository extends BaseRepository<AddMaterials> {
 
     @Override
     public void deleteById(int id) {
-        for (int i = 0; i <= lastIndex; i++) {
+        for (int i = 0; i < lastIndex; i++) {
             if (addMaterialsArray[i].getId() == id) {
                 addMaterialsArray[i]=null;
             }
