@@ -7,8 +7,6 @@ public class LectureRepository extends BaseRepository<Lecture> {
     private int lastIndex = -1;
 
 
-
-
     @Override
     public void add(Lecture lecture) {
         lastIndex++;
