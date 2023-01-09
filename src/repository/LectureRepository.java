@@ -1,12 +1,10 @@
 package repository;
 import models.Lecture;
 
-public class LectureRepository extends BaseRepository<Lecture> {
+public class LectureRepository implements BaseRepository<Lecture> {
     private Lecture[] lectures = new Lecture[0];
 
     private int lastIndex = -1;
-
-
 
 
     @Override
@@ -37,10 +35,29 @@ public class LectureRepository extends BaseRepository<Lecture> {
 
     @Override
     public void deleteById(int id) {
-        for (int i = 0; i <= lastIndex; i++) {
+        int indexToDelete = -1;
+        for (int i = 0; i < lectures.length; i++) {
+
             if (lectures[i].getId() == id) {
-                lectures[i]=null;
+                indexToDelete = i;
+                break;
             }
+
+            }
+        if (indexToDelete == -1) {
+            return;
         }
+        for (int i = indexToDelete; i < lectures.length-1; i++) {
+
+            lectures[i] = lectures[i+1];
+            lectures[i+1]=null;
+            if (lectures[i] != null) {
+                lectures[i].setId((lectures[i].getId()) - 1);
+            }
+
+
+        }
+
     }
+
 }

@@ -1,6 +1,6 @@
 package models;
 
-public class Base {
+public abstract class Base {
     private int id;
     private String name;
 

@@ -1,7 +1,7 @@
 package repository;
 import models.Teacher;
 
-public class TeacherRepository extends BaseRepository<Teacher> {
+public class TeacherRepository implements BaseRepository<Teacher> {
     private Teacher[] teachers = new Teacher[0];
 
     private int lastIndex = -1;

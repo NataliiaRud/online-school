@@ -1,7 +1,7 @@
 package repository;
 import models.HomeAssignment;
 
-public class HomeAssignmentRepository extends BaseRepository<HomeAssignment> {
+public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> {
     private HomeAssignment[] homeAssignments = new HomeAssignment[0];
 
     private int lastIndex = -1;
