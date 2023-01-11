@@ -6,11 +6,11 @@ public abstract class Base {
 
 
     //one-var constructor
-    public Base(int id) {
+    protected Base(int id) {
         this.id = id;
     }
     //two-vars constructor
-    public Base(int id, String name) {
+    protected Base(int id, String name) {
         this.id = id;
         this.name = name;
 

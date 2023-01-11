@@ -1,6 +1,7 @@
 import models.*;
 import repository.CourseRepository;
 import repository.LectureRepository;
+import repository.StudentsRepository;
 import service.LectureService;
 
 
@@ -13,12 +14,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1);
-        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1);
-        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1);
-        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1);
-        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1);
-        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1);
+        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "1111", "@1111");
+        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "2222", "@2222");
+        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "3333", "@3333");
+        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "4444", "@4444");
+        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "5555", "@5555");
+        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "6666", "@6666");
         Course course1 = new Course(1, "Java Basic");
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
@@ -93,13 +94,13 @@ public class Main {
         Lecture lecture = null;
         switch (createLectureWrapper.categoryNumber()) {
             case 1:
-                lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(), createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId());
+                lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(), createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description");
                 break;
             case 2:
-                lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(), createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId());
+                lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(), createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description");
                 break;
             case 3:
-                lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(), createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId());
+                lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(), createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description");
                 break;             default:                 System.out.println("No such category exist");
         }
         return lecture;
