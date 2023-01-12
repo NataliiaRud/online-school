@@ -1,5 +1,4 @@
 package repository;
-import models.Base;
 import models.Lecture;
 
 public class LectureRepository implements BaseRepository<Lecture>  {
@@ -7,6 +6,8 @@ public class LectureRepository implements BaseRepository<Lecture>  {
 
     private Lecture[] lectures = new Lecture[0];
 private final GenericRepository<Lecture> lectureGenericRepository = new GenericRepository<Lecture>(lectures);
+
+
 
 
     public int getLecturesSize() {
