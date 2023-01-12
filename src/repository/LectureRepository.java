@@ -1,10 +1,17 @@
 package repository;
+import models.Base;
 import models.Lecture;
 
-public class LectureRepository implements BaseRepository<Lecture> {
-    private Lecture[] lectures = new Lecture[0];
-
+public class LectureRepository implements BaseRepository<Lecture>  {
     private int lastIndex = -1;
+
+    private Lecture[] lectures = new Lecture[0];
+private final GenericRepository<Lecture> lectureGenericRepository = new GenericRepository<Lecture>(lectures);
+
+
+    public int getLecturesSize() {
+      return lectureGenericRepository.size();
+    }
 
 
     @Override

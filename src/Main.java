@@ -85,6 +85,10 @@ public class Main {
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
+            System.out.println("result");
+            System.out.println(lectureRepository.getById(3));
+            System.out.println(lectureRepository.getLecturesSize());
+
 
 
         }
