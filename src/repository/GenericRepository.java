@@ -4,18 +4,11 @@ import models.Base;
 
 
 public class GenericRepository<E extends Base> {
-    E[] tests;
+    E[] elements;
 
-    public GenericRepository(E[] tests) {
-        this.tests = tests;
+    public GenericRepository(E[] elements) {
+        this.elements = elements;
     }
-
-    public int size() {
-        return tests.length;
-    }
-//    boolean isEmpty()
-//    E get (int index)
-//    void add(E element)
-//    void add(int index, E element)
-//    void remove (int index)
 }
+
+

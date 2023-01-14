@@ -1,36 +1,37 @@
 package repository;
+
 import models.Lecture;
 
-public class LectureRepository implements BaseRepository<Lecture>  {
-    private int lastIndex = -1;
-
-    private Lecture[] lectures = new Lecture[0];
-private final GenericRepository<Lecture> lectureGenericRepository = new GenericRepository<Lecture>(lectures);
-
-
-
+public class LectureRepository implements BaseRepository<Lecture> {
+    private GenericArray<Lecture> array = new GenericArray<Lecture>();
 
     public int getLecturesSize() {
-      return lectureGenericRepository.size();
+        return array.size();
+    }
+    public boolean isEmpty() {
+        return array.isEmpty();
     }
 
+    public Lecture getByIndex(int indexToGet) {
+        int index = indexToGet;
+        return array.get(index);
+    }
 
     @Override
     public void add(Lecture lecture) {
-        lastIndex++;
-        if (lastIndex >= lectures.length) {
-            Lecture[] newLectures = new Lecture[3 * lectures.length / 2 + 1];
-            System.arraycopy(lectures, 0, newLectures, 0, lectures.length);
-            this.lectures = newLectures;
-        }
-        this.lectures[lastIndex] = lecture;
+        array.add(lecture);
+    }
+
+    @Override
+    public void add(int index, Lecture lecture) {
+        array.add(lecture);
     }
 
     @Override
     public Lecture getById(int id) {
-        for (int i = 0; i <= lastIndex; i++) {
-            if (lectures[i].getId() == id) {
-                return lectures[i];
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getId() == id) {
+                return array.get(i);
             }
         }
         return null;
@@ -38,34 +39,25 @@ private final GenericRepository<Lecture> lectureGenericRepository = new GenericR
 
     @Override
     public Lecture[] getAll() {
-        return this.lectures;
+        Lecture[] ret = new Lecture[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            ret[i] = array.get(i);
+        }
+        return ret;
     }
 
     @Override
     public void deleteById(int id) {
         int indexToDelete = -1;
-        for (int i = 0; i < lectures.length; i++) {
-
-            if (lectures[i].getId() == id) {
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
-
-            }
-        if (indexToDelete == -1) {
-            return;
-        }
-        for (int i = indexToDelete; i < lectures.length-1; i++) {
-
-            lectures[i] = lectures[i+1];
-            lectures[i+1]=null;
-            if (lectures[i] != null) {
-                lectures[i].setId((lectures[i].getId()) - 1);
-            }
-
-
         }
 
+        if (indexToDelete != -1) {
+            array.remove(indexToDelete);
+        }
     }
-
 }

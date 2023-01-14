@@ -85,11 +85,21 @@ public class Main {
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
-            System.out.println("result");
-            System.out.println(lectureRepository.getById(3));
-            System.out.println(lectureRepository.getLecturesSize());
-
-
+            System.out.println("----------HW-13-------------");
+            System.out.println("lectures size: " + lectureRepository.getLecturesSize());
+            System.out.println(lectureRepository.isEmpty());
+            System.out.println("get by index: " + lectureRepository.getByIndex(2));
+            Lecture lecture5 = new Lecture(5, "testLecture5", teacher1, student1, 1, 2);
+            Lecture lecture6 = new Lecture(6, "testLecture5", teacher1, student1, 1, 2);
+            lectureRepository.add(lecture5);
+            System.out.println("print ids after 5th lecture addition");
+            lectureService.printLectureIds();
+            lectureRepository.add(2, lecture6);
+            System.out.println("print ids after 6th lecture addiction");
+            lectureService.printLectureIds();
+            lectureRepository.deleteById(6);
+            System.out.println("print ids after 6th lecture removing");
+            lectureService.printLectureIds();
 
         }
     }
