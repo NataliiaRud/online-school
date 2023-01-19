@@ -7,24 +7,28 @@ public class Lecture extends Base {
     private Students student;
     private int courseId;
     private int personId;
+    private String description;
     private static int counter;
 
 
-    public Lecture(int id, String name, Teacher teacher, Students student, int courseId, int personId) {
+    public Lecture(int id, String name, Teacher teacher, Students student, int courseId, int personId, String description) {
         super(id, name);
         this.teacher = teacher;
         this.student = student;
         this.courseId = courseId;
         this.personId = personId;
-        counter++;
+
+        this.description = description;
+counter++;
+
     }
 
     public int getCourseId() {
         return this.courseId;
     }
 
-    public static Lecture createLecture(int id, String name, Teacher teacher, Students student, int courseId, int personId) {
-        return new Lecture(id, name, teacher, student, courseId, personId);
+    public static Lecture createLecture(int id, String name, Teacher teacher, Students student, int courseId, int personId, String description) {
+        return new Lecture(id, name, teacher, student, courseId, personId, description);
     }
 
     @Override
