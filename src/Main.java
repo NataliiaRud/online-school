@@ -13,12 +13,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1);
-        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1);
-        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1);
-        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1);
-        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1);
-        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1);
+        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "11111111111", "@1111");
+        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "22222222222", "@2222");
+        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "33333333333", "@3333");
+        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "44444444444", "@4444");
+        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "55555555555", "@5555");
+        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "66666666666", "@6666");
         Course course1 = new Course(1, "Java Basic");
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
@@ -85,21 +85,9 @@ public class Main {
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
-            System.out.println("----------HW-13-------------");
-            System.out.println("lectures size: " + lectureRepository.getLecturesSize());
-            System.out.println(lectureRepository.isEmpty());
-            System.out.println("get by index: " + lectureRepository.getByIndex(2));
-            Lecture lecture5 = new Lecture(5, "testLecture5", teacher1, student1, 1, 2);
-            Lecture lecture6 = new Lecture(6, "testLecture5", teacher1, student1, 1, 2);
-            lectureRepository.add(lecture5);
-            System.out.println("print ids after 5th lecture addition");
-            lectureService.printLectureIds();
-            lectureRepository.add(2, lecture6);
-            System.out.println("print ids after 6th lecture addiction");
-            lectureService.printLectureIds();
-            lectureRepository.deleteById(6);
-            System.out.println("print ids after 6th lecture removing");
-            lectureService.printLectureIds();
+
+
+
 
         }
     }

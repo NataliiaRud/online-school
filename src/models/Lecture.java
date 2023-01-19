@@ -13,10 +13,10 @@ public class Lecture extends Base {
     public Lecture(int id, String name, Teacher teacher, Students student, int courseId, int personId) {
         super(id, name);
         this.teacher = teacher;
-       this.student = student;
-       this.courseId = courseId;
+        this.student = student;
+        this.courseId = courseId;
         this.personId = personId;
-counter++;
+        counter++;
     }
 
     public int getCourseId() {
@@ -47,4 +47,5 @@ counter++;
         Lecture.counter = counter;
     }
 }
+
 

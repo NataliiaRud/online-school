@@ -1,5 +1,6 @@
 package models;
 
+
 public abstract class Base {
     private int id;
     private String name;
@@ -32,6 +33,8 @@ public abstract class Base {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
 
 }
