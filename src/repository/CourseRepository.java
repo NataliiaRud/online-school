@@ -1,30 +1,30 @@
 package repository;
+
 import models.Course;
 
+
 public class CourseRepository implements BaseRepository<Course> {
-    private Course[] courses = new Course[0];
+    private GenericArray<Course> array = new GenericArray<Course>();
 
-    private int lastIndex = -1;
-
-
-
+    public int getLecturesSize() {
+        return array.size();
+    }
 
     @Override
     public void add(Course course) {
-        lastIndex++;
-        if (lastIndex >= courses.length) {
-            Course[] newCourses = new Course[3 * courses.length / 2 + 1];
-            System.arraycopy(courses, 0, newCourses, 0, courses.length);
-            this.courses = newCourses;
-        }
-        this.courses[lastIndex] = course;
+        array.add(course);
+    }
+
+    @Override
+    public void add(int id, Course course) {
+
     }
 
     @Override
     public Course getById(int id) {
-        for (int i = 0; i <= lastIndex; i++) {
-            if (courses[i].getId() == id) {
-                return courses[i];
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getId() == id) {
+                return array.get(i);
             }
         }
         return null;
@@ -32,15 +32,25 @@ public class CourseRepository implements BaseRepository<Course> {
 
     @Override
     public Course[] getAll() {
-        return this.courses;
+        Course[] ret = new Course[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            ret[i] = array.get(i);
+        }
+        return ret;
     }
 
     @Override
     public void deleteById(int id) {
-        for (int i = 0; i <= lastIndex; i++) {
-            if (courses[i].getId() == id) {
-                courses[i]=null;
+        int indexToDelete = -1;
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getId() == id) {
+                indexToDelete = i;
+                break;
             }
+        }
+
+        if (indexToDelete != -1) {
+            array.remove(indexToDelete);
         }
     }
 }

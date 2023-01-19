@@ -14,12 +14,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "1111", "@1111");
-        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "2222", "@2222");
-        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "3333", "@3333");
-        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "4444", "@4444");
-        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "5555", "@5555");
-        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "6666", "@6666");
+        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "11111111111", "@1111");
+        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "22222222222", "@2222");
+        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "33333333333", "@3333");
+        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "44444444444", "@4444");
+        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "55555555555", "@5555");
+        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "66666666666", "@6666");
+
         Course course1 = new Course(1, "Java Basic");
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
@@ -86,6 +87,8 @@ public class Main {
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
+
+
 
 
         }
