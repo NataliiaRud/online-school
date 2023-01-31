@@ -3,7 +3,7 @@ import repository.CourseRepository;
 import repository.LectureRepository;
 import repository.StudentsRepository;
 import service.LectureService;
-
+import repository.HomeAssignmentRepository;
 
 import java.util.Scanner;
 
@@ -25,6 +25,13 @@ public class Main {
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
 
+        HomeAssignment homeAssignment1 = new HomeAssignment(1, "hw", 1, "task1");
+        HomeAssignment homeAssignment2 = new HomeAssignment(2, "hw", 2, "task2");
+        HomeAssignment homeAssignment3 = new HomeAssignment(3, "hw", 3, "task3");
+
+        HomeAssignment[] homeAssignments1 = {homeAssignment1, homeAssignment2, homeAssignment3};
+
+
         CourseRepository courseRepository = new CourseRepository();
         Course course4 = Course.createCourse(4, "Java 18");
         courseRepository.add(course4);
@@ -43,7 +50,9 @@ public class Main {
                     course1,
                     course2,
                     course3,
-                    counter); // using counter (1-3) as category number
+                    counter,
+                    homeAssignments1);
+            // using counter (1-3) as category number
 
             Lecture firstLecture = createLecture(wrapper);
             lectureRepository.add(firstLecture);
@@ -72,7 +81,8 @@ public class Main {
                     course1,
                     course2,
                     course3,
-                    categoryNumber);
+                    categoryNumber,
+                    homeAssignments1);
 
             Lecture firstLecture = createLecture(wrapper);
             lectureRepository.add(firstLecture);
@@ -91,22 +101,26 @@ public class Main {
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getLecturesSize());
 
-
-
-
         }
     }
+
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
         Lecture lecture = null;
         switch (createLectureWrapper.categoryNumber()) {
             case 1:
-                lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(), createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description");
+                lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(),
+                        createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description",
+                        createLectureWrapper.homeAssignments1);
                 break;
             case 2:
-                lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(), createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description");
+                lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(),
+                        createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description",
+                        createLectureWrapper.homeAssignments1);
                 break;
             case 3:
-                lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(), createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description");
+                lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(),
+                        createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description",
+                        createLectureWrapper.homeAssignments1);
                 break;             default:                 System.out.println("No such category exist");
         }
         return lecture;
@@ -114,7 +128,7 @@ public class Main {
 
     private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Students student1,
                                         Students student2, Students student3, Course course1, Course course2, Course course3,
-                                        int categoryNumber) {
+                                        int categoryNumber, HomeAssignment[] homeAssignments1) {
     }
 }
 
