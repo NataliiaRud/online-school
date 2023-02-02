@@ -100,7 +100,7 @@ public class Main {
             Person teacher6 = Person.createPerson(1, "aaa", "vvv", Role.TEACHER, 1, "55555555555", "@rrr");
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getLecturesSize());
-
+            System.out.println("test");
         }
     }
 
