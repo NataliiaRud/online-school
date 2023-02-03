@@ -1,4 +1,6 @@
 package models;
+import exceptions.EntityNotFoundException;
+import exceptions.ValidationExceptions;
 
 public abstract class Person extends Base {
 private int courseId;
@@ -81,6 +83,14 @@ private static int counter;
         this.email = email;
     }
     public static boolean emailCheck(String email) {
+        try {
+            if (email.indexOf('@')== -1)
+                throw new ValidationExceptions("Wrong email format");
+        }
+        catch(ValidationExceptions e) {
+            System.out.println(e);
+
+        }
         if(email.indexOf('@')== -1) {
             System.out.println("Email error");
             return true;
@@ -90,6 +100,14 @@ private static int counter;
     }
 
         public static boolean phoneCheck(String phone) {
+            try {
+                if (phone.length() != 11)
+                    throw new ValidationExceptions("Wrong phone number");
+            }
+            catch(ValidationExceptions e) {
+                System.out.println(e);
+
+            }
         boolean areNumbers = false;
         for (int i =0; i<phone.length(); i++) {
             areNumbers = Character.isDigit(phone.charAt(i));

@@ -101,29 +101,37 @@ public class Main {
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getLecturesSize());
             System.out.println("test");
+            lectureRepository.getById(4);
         }
     }
 
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
         Lecture lecture = null;
-        switch (createLectureWrapper.categoryNumber()) {
-            case 1:
-                lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(),
-                        createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description",
-                        createLectureWrapper.homeAssignments1);
-                break;
-            case 2:
-                lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(),
-                        createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description",
-                        createLectureWrapper.homeAssignments1);
-                break;
-            case 3:
-                lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(),
-                        createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description",
-                        createLectureWrapper.homeAssignments1);
-                break;             default:                 System.out.println("No such category exist");
+        try {
+            switch (createLectureWrapper.categoryNumber()) {
+                case 1:
+                    lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(),
+                            createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description",
+                            createLectureWrapper.homeAssignments1);
+                    break;
+                case 2:
+                    lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(),
+                            createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description",
+                            createLectureWrapper.homeAssignments1);
+                    break;
+                case 3:
+                    lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(),
+                            createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description",
+                            createLectureWrapper.homeAssignments1);
+                    break;
+                default:
+                    throw new IllegalArgumentException("test exception");
+            }
+            return lecture;
         }
-        return lecture;
+        catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Students student1,
