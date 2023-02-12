@@ -2,16 +2,16 @@ package models;
 
 
 public abstract class Base {
-    private int id;
+    private Integer id;
     private String name;
 
 
     //one-var constructor
-    protected Base(int id) {
+    protected Base(Integer id) {
         this.id = id;
     }
     //two-vars constructor
-    protected Base(int id, String name) {
+    protected Base(Integer id, String name) {
         this.id = id;
         this.name = name;
 

@@ -13,7 +13,7 @@ private String lastName;
     private String email;
 private static int counter;
 
-    protected Person(int id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
+    protected Person(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
 
         super(id);
         this.courseId = courseId;
@@ -24,7 +24,7 @@ private static int counter;
         this.email = email;
         this.counter++;
     }
-    public static Person createPerson(int id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
+    public static Person createPerson(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
 
         if (emailCheck(email)) {return null;}
         if (phoneCheck(phone)) {return null;}

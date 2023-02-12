@@ -13,7 +13,7 @@ public class Lecture extends Base {
     private static int counter;
 
 
-    public Lecture(int id, String name, Teacher teacher, Students student, int courseId, int personId, String description, HomeAssignment[] homeAssignments) {
+    public Lecture(Integer id, String name, Teacher teacher, Students student, int courseId, int personId, String description, HomeAssignment[] homeAssignments) {
         super(id, name);
         this.teacher = teacher;
         this.student = student;

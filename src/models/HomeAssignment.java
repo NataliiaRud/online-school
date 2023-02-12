@@ -7,7 +7,7 @@ public class HomeAssignment extends Base {
     private String task;
     private static int counter;
 
-    public HomeAssignment(int id, String assignment, int lectureId, String task) {
+    public HomeAssignment(Integer id, String assignment, int lectureId, String task) {
         super(id);
         this.assignment = assignment;
         this.lectureId = lectureId;

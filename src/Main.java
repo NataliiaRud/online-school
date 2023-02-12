@@ -1,10 +1,10 @@
 import models.*;
 import repository.CourseRepository;
 import repository.LectureRepository;
-import repository.StudentsRepository;
 import service.LectureService;
-import repository.HomeAssignmentRepository;
+import utility.SimpleIterator;
 
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -101,8 +101,12 @@ public class Main {
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getLecturesSize());
             System.out.println("test");
-            lectureRepository.getById(4);
+
         }
+
+        List<Lecture> allLectures = lectureRepository.findAll();
+        System.out.printf(allLectures.toString());
+
     }
 
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {

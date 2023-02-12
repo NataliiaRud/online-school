@@ -16,12 +16,12 @@ public class StudentsRepository implements BaseRepository<Students> {
     }
 
     @Override
-    public void add(int id, Students students) {
+    public void add(Integer id, Students students) {
 
     }
 
     @Override
-    public Students getById(int id) {
+    public Students getById(Integer id) {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {
                 return array.get(i);
@@ -40,7 +40,7 @@ public class StudentsRepository implements BaseRepository<Students> {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         int indexToDelete = -1;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {
