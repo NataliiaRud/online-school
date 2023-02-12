@@ -1,5 +1,5 @@
 package models;
-
+import java.util.Objects;
 
 public abstract class Base {
     private Integer id;
@@ -34,7 +34,18 @@ public abstract class Base {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Base base = (Base) o;
+        return id == base.id && Objects.equals(name, base.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 
 
 }

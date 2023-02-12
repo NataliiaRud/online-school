@@ -1,5 +1,5 @@
 package models;
-import exceptions.EntityNotFoundException;
+import java.util.Objects;
 import exceptions.ValidationExceptions;
 
 public abstract class Person extends Base {
@@ -133,7 +133,18 @@ private static int counter;
         Person.counter = counter;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return courseId == person.courseId && role == person.role && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseId, role, firstName, lastName);
+    }
 
 
 
