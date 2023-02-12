@@ -16,12 +16,12 @@ public class TeacherRepository implements BaseRepository<Teacher> {
     }
 
     @Override
-    public void add(int id, Teacher teacher) {
+    public void add(Integer id, Teacher teacher) {
 
     }
 
     @Override
-    public Teacher getById(int id) {
+    public Teacher getById(Integer id) {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {
                 return array.get(i);
@@ -40,7 +40,7 @@ public class TeacherRepository implements BaseRepository<Teacher> {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         int indexToDelete = -1;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {

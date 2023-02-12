@@ -2,9 +2,9 @@ package repository;
 
 
 public interface BaseRepository<T> {
-    public abstract void add(T t);
-    public abstract void add(int id, T t);
-    public abstract T getById(int id);
-    public abstract T[] getAll();
-    public abstract void deleteById(int id);
+     void add(T t);
+     void add(Integer id, T t);
+     T getById(Integer id);
+     T[] getAll();
+    void deleteById(Integer id);
 }

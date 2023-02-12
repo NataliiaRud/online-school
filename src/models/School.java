@@ -2,11 +2,11 @@ package models;
 
 public class School extends Base {
     private static int counter;
-    public School(int id, String name) {
+    public School(Integer id, String name) {
         super(id, name);
         counter++;
     }
-    public School(int id) {
+    public School(Integer id) {
         super(id);
     }
 

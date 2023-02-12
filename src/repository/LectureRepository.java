@@ -3,8 +3,13 @@ package repository;
 import models.Lecture;
 import exceptions.EntityNotFoundException;
 
+
+
+
 public class LectureRepository implements BaseRepository<Lecture> {
     private GenericArray<Lecture> array = new GenericArray<Lecture>();
+
+
 
     public int getLecturesSize() {
         return array.size();
@@ -24,7 +29,7 @@ public class LectureRepository implements BaseRepository<Lecture> {
     }
 
     @Override
-    public void add(int index, Lecture lecture) {
+    public void add(Integer index, Lecture lecture) {
         array.add(lecture);
     }
 
@@ -32,10 +37,10 @@ public class LectureRepository implements BaseRepository<Lecture> {
 
 
     @Override
-    public Lecture getById(int id) {
+    public Lecture getById(Integer id) {
         try {
             if (id <1 || id >3)
-                throw new EntityNotFoundException("Wrong lecture");
+                throw new EntityNotFoundException("Lecture with id = " + id + " doesn't exist in repo");
         }
         catch(EntityNotFoundException e) {
             System.out.println(e);
@@ -58,8 +63,12 @@ public class LectureRepository implements BaseRepository<Lecture> {
         return ret;
     }
 
+    public java.util.List<Lecture> findAll() {
+        return array.findAll();
+    }
+
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         try {
             if (id <1 || id >3)
                 throw new EntityNotFoundException("Wrong lecture");
@@ -80,4 +89,5 @@ public class LectureRepository implements BaseRepository<Lecture> {
             array.remove(indexToDelete);
         }
     }
+
 }

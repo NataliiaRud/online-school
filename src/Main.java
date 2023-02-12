@@ -1,12 +1,12 @@
 import models.*;
 import repository.CourseRepository;
 import repository.LectureRepository;
-import repository.StudentsRepository;
 import service.LectureService;
-import repository.HomeAssignmentRepository;
+import utility.SimpleIterator;
 
+import java.util.List;
 import java.util.Scanner;
-
+import java.util.Objects;
 
 public class Main {
 
@@ -101,8 +101,12 @@ public class Main {
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getLecturesSize());
             System.out.println("test");
-            lectureRepository.getById(4);
+
         }
+
+        List<Lecture> allLectures = lectureRepository.findAll();
+        System.out.printf(allLectures.toString());
+
     }
 
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
@@ -137,6 +141,19 @@ public class Main {
     private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Students student1,
                                         Students student2, Students student3, Course course1, Course course2, Course course3,
                                         int categoryNumber, HomeAssignment[] homeAssignments1) {
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            CreateLectureWrapper wrapper = (CreateLectureWrapper) o;
+            return categoryNumber == wrapper.categoryNumber && Objects.equals(teacher1, wrapper.teacher1) && Objects.equals(teacher2, wrapper.teacher2) && Objects.equals(teacher3, wrapper.teacher3) && Objects.equals(student1, wrapper.student1) && Objects.equals(student2, wrapper.student2) && Objects.equals(student3, wrapper.student3) && Objects.equals(course1, wrapper.course1) && Objects.equals(course2, wrapper.course2) && Objects.equals(course3, wrapper.course3);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(teacher1, teacher2, teacher3, student1, student2, student3, course1, course2, course3, categoryNumber);
+        }
     }
 }
 

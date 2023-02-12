@@ -2,7 +2,7 @@ package models;
 
 public class Course extends Base {
     private static int counter;
-    public Course(int id, String name) {
+    public Course(Integer id, String name) {
         super(id, name);
         counter++;
     }

@@ -3,7 +3,7 @@ package models;
 public class AddMaterials extends Base {
     private String materials;
     private static int counter;
-    public AddMaterials(int id, String materials) {
+    public AddMaterials(Integer id, String materials) {
         super(id);
         this.materials = materials;
         counter++;

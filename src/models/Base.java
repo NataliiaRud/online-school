@@ -1,17 +1,17 @@
 package models;
-
+import java.util.Objects;
 
 public abstract class Base {
-    private int id;
+    private Integer id;
     private String name;
 
 
     //one-var constructor
-    protected Base(int id) {
+    protected Base(Integer id) {
         this.id = id;
     }
     //two-vars constructor
-    protected Base(int id, String name) {
+    protected Base(Integer id, String name) {
         this.id = id;
         this.name = name;
 
@@ -34,7 +34,18 @@ public abstract class Base {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Base base = (Base) o;
+        return id == base.id && Objects.equals(name, base.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 
 
 }

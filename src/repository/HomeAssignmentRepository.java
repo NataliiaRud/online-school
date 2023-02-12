@@ -16,12 +16,12 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
     }
 
     @Override
-    public void add(int id, HomeAssignment homeAssignment) {
+    public void add(Integer id, HomeAssignment homeAssignment) {
 
     }
 
     @Override
-    public HomeAssignment getById(int id) {
+    public HomeAssignment getById(Integer id) {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {
                 return array.get(i);
@@ -40,7 +40,7 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         int indexToDelete = -1;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {

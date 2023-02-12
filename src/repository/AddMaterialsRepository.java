@@ -17,12 +17,12 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     }
 
     @Override
-    public void add(int id, AddMaterials addMaterials) {
+    public void add(Integer id, AddMaterials addMaterials) {
 
     }
 
     @Override
-    public AddMaterials getById(int id) {
+    public AddMaterials getById(Integer id) {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {
                 return array.get(i);
@@ -41,7 +41,7 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         int indexToDelete = -1;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getId() == id) {
