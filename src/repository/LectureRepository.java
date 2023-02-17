@@ -1,40 +1,35 @@
 package repository;
 
 import models.Lecture;
+import java.util.*;
 import exceptions.EntityNotFoundException;
 
+public class LectureRepository implements BaseRepository<Lecture>{
+    ArrayList <Lecture> lectures = new ArrayList<>();
 
-
-
-public class LectureRepository implements BaseRepository<Lecture> {
-    private GenericArray<Lecture> array = new GenericArray<Lecture>();
-
-
-
-    public int getLecturesSize() {
-        return array.size();
-    }
-    public boolean isEmpty() {
-        return array.isEmpty();
-    }
-
-    public Lecture getByIndex(int indexToGet) {
-        int index = indexToGet;
-        return array.get(index);
-    }
 
     @Override
-    public void add(Lecture lecture) {
-        array.add(lecture);
+    public Integer getSize() {
+        return lectures.size();
     }
+    @Override
+    public boolean isEmpty() {
+        return lectures.isEmpty();
+    }
+    @Override
+    public Lecture getByIndex(Integer indexToGet) {
+        int index = indexToGet;
+        return lectures.get(index);
+    }
+    @Override
+    public void add(Lecture lecture) {
+        lectures.add(lecture);
+}
 
     @Override
     public void add(Integer index, Lecture lecture) {
-        array.add(lecture);
+        lectures.add(lecture);
     }
-
-
-
 
     @Override
     public Lecture getById(Integer id) {
@@ -46,25 +41,27 @@ public class LectureRepository implements BaseRepository<Lecture> {
             System.out.println(e);
 
         }
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
-                return array.get(i);
+        for (int i = 0; i < lectures.size(); i++) {
+            if (lectures.get(i).getId() == id) {
+                return lectures.get(i);
             }
         }
         return null;
     }
-
     @Override
+
     public Lecture[] getAll() {
-        Lecture[] ret = new Lecture[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            ret[i] = array.get(i);
+        Lecture[] ret = new Lecture[lectures.size()];
+        for (int i = 0; i < lectures.size(); i++) {
+            ret[i] = lectures.get(i);
         }
         return ret;
+
     }
 
+
     public java.util.List<Lecture> findAll() {
-        return array.findAll();
+        return lectures;
     }
 
     @Override
@@ -78,16 +75,19 @@ public class LectureRepository implements BaseRepository<Lecture> {
 
         }
         int indexToDelete = -1;
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
+        for (int i = 0; i < lectures.size(); i++) {
+            if (lectures.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
         }
 
         if (indexToDelete != -1) {
-            array.remove(indexToDelete);
+            lectures.remove(indexToDelete);
         }
     }
+
+
+
 
 }

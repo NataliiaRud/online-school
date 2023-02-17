@@ -1,18 +1,32 @@
 package repository;
 
+import models.Lecture;
 import models.Teacher;
+
+import java.util.ArrayList;
 
 
 public class TeacherRepository implements BaseRepository<Teacher> {
-    private GenericArray<Teacher> array = new GenericArray<Teacher>();
 
-    public int getLecturesSize() {
-        return array.size();
+    ArrayList<Teacher> teachers = new ArrayList<>();
+
+    public Integer getSize() {
+        return teachers.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public Teacher getByIndex(Integer indexToGet) {
+        return null;
     }
 
     @Override
     public void add(Teacher teacher) {
-        array.add(teacher);
+        teachers.add(teacher);
     }
 
     @Override
@@ -22,9 +36,9 @@ public class TeacherRepository implements BaseRepository<Teacher> {
 
     @Override
     public Teacher getById(Integer id) {
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
-                return array.get(i);
+        for (int i = 0; i < teachers.size(); i++) {
+            if (teachers.get(i).getId() == id) {
+                return teachers.get(i);
             }
         }
         return null;
@@ -32,9 +46,9 @@ public class TeacherRepository implements BaseRepository<Teacher> {
 
     @Override
     public Teacher[] getAll() {
-        Teacher[] ret = new Teacher[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            ret[i] = array.get(i);
+        Teacher[] ret = new Teacher[teachers.size()];
+        for (int i = 0; i < teachers.size(); i++) {
+            ret[i] = teachers.get(i);
         }
         return ret;
     }
@@ -42,15 +56,15 @@ public class TeacherRepository implements BaseRepository<Teacher> {
     @Override
     public void deleteById(Integer id) {
         int indexToDelete = -1;
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
+        for (int i = 0; i < teachers.size(); i++) {
+            if (teachers.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
         }
 
         if (indexToDelete != -1) {
-            array.remove(indexToDelete);
+            teachers.remove(indexToDelete);
         }
     }
 }

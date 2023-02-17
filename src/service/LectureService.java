@@ -1,7 +1,6 @@
 package service;
 
 import models.Base;
-import models.Lecture;
 import repository.LectureRepository;
 
 public class LectureService {
