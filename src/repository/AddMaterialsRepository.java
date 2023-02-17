@@ -1,31 +1,44 @@
 package repository;
 
 import models.AddMaterials;
-import models.Course;
+
+
+import java.util.ArrayList;
 
 
 public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
-    private GenericArray<AddMaterials> array = new GenericArray<AddMaterials>();
+    ArrayList<AddMaterials> addMaterials = new ArrayList<>();;
 
-    public int getLecturesSize() {
-        return array.size();
+    public Integer getSize() {
+        return addMaterials.size();
     }
 
     @Override
-    public void add(AddMaterials addMaterials) {
-        array.add(addMaterials);
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
-    public void add(Integer id, AddMaterials addMaterials) {
+    public AddMaterials getByIndex(Integer indexToGet) {
+        return null;
+    }
 
+    @Override
+    public void add(AddMaterials addMaterial) {
+        addMaterials.add(addMaterial);
+    }
+
+
+    @Override
+    public void add(Integer id, AddMaterials addMaterial) {
+        addMaterials.add(addMaterial);
     }
 
     @Override
     public AddMaterials getById(Integer id) {
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
-                return array.get(i);
+        for (int i = 0; i <addMaterials.size(); i++) {
+            if (addMaterials.get(i).getId() == id) {
+                return addMaterials.get(i);
             }
         }
         return null;
@@ -33,9 +46,9 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
 
     @Override
     public AddMaterials[] getAll() {
-        AddMaterials[] ret = new AddMaterials[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            ret[i] = array.get(i);
+        AddMaterials[] ret = new AddMaterials[addMaterials.size()];
+        for (int i = 0; i < addMaterials.size(); i++) {
+            ret[i] = addMaterials.get(i);
         }
         return ret;
     }
@@ -43,15 +56,15 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     @Override
     public void deleteById(Integer id) {
         int indexToDelete = -1;
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
+        for (int i = 0; i < addMaterials.size(); i++) {
+            if (addMaterials.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
         }
 
         if (indexToDelete != -1) {
-            array.remove(indexToDelete);
+            addMaterials.remove(indexToDelete);
         }
     }
 }

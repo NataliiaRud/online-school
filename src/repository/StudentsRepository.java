@@ -1,30 +1,43 @@
 package repository;
 
+
 import models.Students;
+
+import java.util.ArrayList;
 
 
 public class StudentsRepository implements BaseRepository<Students> {
-    private GenericArray<Students> array = new GenericArray<Students>();
+    ArrayList<Students> students = new ArrayList<>();
 
-    public int getLecturesSize() {
-        return array.size();
+    public Integer getSize() {
+        return students.size();
     }
 
     @Override
-    public void add(Students students) {
-        array.add(students);
+    public boolean isEmpty() {
+        return false;
     }
 
     @Override
-    public void add(Integer id, Students students) {
+    public Students getByIndex(Integer indexToGet) {
+        return null;
+    }
+
+    @Override
+    public void add(Students student) {
+        students.add(student);
+    }
+
+    @Override
+    public void add(Integer id, Students student) {
 
     }
 
     @Override
     public Students getById(Integer id) {
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
-                return array.get(i);
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId() == id) {
+                return students.get(i);
             }
         }
         return null;
@@ -32,9 +45,9 @@ public class StudentsRepository implements BaseRepository<Students> {
 
     @Override
     public Students[] getAll() {
-        Students[] ret = new Students[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            ret[i] = array.get(i);
+        Students[] ret = new Students[students.size()];
+        for (int i = 0; i < students.size(); i++) {
+            ret[i] = students.get(i);
         }
         return ret;
     }
@@ -42,15 +55,15 @@ public class StudentsRepository implements BaseRepository<Students> {
     @Override
     public void deleteById(Integer id) {
         int indexToDelete = -1;
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
         }
 
         if (indexToDelete != -1) {
-            array.remove(indexToDelete);
+            students.remove(indexToDelete);
         }
     }
 }

@@ -1,18 +1,31 @@
 package repository;
 
+import models.Lecture;
 import models.School;
+
+import java.util.ArrayList;
 
 
 public class SchoolRepository implements BaseRepository<School> {
-    private GenericArray<School> array = new GenericArray<School>();
+    ArrayList<School> schools = new ArrayList<>();
 
-    public int getLecturesSize() {
-        return array.size();
+    public Integer getSize() {
+        return schools.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public School getByIndex(Integer indexToGet) {
+        return null;
     }
 
     @Override
     public void add(School school) {
-        array.add(school);
+        schools.add(school);
     }
 
     @Override
@@ -22,9 +35,9 @@ public class SchoolRepository implements BaseRepository<School> {
 
     @Override
     public School getById(Integer id) {
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
-                return array.get(i);
+        for (int i = 0; i < schools.size(); i++) {
+            if (schools.get(i).getId() == id) {
+                return schools.get(i);
             }
         }
         return null;
@@ -32,9 +45,9 @@ public class SchoolRepository implements BaseRepository<School> {
 
     @Override
     public School[] getAll() {
-        School[] ret = new School[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            ret[i] = array.get(i);
+        School[] ret = new School[schools.size()];
+        for (int i = 0; i < schools.size(); i++) {
+            ret[i] = schools.get(i);
         }
         return ret;
     }
@@ -42,15 +55,15 @@ public class SchoolRepository implements BaseRepository<School> {
     @Override
     public void deleteById(Integer id) {
         int indexToDelete = -1;
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
+        for (int i = 0; i < schools.size(); i++) {
+            if (schools.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
         }
 
         if (indexToDelete != -1) {
-            array.remove(indexToDelete);
+            schools.remove(indexToDelete);
         }
     }
 }

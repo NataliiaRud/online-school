@@ -2,11 +2,14 @@ import models.*;
 import repository.CourseRepository;
 import repository.LectureRepository;
 import service.LectureService;
-import utility.SimpleIterator;
 
 import java.util.List;
 import java.util.Scanner;
 import java.util.Objects;
+
+
+import static models.AddMaterials.createAddMaterials;
+import static service.AddMaterialsService.createAddMaterials1;
 
 public class Main {
 
@@ -29,7 +32,14 @@ public class Main {
         HomeAssignment homeAssignment2 = new HomeAssignment(2, "hw", 2, "task2");
         HomeAssignment homeAssignment3 = new HomeAssignment(3, "hw", 3, "task3");
 
+
+        AddMaterials addMaterial1 = createAddMaterials1();
+        AddMaterials addMaterial2 = createAddMaterials1();
+        AddMaterials addMaterial3 = createAddMaterials1();
+
+
         HomeAssignment[] homeAssignments1 = {homeAssignment1, homeAssignment2, homeAssignment3};
+        AddMaterials[] addMaterials1 = {addMaterial1, addMaterial2, addMaterial3};
 
 
         CourseRepository courseRepository = new CourseRepository();
@@ -51,7 +61,8 @@ public class Main {
                     course2,
                     course3,
                     counter,
-                    homeAssignments1);
+                    homeAssignments1,
+                    addMaterials1);
             // using counter (1-3) as category number
 
             Lecture firstLecture = createLecture(wrapper);
@@ -82,7 +93,8 @@ public class Main {
                     course2,
                     course3,
                     categoryNumber,
-                    homeAssignments1);
+                    homeAssignments1,
+                    addMaterials1);
 
             Lecture firstLecture = createLecture(wrapper);
             lectureRepository.add(firstLecture);
@@ -99,15 +111,18 @@ public class Main {
             lectureService.printLectureIds();
             Person teacher6 = Person.createPerson(1, "aaa", "vvv", Role.TEACHER, 1, "55555555555", "@rrr");
             System.out.println(teacher6.getFirstName());
-            System.out.println(lectureRepository.getLecturesSize());
+            System.out.println(lectureRepository.getSize());
             System.out.println("test");
 
         }
 
+
         List<Lecture> allLectures = lectureRepository.findAll();
         System.out.printf(allLectures.toString());
 
+
     }
+
 
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
         Lecture lecture = null;
@@ -116,17 +131,17 @@ public class Main {
                 case 1:
                     lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(),
                             createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description",
-                            createLectureWrapper.homeAssignments1);
+                            createLectureWrapper.homeAssignments1, createLectureWrapper.addMaterials1);
                     break;
                 case 2:
                     lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(),
                             createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description",
-                            createLectureWrapper.homeAssignments1);
+                            createLectureWrapper.homeAssignments1, createLectureWrapper.addMaterials1);
                     break;
                 case 3:
                     lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(),
                             createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description",
-                            createLectureWrapper.homeAssignments1);
+                            createLectureWrapper.homeAssignments1, createLectureWrapper.addMaterials1);
                     break;
                 default:
                     throw new IllegalArgumentException("test exception");
@@ -140,7 +155,8 @@ public class Main {
 
     private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Students student1,
                                         Students student2, Students student3, Course course1, Course course2, Course course3,
-                                        int categoryNumber, HomeAssignment[] homeAssignments1) {
+                                        int categoryNumber, HomeAssignment[] homeAssignments1,
+                                        AddMaterials[] addMaterials1) {
 
         @Override
         public boolean equals(Object o) {

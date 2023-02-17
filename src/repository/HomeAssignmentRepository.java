@@ -1,30 +1,45 @@
 package repository;
 
+
 import models.HomeAssignment;
+
+import java.util.ArrayList;
 
 
 public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> {
-    private GenericArray<HomeAssignment> array = new GenericArray<HomeAssignment>();
+    ArrayList<HomeAssignment> homeAssignments = new ArrayList<>();
 
-    public int getLecturesSize() {
-        return array.size();
+    public Integer getSize() {
+        return homeAssignments.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public HomeAssignment getByIndex(Integer indexToGet) {
+        return null;
     }
 
     @Override
     public void add(HomeAssignment homeAssignment) {
-        array.add(homeAssignment);
+        {
+            homeAssignments.add(homeAssignment);
+        }
     }
 
     @Override
     public void add(Integer id, HomeAssignment homeAssignment) {
-
+        homeAssignments.add(homeAssignment);
     }
 
     @Override
     public HomeAssignment getById(Integer id) {
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
-                return array.get(i);
+        for (int i = 0; i < homeAssignments.size(); i++) {
+            if (homeAssignments.get(i).getId() == id) {
+                return homeAssignments.get(i);
             }
         }
         return null;
@@ -32,9 +47,9 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
 
     @Override
     public HomeAssignment[] getAll() {
-        HomeAssignment[] ret = new HomeAssignment[array.size()];
-        for (int i = 0; i < array.size(); i++) {
-            ret[i] = array.get(i);
+        HomeAssignment[] ret = new HomeAssignment[homeAssignments.size()];
+        for (int i = 0; i < homeAssignments.size(); i++) {
+            ret[i] = homeAssignments.get(i);
         }
         return ret;
     }
@@ -42,15 +57,15 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
     @Override
     public void deleteById(Integer id) {
         int indexToDelete = -1;
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getId() == id) {
+        for (int i = 0; i < homeAssignments.size(); i++) {
+            if (homeAssignments.get(i).getId() == id) {
                 indexToDelete = i;
                 break;
             }
         }
 
         if (indexToDelete != -1) {
-            array.remove(indexToDelete);
+            homeAssignments.remove(indexToDelete);
         }
     }
 }
