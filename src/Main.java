@@ -1,11 +1,10 @@
+import comparator.CourseComparator;
 import models.*;
 import repository.CourseRepository;
 import repository.LectureRepository;
 import service.LectureService;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Objects;
+import java.util.*;
 
 
 import static models.AddMaterials.createAddMaterials;
@@ -28,6 +27,8 @@ public class Main {
         Course course2 = new Course(2, "Java Advanced");
         Course course3 = new Course(3, "Java Pro");
 
+
+
         HomeAssignment homeAssignment1 = new HomeAssignment(1, "hw", 1, "task1");
         HomeAssignment homeAssignment2 = new HomeAssignment(2, "hw", 2, "task2");
         HomeAssignment homeAssignment3 = new HomeAssignment(3, "hw", 3, "task3");
@@ -44,7 +45,33 @@ public class Main {
 
         CourseRepository courseRepository = new CourseRepository();
         Course course4 = Course.createCourse(4, "Java 18");
+
+        courseRepository.add(course1);
+        courseRepository.add(course2);
+        courseRepository.add(course3);
         courseRepository.add(course4);
+
+
+//Set<Course> sortedSet = new TreeSet<Course>(new Comparator<Course>() {
+//    public int compare(course1 o1, course2 o2) {
+//                return o1.toString().compareTo(o2.toString());
+//            }
+//});
+
+
+//        Set<ObjectName> sortedSet = new TreeSet<ObjectName>(new Comparator<ObjectName>() {
+//            public int compare(ObjectName o1, ObjectName o2) {
+//                return o1.toString().compareTo(o2.toString());
+//            }
+//        });
+//        sortedSet.addAll(unsortedSet);
+
+
+
+
+
+
+
 
         LectureRepository lectureRepository = new LectureRepository();
 
@@ -112,12 +139,19 @@ public class Main {
             Person teacher6 = Person.createPerson(1, "aaa", "vvv", Role.TEACHER, 1, "55555555555", "@rrr");
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getSize());
-            System.out.println("test");
+
+            System.out.println("test2");
+            System.out.println(courseRepository.getAll().toString());
+            Collections.sort(courseRepository.getAll(), new CourseComparator());
+            System.out.println(courseRepository.getAll().toString());
+
+
 
         }
 
 
         List<Lecture> allLectures = lectureRepository.findAll();
+
         System.out.printf(allLectures.toString());
 
 

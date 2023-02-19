@@ -1,6 +1,8 @@
 package repository;
 
 
+import java.util.List;
+
 public interface BaseRepository<T> {
     public Integer getSize();
     public boolean isEmpty();
@@ -8,6 +10,6 @@ public interface BaseRepository<T> {
      void add(T t);
      void add(Integer id, T t);
      T getById(Integer id);
-     T[] getAll();
+    public List<T> getAll();
     void deleteById(Integer id);
 }

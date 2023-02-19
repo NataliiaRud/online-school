@@ -1,7 +1,10 @@
 package service;
 
 import models.Base;
+import models.Lecture;
 import repository.LectureRepository;
+
+import java.util.ArrayList;
 
 public class LectureService {
     private LectureRepository lectureRepository;
@@ -11,11 +14,12 @@ public class LectureService {
     }
 
     public void printLectureIds() {
-        Base[] lectures;
-        lectures = lectureRepository.getAll();
 
-        for (int i = 0; i < lectures.length; i++) {
-            Base lecture = lectures[i];
+        ArrayList<Lecture> lectures = new ArrayList<>();
+        lectures = (ArrayList<Lecture>) lectureRepository.getAll();
+
+        for (int i = 0; i < lectures.size(); i++) {
+            Base lecture = lectures.get(i);
 
             if (lecture == null) {
                 break;
