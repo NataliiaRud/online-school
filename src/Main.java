@@ -3,6 +3,7 @@ import models.*;
 import repository.*;
 import service.LectureService;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 
@@ -44,10 +45,14 @@ public class Main {
         courseRepository.add(course3);
         courseRepository.add(course4);
 
-
+HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository();
         HomeAssignment homeAssignment1 = new HomeAssignment(1, "hw", 1, "task1");
         HomeAssignment homeAssignment2 = new HomeAssignment(2, "hw", 2, "task2");
         HomeAssignment homeAssignment3 = new HomeAssignment(3, "hw", 3, "task3");
+
+        homeAssignmentRepository.add(homeAssignment1);
+        homeAssignmentRepository.add(homeAssignment2);
+        homeAssignmentRepository.add(homeAssignment3);
 
         AddMaterialsRepository addMaterialsRepository = new AddMaterialsRepository();
         AddMaterials addMaterial1 = createAddMaterials1();
@@ -132,9 +137,6 @@ public class Main {
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getSize());
 
-
-
-
         }
 
 
@@ -143,6 +145,8 @@ public class Main {
         System.out.printf(allLectures.toString());
 
         sorting(teacherRepository, studentsRepository, courseRepository, addMaterialsRepository, scanner);
+
+        viewByLectureId(homeAssignmentRepository, addMaterialsRepository, scanner);
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
@@ -186,7 +190,66 @@ public class Main {
         System.out.println(copyOfAdMaterials);
         System.out.println();
     }
-
+    private static void viewByLectureId(HomeAssignmentRepository homeAssignmentRepository,
+                                        AddMaterialsRepository addMaterialsRepository,
+                                        Scanner scanner) {
+        System.out.println("Enter lecture id: ");
+        int lectureId = scanner.nextInt();
+        System.out.println("Home assignments belonging to lecture " + lectureId);
+        System.out.println(homeAssignmentRepository.getByLectureId(lectureId));
+        System.out.println();
+        System.out.println("Would you like to add new assignment to lecture " + lectureId + "? yes/no");
+        if ("yes".equalsIgnoreCase(scanner.next())) {
+            System.out.println("Enter new home assignment id: ");
+            int id = scanner.nextInt();
+            System.out.println("Enter new assignment description: ");
+            String assignment = scanner.next();
+            System.out.println("Enter new assignment task: ");
+            String task = scanner.next();
+            HomeAssignment newAssignment = new HomeAssignment(id, assignment, lectureId, task);
+            homeAssignmentRepository.add(newAssignment);
+            System.out.println("List of assignments for lecture " + lectureId + " has been updated:");
+            System.out.println(homeAssignmentRepository.getByLectureId(lectureId));
+        }
+        System.out.println("Would you like to delete an assignment? yes/no");
+        if ("yes".equalsIgnoreCase(scanner.next())) {
+            System.out.println("Enter home assignment id to delete: ");
+            int id = scanner.nextInt();
+            homeAssignmentRepository.deleteById(id);
+            System.out.println("List of assignments for lecture " + lectureId + " has been updated:");
+            System.out.println(homeAssignmentRepository.getByLectureId(lectureId));
+        }
+        System.out.println("Additional materials belonging to lecture " + lectureId);
+        System.out.println(addMaterialsRepository.getByLectureId(lectureId));
+        System.out.println();
+        System.out.println("Would you like to add additional materials to lecture " + lectureId + "? yes/no");
+        if ("yes".equalsIgnoreCase(scanner.next())) {
+            System.out.println("Enter new additional materials id: ");
+            int id = scanner.nextInt();
+            System.out.println("Enter new additional assignment name: ");
+            String name = scanner.next();
+            System.out.println("Enter new additional assignment type (default - URL): ");
+            String type = scanner.next();
+            ResourceType resourceType = ResourceType.URL;
+            if ("book".equalsIgnoreCase(type)) {
+                resourceType = ResourceType.BOOK;
+            } else if ("video".equalsIgnoreCase(type)) {
+                resourceType = ResourceType.VIDEO;
+            }
+            AddMaterials addMaterials = new AddMaterials(id, name, lectureId, resourceType);
+            addMaterialsRepository.add(addMaterials);
+            System.out.println("Additional materials belonging to lecture " + lectureId + " has been updated: ");
+            System.out.println(addMaterialsRepository.getByLectureId(lectureId));
+        }
+        System.out.println("Would you like to delete additional material? yes/no");
+        if ("yes".equalsIgnoreCase(scanner.next())) {
+            System.out.println("Enter additional material id to delete: ");
+            int id = scanner.nextInt();
+            addMaterialsRepository.deleteById(id);
+            System.out.println("Additional materials belonging to lecture " + lectureId + " has been updated: ");
+            System.out.println(addMaterialsRepository.getByLectureId(lectureId));
+        }
+    }
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
         Lecture lecture = null;
         try {

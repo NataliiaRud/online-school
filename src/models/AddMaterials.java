@@ -52,5 +52,15 @@ public class AddMaterials extends Base {
     public static void setCounter(int counter) {
         AddMaterials.counter = counter;
     }
+
+    @Override
+    public String toString() {
+        return "AddMaterials{" +
+                "id='" + getId() + '\'' +
+                ", name='" + name + '\'' +
+                ", lectureId=" + lectureId +
+                ", resourceType=" + resourceType +
+                '}';
+    }
 }
 

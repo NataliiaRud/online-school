@@ -46,4 +46,14 @@ public class HomeAssignment extends Base {
     public static void setCounter(int counter) {
         HomeAssignment.counter = counter;
     }
+
+    @Override
+    public String toString() {
+        return "HomeAssignment{" +
+                "id='" + getId() + '\'' +
+                ", assignment='" + assignment + '\'' +
+                ", lectureId=" + lectureId +
+                ", task='" + task + '\'' +
+                '}';
+    }
 }

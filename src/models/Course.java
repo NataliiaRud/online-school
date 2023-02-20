@@ -19,5 +19,10 @@ public class Course extends Base {
         return new Course(id, name);
     }
 
+    @Override
+    public String toString() {
+        return "Course{" + getName() + "}";
+    }
+
 
 }

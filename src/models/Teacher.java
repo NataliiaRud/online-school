@@ -16,5 +16,13 @@ public class Teacher extends Person {
         Teacher.counter = counter;
     }
 
+    @Override
+    public String toString() {
+        return "Teacher{"
+                +  getId()
+                + ", " + getFirstName() + " " + getLastName()
+                + "}";
+    }
+
 
 }
