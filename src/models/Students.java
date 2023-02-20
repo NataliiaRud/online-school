@@ -18,4 +18,12 @@ public class Students extends Person {
     public static void setCounter(int counter) {
         Students.counter = counter;
     }
+
+    @Override
+    public String toString() {
+        return "Students{"
+                + getId()
+                + ", " + getFirstName() + " " + getLastName()
+                + "}";
+    }
 }

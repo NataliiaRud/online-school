@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 
 public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
-    ArrayList<AddMaterials> addMaterials = new ArrayList<>();
+   private final ArrayList<AddMaterials> addMaterials = new ArrayList<>();
+    private final Map<Integer, List<AddMaterials>> byLectureMap = new HashMap<>();
 
     public Integer getSize() {
         return addMaterials.size();
@@ -15,23 +16,31 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return addMaterials.isEmpty();
     }
 
     @Override
     public AddMaterials getByIndex(Integer indexToGet) {
-        return null;
+        return indexToGet < addMaterials.size() ? addMaterials.get(indexToGet) : null;
     }
 
     @Override
     public void add(AddMaterials addMaterial) {
         addMaterials.add(addMaterial);
+
+        List<AddMaterials> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
+        list.add(addMaterial);
     }
 
-
+    public List<AddMaterials> getByLectureId(int lectureId) {
+        return byLectureMap.computeIfAbsent(lectureId, k -> new ArrayList<>());
+    }
     @Override
     public void add(Integer id, AddMaterials addMaterial) {
         addMaterials.add(addMaterial);
+
+        List<AddMaterials> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
+        list.add(addMaterial);
     }
 
     @Override
@@ -51,16 +60,11 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
 
     @Override
     public void deleteById(Integer id) {
-        int indexToDelete = -1;
-        for (int i = 0; i < addMaterials.size(); i++) {
-            if (addMaterials.get(i).getId() == id) {
-                indexToDelete = i;
-                break;
-            }
-        }
+        addMaterials.removeIf(addMaterials -> addMaterials.getId() == id);
 
-        if (indexToDelete != -1) {
-            addMaterials.remove(indexToDelete);
+        for (Integer lectureId : byLectureMap.keySet()) {
+            List<AddMaterials> list = byLectureMap.get(lectureId);
+            list.removeIf(addMaterials -> addMaterials.getId() == id);
         }
     }
 }
