@@ -4,6 +4,7 @@ import models.Lecture;
 import models.Teacher;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TeacherRepository implements BaseRepository<Teacher> {
@@ -45,12 +46,8 @@ public class TeacherRepository implements BaseRepository<Teacher> {
     }
 
     @Override
-    public Teacher[] getAll() {
-        Teacher[] ret = new Teacher[teachers.size()];
-        for (int i = 0; i < teachers.size(); i++) {
-            ret[i] = teachers.get(i);
-        }
-        return ret;
+    public List<Teacher> getAll() {
+        return this.teachers;
     }
 
     @Override

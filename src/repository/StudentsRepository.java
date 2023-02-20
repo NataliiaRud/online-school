@@ -4,6 +4,7 @@ package repository;
 import models.Students;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class StudentsRepository implements BaseRepository<Students> {
@@ -44,12 +45,8 @@ public class StudentsRepository implements BaseRepository<Students> {
     }
 
     @Override
-    public Students[] getAll() {
-        Students[] ret = new Students[students.size()];
-        for (int i = 0; i < students.size(); i++) {
-            ret[i] = students.get(i);
-        }
-        return ret;
+    public List<Students> getAll() {
+        return this.students;
     }
 
     @Override

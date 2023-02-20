@@ -4,6 +4,7 @@ import models.Lecture;
 import models.School;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SchoolRepository implements BaseRepository<School> {
@@ -44,12 +45,8 @@ public class SchoolRepository implements BaseRepository<School> {
     }
 
     @Override
-    public School[] getAll() {
-        School[] ret = new School[schools.size()];
-        for (int i = 0; i < schools.size(); i++) {
-            ret[i] = schools.get(i);
-        }
-        return ret;
+    public List<School> getAll() {
+        return this.schools;
     }
 
     @Override

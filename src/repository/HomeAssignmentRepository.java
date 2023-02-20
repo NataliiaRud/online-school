@@ -4,6 +4,7 @@ package repository;
 import models.HomeAssignment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> {
@@ -46,13 +47,12 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
     }
 
     @Override
-    public HomeAssignment[] getAll() {
-        HomeAssignment[] ret = new HomeAssignment[homeAssignments.size()];
-        for (int i = 0; i < homeAssignments.size(); i++) {
-            ret[i] = homeAssignments.get(i);
-        }
-        return ret;
+    public List<HomeAssignment> getAll() {
+        return this.homeAssignments;
     }
+
+
+
 
     @Override
     public void deleteById(Integer id) {

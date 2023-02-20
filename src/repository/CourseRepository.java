@@ -1,12 +1,15 @@
 package repository;
 
+import models.AddMaterials;
 import models.Course;
 import java.util.*;
+import comparator.CourseComparator;
 import exceptions.EntityNotFoundException;
 
 
 public class CourseRepository implements BaseRepository<Course>{
     ArrayList <Course> courses = new ArrayList<>();
+
     @Override
     public Integer getSize() {
         return courses.size();
@@ -49,14 +52,11 @@ public class CourseRepository implements BaseRepository<Course>{
     }
 
     @Override
-    public Course[] getAll() {
-        Course[] ret = new Course[courses.size()];
-        for (int i = 0; i < courses.size(); i++) {
-            ret[i] = courses.get(i);
-        }
-        return ret;
-
+    public List<Course> getAll() {
+        return this.courses;
     }
+
+
     @Override
     public void deleteById(Integer id) {
         try {
@@ -81,6 +81,14 @@ public class CourseRepository implements BaseRepository<Course>{
     }
 
 
+//    public String [] getCoursesNames(ArrayList<Course> courses) {
+//        String[] result = new String[0];
+//        for (int i=0; i<courses.size(); i++) {
+//            result[i] = courses.getName();
+//
+//        }
+//        return result;
+//    }
 
 
 }

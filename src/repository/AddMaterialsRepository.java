@@ -1,13 +1,13 @@
 package repository;
 
 import models.AddMaterials;
-
+import java.util.*;
 
 import java.util.ArrayList;
 
 
 public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
-    ArrayList<AddMaterials> addMaterials = new ArrayList<>();;
+    ArrayList<AddMaterials> addMaterials = new ArrayList<>();
 
     public Integer getSize() {
         return addMaterials.size();
@@ -45,12 +45,8 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     }
 
     @Override
-    public AddMaterials[] getAll() {
-        AddMaterials[] ret = new AddMaterials[addMaterials.size()];
-        for (int i = 0; i < addMaterials.size(); i++) {
-            ret[i] = addMaterials.get(i);
-        }
-        return ret;
+    public List<AddMaterials> getAll() {
+        return this.addMaterials;
     }
 
     @Override

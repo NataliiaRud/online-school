@@ -1,11 +1,9 @@
+import comparator.*;
 import models.*;
-import repository.CourseRepository;
-import repository.LectureRepository;
+import repository.*;
 import service.LectureService;
 
-import java.util.List;
-import java.util.Scanner;
-import java.util.Objects;
+import java.util.*;
 
 
 import static models.AddMaterials.createAddMaterials;
@@ -17,34 +15,55 @@ public class Main {
 
     public static void main(String[] args) {
 
+        TeacherRepository teacherRepository = new TeacherRepository();
         Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "11111111111", "@1111");
         Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "22222222222", "@2222");
         Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "33333333333", "@3333");
+
+        teacherRepository.add(teacher1);
+        teacherRepository.add(teacher2);
+        teacherRepository.add(teacher3);
+
+        StudentsRepository studentsRepository = new StudentsRepository();
         Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "44444444444", "@4444");
         Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "55555555555", "@5555");
         Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "66666666666", "@6666");
 
-        Course course1 = new Course(1, "Java Basic");
-        Course course2 = new Course(2, "Java Advanced");
-        Course course3 = new Course(3, "Java Pro");
+        studentsRepository.add(student1);
+        studentsRepository.add(student2);
+        studentsRepository.add(student3);
+
+        CourseRepository courseRepository = new CourseRepository();
+        Course course1 = Course.createCourse(1, "Java Basic");
+        Course course2 = Course.createCourse(2, "Java Advanced");
+        Course course3 = Course.createCourse(3, "Java Pro");
+        Course course4 = Course.createCourse(4, "Java 18");
+
+        courseRepository.add(course1);
+        courseRepository.add(course2);
+        courseRepository.add(course3);
+        courseRepository.add(course4);
+
 
         HomeAssignment homeAssignment1 = new HomeAssignment(1, "hw", 1, "task1");
         HomeAssignment homeAssignment2 = new HomeAssignment(2, "hw", 2, "task2");
         HomeAssignment homeAssignment3 = new HomeAssignment(3, "hw", 3, "task3");
 
-
+        AddMaterialsRepository addMaterialsRepository = new AddMaterialsRepository();
         AddMaterials addMaterial1 = createAddMaterials1();
         AddMaterials addMaterial2 = createAddMaterials1();
         AddMaterials addMaterial3 = createAddMaterials1();
+
+        addMaterialsRepository.add(addMaterial1);
+        addMaterialsRepository.add(addMaterial2);
+        addMaterialsRepository.add(addMaterial3);
+
 
 
         HomeAssignment[] homeAssignments1 = {homeAssignment1, homeAssignment2, homeAssignment3};
         AddMaterials[] addMaterials1 = {addMaterial1, addMaterial2, addMaterial3};
 
 
-        CourseRepository courseRepository = new CourseRepository();
-        Course course4 = Course.createCourse(4, "Java 18");
-        courseRepository.add(course4);
 
         LectureRepository lectureRepository = new LectureRepository();
 
@@ -112,17 +131,61 @@ public class Main {
             Person teacher6 = Person.createPerson(1, "aaa", "vvv", Role.TEACHER, 1, "55555555555", "@rrr");
             System.out.println(teacher6.getFirstName());
             System.out.println(lectureRepository.getSize());
-            System.out.println("test");
+
+
+
 
         }
 
 
         List<Lecture> allLectures = lectureRepository.findAll();
+
         System.out.printf(allLectures.toString());
 
-
+        sorting(teacherRepository, studentsRepository, courseRepository, addMaterialsRepository, scanner);
     }
 
+    private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
+                                CourseRepository courseRepository, AddMaterialsRepository addMaterialsRepository,
+                                Scanner scanner) {
+        // Home assignment 18 (1)
+        System.out.println("18-1 Sorting a copy of the list of courses by name");
+        List<Course> copyOfCoursesList = new ArrayList<>(courseRepository.getAll());
+        copyOfCoursesList.sort(new CourseComparator());
+        System.out.println("Printing the sorted copy of the list of courses");
+        System.out.println(copyOfCoursesList);
+        System.out.println();
+
+        // Home assignment 18 (2)
+        System.out.println("18-2 Sorting a copy of the list of teachers by name");
+        List<Teacher> copyOfTeachersList = new ArrayList<>(teacherRepository.getAll());
+        copyOfTeachersList.sort(new TeacherComparator());
+        System.out.println("Printing the sorted copy of the list of teachers");
+        System.out.println(copyOfTeachersList);
+        System.out.println();
+
+        System.out.println("18-2 Sorting a copy of the list of students by name");
+        List<Students> copyOfStudentsList = new ArrayList<>(studentsRepository.getAll());
+        copyOfStudentsList.sort(new StudentComparator());
+        System.out.println("Printing the sorted copy of the list of students");
+        System.out.println(copyOfStudentsList);
+        System.out.println();
+
+        System.out.println("Please select additional materials sorting mode:");
+        System.out.println("1 - by id (default), 2 - by lecture number, 3 - by type");
+        List<AddMaterials> copyOfAdMaterials = new ArrayList<>(addMaterialsRepository.getAll());
+        String selection = scanner.next();
+        if ("2".equals(selection)) {
+            copyOfAdMaterials.sort(new AdMaterialsByLectureIdComparator());
+        } else if ("3".equals(selection)) {
+            copyOfAdMaterials.sort(new AdMaterialsByTypeComparator());
+        } else {
+            copyOfAdMaterials.sort(new AdMaterialsByIdComparator());
+        }
+        System.out.println("Printing the sorted copy of the additional materials");
+        System.out.println(copyOfAdMaterials);
+        System.out.println();
+    }
 
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
         Lecture lecture = null;

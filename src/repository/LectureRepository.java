@@ -48,15 +48,11 @@ public class LectureRepository implements BaseRepository<Lecture>{
         }
         return null;
     }
+
+
     @Override
-
-    public Lecture[] getAll() {
-        Lecture[] ret = new Lecture[lectures.size()];
-        for (int i = 0; i < lectures.size(); i++) {
-            ret[i] = lectures.get(i);
-        }
-        return ret;
-
+    public List<Lecture> getAll() {
+        return this.lectures;
     }
 
 
