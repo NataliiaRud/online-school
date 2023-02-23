@@ -17,4 +17,5 @@ public class School extends Base {
     public static void setCounter(int counter) {
         School.counter = counter;
     }
+
 }
