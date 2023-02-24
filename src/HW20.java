@@ -10,7 +10,7 @@ public class HW20 {
         LogFactory logFactory = new LogFactory();
 
         logFactory.debug("HW20", "This is a debug message");
-        logFactory.info("HW20", "This is an information message");
+        logFactory.info("HW20", "This is an info message");
         logFactory.warning("HW20", "This is a warning message", "Warning stack trace");
         logFactory.error("HW20", "This is an error message", "Error stack trace");
 
