@@ -1,13 +1,15 @@
 package repository;
 
 import models.AddMaterials;
-import java.util.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
-   private final ArrayList<AddMaterials> addMaterials = new ArrayList<>();
+    private final ArrayList<AddMaterials> addMaterials = new ArrayList<>();
     private final Map<Integer, List<AddMaterials>> byLectureMap = new HashMap<>();
 
     public Integer getSize() {
@@ -35,6 +37,7 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     public List<AddMaterials> getByLectureId(int lectureId) {
         return byLectureMap.computeIfAbsent(lectureId, k -> new ArrayList<>());
     }
+
     @Override
     public void add(Integer id, AddMaterials addMaterial) {
         addMaterials.add(addMaterial);
@@ -45,9 +48,9 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
 
     @Override
     public AddMaterials getById(Integer id) {
-        for (int i = 0; i <addMaterials.size(); i++) {
-            if (addMaterials.get(i).getId() == id) {
-                return addMaterials.get(i);
+        for (AddMaterials addMaterial : addMaterials) {
+            if (addMaterial.getId() == id) {
+                return addMaterial;
             }
         }
         return null;

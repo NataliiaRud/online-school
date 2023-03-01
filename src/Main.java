@@ -3,24 +3,19 @@ import models.*;
 import repository.*;
 import service.LectureService;
 
-import java.sql.SQLOutput;
+import java.io.IOException;
 import java.util.*;
 
-
-import static models.AddMaterials.createAddMaterials;
 import static service.AddMaterialsService.createAddMaterials1;
 
 public class Main {
-
     public static final String CHOOSE_LECTURE_PARAMETERS = "%s: Course %s, Teacher: %s, Student: %s%n";
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException, InterruptedException {
         TeacherRepository teacherRepository = new TeacherRepository();
         Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "11111111111", "@1111");
         Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "22222222222", "@2222");
         Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "33333333333", "@3333");
-
         teacherRepository.add(teacher1);
         teacherRepository.add(teacher2);
         teacherRepository.add(teacher3);
@@ -29,12 +24,12 @@ public class Main {
         Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "44444444444", "@4444");
         Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "55555555555", "@5555");
         Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "66666666666", "@6666");
-
         studentsRepository.add(student1);
         studentsRepository.add(student2);
         studentsRepository.add(student3);
 
         CourseRepository courseRepository = new CourseRepository();
+
         Course course1 = Course.createCourse(1, "Java Basic");
         Course course2 = Course.createCourse(2, "Java Advanced");
         Course course3 = Course.createCourse(3, "Java Pro");
@@ -45,11 +40,11 @@ public class Main {
         courseRepository.add(course3);
         courseRepository.add(course4);
 
-HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository();
+
+        HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository();
         HomeAssignment homeAssignment1 = new HomeAssignment(1, "hw", 1, "task1");
         HomeAssignment homeAssignment2 = new HomeAssignment(2, "hw", 2, "task2");
         HomeAssignment homeAssignment3 = new HomeAssignment(3, "hw", 3, "task3");
-
         homeAssignmentRepository.add(homeAssignment1);
         homeAssignmentRepository.add(homeAssignment2);
         homeAssignmentRepository.add(homeAssignment3);
@@ -58,17 +53,13 @@ HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository
         AddMaterials addMaterial1 = createAddMaterials1();
         AddMaterials addMaterial2 = createAddMaterials1();
         AddMaterials addMaterial3 = createAddMaterials1();
-
         addMaterialsRepository.add(addMaterial1);
         addMaterialsRepository.add(addMaterial2);
         addMaterialsRepository.add(addMaterial3);
 
 
-
         HomeAssignment[] homeAssignments1 = {homeAssignment1, homeAssignment2, homeAssignment3};
         AddMaterials[] addMaterials1 = {addMaterial1, addMaterial2, addMaterial3};
-
-
 
         LectureRepository lectureRepository = new LectureRepository();
 
@@ -133,20 +124,29 @@ HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository
         if ("yes".equalsIgnoreCase(scanner.next())) {
             LectureService lectureService = new LectureService(lectureRepository);
             lectureService.printLectureIds();
-            Person teacher6 = Person.createPerson(1, "aaa", "vvv", Role.TEACHER, 1, "55555555555", "@rrr");
-            System.out.println(teacher6.getFirstName());
+            Optional<Person> teacher6 = Optional.ofNullable(Person.createPerson(1, "aaa", "vvv", Role.TEACHER, 1, "55555555555", "@rrr"));
+            System.out.println(teacher6.isPresent() ? teacher6.get().getFirstName() : "teacher6 is null");
             System.out.println(lectureRepository.getSize());
-
         }
 
 
         List<Lecture> allLectures = lectureRepository.findAll();
-
         System.out.printf(allLectures.toString());
 
+        // Home assignment 18
         sorting(teacherRepository, studentsRepository, courseRepository, addMaterialsRepository, scanner);
 
+        // Home assignment 19
         viewByLectureId(homeAssignmentRepository, addMaterialsRepository, scanner);
+
+        // Home assignment 20
+        HW20.execute();
+
+        // Home assignment 21
+        HW21.execute();
+
+        // Home assignment 22
+        HW22.execute();
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
@@ -190,11 +190,13 @@ HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository
         System.out.println(copyOfAdMaterials);
         System.out.println();
     }
+
     private static void viewByLectureId(HomeAssignmentRepository homeAssignmentRepository,
                                         AddMaterialsRepository addMaterialsRepository,
                                         Scanner scanner) {
         System.out.println("Enter lecture id: ");
         int lectureId = scanner.nextInt();
+
         System.out.println("Home assignments belonging to lecture " + lectureId);
         System.out.println(homeAssignmentRepository.getByLectureId(lectureId));
         System.out.println();
@@ -206,19 +208,24 @@ HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository
             String assignment = scanner.next();
             System.out.println("Enter new assignment task: ");
             String task = scanner.next();
+
             HomeAssignment newAssignment = new HomeAssignment(id, assignment, lectureId, task);
             homeAssignmentRepository.add(newAssignment);
+
             System.out.println("List of assignments for lecture " + lectureId + " has been updated:");
             System.out.println(homeAssignmentRepository.getByLectureId(lectureId));
         }
+
         System.out.println("Would you like to delete an assignment? yes/no");
         if ("yes".equalsIgnoreCase(scanner.next())) {
             System.out.println("Enter home assignment id to delete: ");
             int id = scanner.nextInt();
             homeAssignmentRepository.deleteById(id);
+
             System.out.println("List of assignments for lecture " + lectureId + " has been updated:");
             System.out.println(homeAssignmentRepository.getByLectureId(lectureId));
         }
+
         System.out.println("Additional materials belonging to lecture " + lectureId);
         System.out.println(addMaterialsRepository.getByLectureId(lectureId));
         System.out.println();
@@ -236,20 +243,25 @@ HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository
             } else if ("video".equalsIgnoreCase(type)) {
                 resourceType = ResourceType.VIDEO;
             }
+
             AddMaterials addMaterials = new AddMaterials(id, name, lectureId, resourceType);
             addMaterialsRepository.add(addMaterials);
+
             System.out.println("Additional materials belonging to lecture " + lectureId + " has been updated: ");
             System.out.println(addMaterialsRepository.getByLectureId(lectureId));
         }
+
         System.out.println("Would you like to delete additional material? yes/no");
         if ("yes".equalsIgnoreCase(scanner.next())) {
             System.out.println("Enter additional material id to delete: ");
             int id = scanner.nextInt();
             addMaterialsRepository.deleteById(id);
+
             System.out.println("Additional materials belonging to lecture " + lectureId + " has been updated: ");
             System.out.println(addMaterialsRepository.getByLectureId(lectureId));
         }
     }
+
     private static Lecture createLecture(CreateLectureWrapper createLectureWrapper) {
         Lecture lecture = null;
         try {

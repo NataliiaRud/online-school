@@ -1,17 +1,22 @@
 package models;
-import java.util.Objects;
+
 import exceptions.ValidationExceptions;
+import utility.LogService;
+
+import java.util.Objects;
 
 public abstract class Person extends Base {
-private int courseId;
-private final Role role;
-private String firstName;
-private String lastName;
+    private static final LogService logService = new LogService(Person.class.getName());
+
+    private int courseId;
+    private final Role role;
+    private String firstName;
+    private String lastName;
 
 
     private String phone;
     private String email;
-private static int counter;
+    private static int counter;
 
     protected Person(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
 
@@ -84,12 +89,11 @@ private static int counter;
     }
     public static boolean emailCheck(String email) {
         try {
-            if (email.indexOf('@')== -1)
+            if (email.indexOf('@') == -1) {
                 throw new ValidationExceptions("Wrong email format");
-        }
-        catch(ValidationExceptions e) {
-            System.out.println(e);
-
+            }
+        } catch(ValidationExceptions e) {
+            logService.error("Email validation error", e);
         }
         if(email.indexOf('@')== -1) {
             System.out.println("Email error");
@@ -99,15 +103,15 @@ private static int counter;
         }
     }
 
-        public static boolean phoneCheck(String phone) {
-            try {
-                if (phone.length() != 11)
-                    throw new ValidationExceptions("Wrong phone number");
-            }
-            catch(ValidationExceptions e) {
-                System.out.println(e);
+    public static boolean phoneCheck(String phone) {
+        try {
+            if (phone.length() != 11)
+                throw new ValidationExceptions("Wrong phone number");
+        }
+        catch(ValidationExceptions e) {
+            logService.error("Email phone error", e);
 
-            }
+        }
         boolean areNumbers = false;
         for (int i =0; i<phone.length(); i++) {
             areNumbers = Character.isDigit(phone.charAt(i));
@@ -115,13 +119,13 @@ private static int counter;
                 return true;
             }
         }
-            if (phone.length() != 11) {
-                System.out.println("Phone error");
-                return true;
-            } else {
-                return false;
-            }
+        if (phone.length() != 11) {
+            System.out.println("Phone error");
+            return true;
+        } else {
+            return false;
         }
+    }
 
 
 

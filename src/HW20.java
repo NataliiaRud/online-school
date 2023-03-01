@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class HW20 {
-    public static void main(String[] args) throws IOException {
+    public static void execute() throws IOException {
         LogFactory logFactory = new LogFactory();
 
         logFactory.debug("HW20", "This is a debug message");
@@ -19,7 +19,5 @@ public class HW20 {
 
         Log[] fromLogFile = logService.read();
         System.out.println(Arrays.toString(fromLogFile));
-
-        logService.deleteLogFile();
     }
 }

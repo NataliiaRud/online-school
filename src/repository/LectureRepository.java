@@ -1,10 +1,15 @@
 package repository;
 
-import models.Lecture;
-import java.util.*;
 import exceptions.EntityNotFoundException;
+import models.Lecture;
+import utility.LogService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LectureRepository implements BaseRepository<Lecture>{
+    private static final LogService logService = new LogService(LectureRepository.class.getName());
+
     ArrayList <Lecture> lectures = new ArrayList<>();
 
 
@@ -24,26 +29,30 @@ public class LectureRepository implements BaseRepository<Lecture>{
     @Override
     public void add(Lecture lecture) {
         lectures.add(lecture);
-}
+    }
 
     @Override
     public void add(Integer index, Lecture lecture) {
         lectures.add(lecture);
     }
 
+    private void checkLecture(Integer id) {
+        try {
+            if (id < 1 || id > 3) {
+                throw new EntityNotFoundException("Lecture with id = " + id + " doesn't exist in repo");
+            }
+        } catch(EntityNotFoundException e) {
+            logService.error("Lecture not found: " + id, e);
+        }
+    }
+
     @Override
     public Lecture getById(Integer id) {
-        try {
-            if (id <1 || id >3)
-                throw new EntityNotFoundException("Lecture with id = " + id + " doesn't exist in repo");
-        }
-        catch(EntityNotFoundException e) {
-            System.out.println(e);
+        checkLecture(id);
 
-        }
-        for (int i = 0; i < lectures.size(); i++) {
-            if (lectures.get(i).getId() == id) {
-                return lectures.get(i);
+        for (Lecture lecture : lectures) {
+            if (lecture.getId() == id) {
+                return lecture;
             }
         }
         return null;
@@ -62,14 +71,8 @@ public class LectureRepository implements BaseRepository<Lecture>{
 
     @Override
     public void deleteById(Integer id) {
-        try {
-            if (id <1 || id >3)
-                throw new EntityNotFoundException("Wrong lecture");
-        }
-        catch(EntityNotFoundException e) {
-            System.out.println(e);
+        checkLecture(id);
 
-        }
         int indexToDelete = -1;
         for (int i = 0; i < lectures.size(); i++) {
             if (lectures.get(i).getId() == id) {

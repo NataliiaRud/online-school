@@ -43,6 +43,9 @@ counter++;
                 ", teacher=" + this.teacher.getLastName() +
                 ", student=" + this.student.getLastName() +
                 ", courseId=" + courseId +
+                ", personId=" + personId +
+                ", description=" + description +
+                ", addMaterials=" + addMaterials +
                 '}';
     }
 

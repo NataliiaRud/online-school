@@ -1,6 +1,5 @@
 package repository;
 
-import models.Lecture;
 import models.Teacher;
 
 import java.util.ArrayList;
@@ -37,9 +36,9 @@ public class TeacherRepository implements BaseRepository<Teacher> {
 
     @Override
     public Teacher getById(Integer id) {
-        for (int i = 0; i < teachers.size(); i++) {
-            if (teachers.get(i).getId() == id) {
-                return teachers.get(i);
+        for (Teacher teacher : teachers) {
+            if (teacher.getId() == id) {
+                return teacher;
             }
         }
         return null;
