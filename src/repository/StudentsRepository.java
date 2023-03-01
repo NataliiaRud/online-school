@@ -36,9 +36,9 @@ public class StudentsRepository implements BaseRepository<Students> {
 
     @Override
     public Students getById(Integer id) {
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).getId() == id) {
-                return students.get(i);
+        for (Students student : students) {
+            if (student.getId() == id) {
+                return student;
             }
         }
         return null;

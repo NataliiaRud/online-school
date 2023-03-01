@@ -1,14 +1,17 @@
 package repository;
 
-import models.AddMaterials;
-import models.Course;
-import java.util.*;
-import comparator.CourseComparator;
 import exceptions.EntityNotFoundException;
+import models.Course;
+import utility.LogService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class CourseRepository implements BaseRepository<Course>{
-    ArrayList <Course> courses = new ArrayList<>();
+public class CourseRepository implements BaseRepository<Course> {
+    private static final LogService logService = new LogService(CourseRepository.class.getName());
+
+    private ArrayList <Course> courses = new ArrayList<>();
 
     @Override
     public Integer getSize() {
@@ -32,20 +35,24 @@ public class CourseRepository implements BaseRepository<Course>{
     public void add(Integer index, Course course) {
         courses.add(course);
     }
-    @Override
 
-    public Course getById(Integer id) {
+    private void checkCourse(Integer id) {
         try {
-            if (id <1 || id >3)
-                throw new EntityNotFoundException("Lecture with id = " + id + " doesn't exist in repo");
+            if (id < 1 || id > 3) {
+                throw new EntityNotFoundException("Course with id = " + id + " doesn't exist");
+            }
+        } catch (EntityNotFoundException e) {
+            logService.error("Course not found: " + id, e);
         }
-        catch(EntityNotFoundException e) {
-            System.out.println(e);
+    }
 
-        }
-        for (int i = 0; i < courses.size(); i++) {
-            if (courses.get(i).getId() == id) {
-                return courses.get(i);
+    @Override
+    public Course getById(Integer id) {
+        checkCourse(id);
+
+        for (Course course : courses) {
+            if (course.getId() == id) {
+                return course;
             }
         }
         return null;
@@ -59,14 +66,8 @@ public class CourseRepository implements BaseRepository<Course>{
 
     @Override
     public void deleteById(Integer id) {
-        try {
-            if (id <1 || id >3)
-                throw new EntityNotFoundException("Wrong course");
-        }
-        catch(EntityNotFoundException e) {
-            System.out.println(e);
+        checkCourse(id);
 
-        }
         int indexToDelete = -1;
         for (int i = 0; i < courses.size(); i++) {
             if (courses.get(i).getId() == id) {
@@ -79,16 +80,4 @@ public class CourseRepository implements BaseRepository<Course>{
             courses.remove(indexToDelete);
         }
     }
-
-
-//    public String [] getCoursesNames(ArrayList<Course> courses) {
-//        String[] result = new String[0];
-//        for (int i=0; i<courses.size(); i++) {
-//            result[i] = courses.getName();
-//
-//        }
-//        return result;
-//    }
-
-
 }

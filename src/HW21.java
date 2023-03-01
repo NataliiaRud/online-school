@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.IntStream;
 
 public class HW21 {
     private static class Student {
@@ -17,7 +18,7 @@ public class HW21 {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void execute() throws InterruptedException {
         int N = 10;
 
         List<String> tasks = new ArrayList<>();
@@ -40,20 +41,17 @@ public class HW21 {
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             Student student = students.get(i);
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    int secondsToSleep = new Random().nextInt(6 + 1) + 8;
-                    try {
-                        Thread.sleep(secondsToSleep * 1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    student.time = (int) ((System.currentTimeMillis() - start) / 1000);
-                    completion.add(student);
+            Thread thread = new Thread(() -> {
+                int secondsToSleep = new Random().nextInt(6 + 1) + 8;
+                try {
+                    Thread.sleep(secondsToSleep * 1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-            };
+
+                student.time = (int) ((System.currentTimeMillis() - start) / 1000);
+                completion.add(student);
+            });
 
             threads.add(thread);
             thread.start();

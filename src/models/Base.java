@@ -39,7 +39,7 @@ public abstract class Base {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Base base = (Base) o;
-        return id == base.id && Objects.equals(name, base.name);
+        return Objects.equals(id, base.id) && Objects.equals(name, base.name);
     }
 
     @Override

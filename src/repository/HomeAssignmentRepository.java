@@ -4,7 +4,9 @@ package repository;
 import models.HomeAssignment;
 
 import java.util.ArrayList;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> {
@@ -22,17 +24,17 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
 
     @Override
     public HomeAssignment getByIndex(Integer indexToGet) {
-        return indexToGet <homeAssignments.size() ? homeAssignments.get(indexToGet) : null;
+        return indexToGet < homeAssignments.size() ? homeAssignments.get(indexToGet) : null;
     }
 
     @Override
     public void add(HomeAssignment homeAssignment) {
+        homeAssignments.add(homeAssignment);
 
-            homeAssignments.add(homeAssignment);
-
-            List<HomeAssignment> list = byLectureMap.computeIfAbsent(homeAssignment.getLectureId(), k -> new ArrayList<>());
-            list.add(homeAssignment);
+        List<HomeAssignment> list = byLectureMap.computeIfAbsent(homeAssignment.getLectureId(), k -> new ArrayList<>());
+        list.add(homeAssignment);
     }
+
     public List<HomeAssignment> getByLectureId(int lectureId) {
         return byLectureMap.computeIfAbsent(lectureId, k -> new ArrayList<>());
     }
@@ -59,9 +61,6 @@ public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> 
     public List<HomeAssignment> getAll() {
         return this.homeAssignments;
     }
-
-
-
 
     @Override
     public void deleteById(Integer id) {

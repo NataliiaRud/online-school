@@ -1,7 +1,7 @@
 package repository;
 
 import utility.SimpleIterator;
-import models.Lecture;
+
 import java.util.ArrayList;
 import java.util.List;
 public class GenericArray<E> {

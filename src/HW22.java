@@ -9,7 +9,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 public class HW22 {
     private static final String LOG_SETTINGS_FILE_NAME="logging.properties";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void execute() throws IOException, InterruptedException {
         File loggingProperties = new File(LOG_SETTINGS_FILE_NAME);
 
         // create settings file if it does not exist
@@ -79,7 +79,7 @@ public class HW22 {
         do {
             System.out.println("Using logLevel: " + logLevel[0]);
 
-            Thread.sleep(60 * 1000);
+            Thread.sleep(10 * 1000);
 
             System.out.println("Do you want to continue? yes/no");
         } while ("yes".equals(scanner.next()));

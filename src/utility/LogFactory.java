@@ -1,10 +1,21 @@
 package utility;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
 
 public class LogFactory {
     private Log[] logs = new Log[0];
 
-    private void log(String name, LogLevel level, String message, String stacktrace) {
+    private void log(String name, LogLevel level, String message, Throwable t) {
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        String exceptionAsString = sw.toString();
+
+        log(name, level, message, exceptionAsString);
+    }
+
+    public void log(String name, LogLevel level, String message, String stacktrace) {
         Log[] newLogs = new Log[logs.length + 1];
         System.arraycopy(logs, 0, newLogs, 0, logs.length);
         logs = newLogs;
@@ -30,8 +41,16 @@ public class LogFactory {
         log(name, LogLevel.WARNING, message, stacktrace);
     }
 
+    public void warning(String name, String message, Throwable t) {
+        log(name, LogLevel.WARNING, message, t);
+    }
+
     public void error(String name, String message, String stacktrace) {
         log(name, LogLevel.ERROR, message, stacktrace);
+    }
+
+    public void error(String name, String message, Throwable t) {
+        log(name, LogLevel.ERROR, message, t);
     }
 
     public Log[] getLogs() {
