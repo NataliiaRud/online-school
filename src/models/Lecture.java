@@ -2,6 +2,7 @@ package models;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Lecture extends Base implements Serializable {
     private static final long serialVersionUID = 2394135373501585452L;
@@ -15,6 +16,7 @@ public class Lecture extends Base implements Serializable {
     private int courseId;
     private int personId;
     private String description;
+    private Date date = new Date();
 
     private HomeAssignment[] homeAssignments;
     private AddMaterials[] addMaterials;
@@ -31,7 +33,6 @@ public class Lecture extends Base implements Serializable {
         this.homeAssignments = homeAssignments;
         this.addMaterials = addMaterials;
         counter++;
-
     }
 
     public int getCourseId() {
@@ -41,6 +42,31 @@ public class Lecture extends Base implements Serializable {
     public static Lecture createLecture(Integer id, String name, Teacher teacher, Students student, Integer courseId, Integer personId, String description, HomeAssignment[] homeAssignments, AddMaterials[] addMaterials) {
         return new Lecture(id, name, teacher, student, courseId, personId, description, homeAssignments, addMaterials);
     }
+
+    public HomeAssignment[] getHomeAssignments() {
+        return homeAssignments;
+    }
+
+    public void setHomeAssignments(HomeAssignment[] homeAssignments) {
+        this.homeAssignments = homeAssignments;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    public static void setCounter(int counter) {
+        Lecture.counter = counter;
+    }
+
 
     @Override
     public String toString() {
@@ -54,22 +80,6 @@ public class Lecture extends Base implements Serializable {
                 ", description=" + description +
                 ", addMaterials=" + addMaterials +
                 '}';
-    }
-
-    public HomeAssignment[] getHomeAssignments() {
-        return homeAssignments;
-    }
-
-    public void setHomeAssignments(HomeAssignment[] homeAssignments) {
-        this.homeAssignments = homeAssignments;
-    }
-
-    public static int getCounter() {
-        return counter;
-    }
-
-    public static void setCounter(int counter) {
-        Lecture.counter = counter;
     }
 }
 
