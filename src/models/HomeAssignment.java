@@ -1,11 +1,18 @@
 package models;
 
-public class HomeAssignment extends Base {
+import java.io.Serializable;
+
+public class HomeAssignment extends Base implements Serializable {
+    private static final long serialVersionUID = 2281629061527663261L;
 
     private String assignment;
     private int lectureId;
     private String task;
     private static int counter;
+
+    public HomeAssignment() {
+        super(0);
+    }
 
     public HomeAssignment(Integer id, String assignment, int lectureId, String task) {
         super(id);

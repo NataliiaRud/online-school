@@ -1,7 +1,14 @@
 package models;
 
 
-public class Lecture extends Base {
+import java.io.Serializable;
+
+public class Lecture extends Base implements Serializable {
+    private static final long serialVersionUID = 2394135373501585452L;
+
+    public Lecture() {
+        super(0);
+    }
 
     private Teacher teacher;
     private Students student;
@@ -23,7 +30,7 @@ public class Lecture extends Base {
         this.description = description;
         this.homeAssignments = homeAssignments;
         this.addMaterials = addMaterials;
-counter++;
+        counter++;
 
     }
 
@@ -64,8 +71,6 @@ counter++;
     public static void setCounter(int counter) {
         Lecture.counter = counter;
     }
-
-
 }
 
 

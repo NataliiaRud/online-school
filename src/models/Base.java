@@ -1,7 +1,8 @@
 package models;
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Base {
+public abstract class Base implements Serializable {
     private Integer id;
     private String name;
 
@@ -46,7 +47,4 @@ public abstract class Base {
     public int hashCode() {
         return Objects.hash(id, name);
     }
-
-
-
 }

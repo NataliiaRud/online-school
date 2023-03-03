@@ -1,11 +1,19 @@
 package models;
 
-public class AddMaterials extends Base {
+import java.io.Serializable;
+
+public class AddMaterials extends Base implements Serializable {
+    private static final long serialVersionUID = 688325859070780787L;
 
     private String name;
     private Integer lectureId;
     private ResourceType resourceType;
     private static int counter;
+
+    public AddMaterials() {
+        super(0);
+    }
+
     public AddMaterials(Integer id, String name, Integer lectureId, ResourceType resourceType) {
         super(id);
         this.name = name;

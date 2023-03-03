@@ -18,6 +18,11 @@ public abstract class Person extends Base {
     private String email;
     private static int counter;
 
+    public Person(Role role) {
+        super(0);
+        this.role = role;
+    }
+
     protected Person(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
 
         super(id);
