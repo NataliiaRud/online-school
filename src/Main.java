@@ -3,7 +3,7 @@ import models.*;
 import repository.*;
 import service.LectureService;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 import static service.AddMaterialsService.createAddMaterials1;
@@ -11,7 +11,7 @@ import static service.AddMaterialsService.createAddMaterials1;
 public class Main {
     public static final String CHOOSE_LECTURE_PARAMETERS = "%s: Course %s, Teacher: %s, Student: %s%n";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
         TeacherRepository teacherRepository = new TeacherRepository();
         Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "11111111111", "@1111");
         Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "22222222222", "@2222");
@@ -147,6 +147,49 @@ public class Main {
 
         // Home assignment 22
         HW22.execute();
+
+        // Home assignment 25
+        // serialization
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+
+        for (Lecture lecture : lectureRepository.getAll()) {
+            objectOutputStream.writeObject(lecture);
+        }
+
+        for (HomeAssignment homeAssignment : homeAssignmentRepository.getAll()) {
+            objectOutputStream.writeObject(homeAssignment);
+        }
+
+        for (AddMaterials addMaterials : addMaterialsRepository.getAll()) {
+            objectOutputStream.writeObject(addMaterials);
+        }
+
+        for (Teacher teacher : teacherRepository.getAll()) {
+            objectOutputStream.writeObject(teacher);
+        }
+
+        for (Students student : studentsRepository.getAll()) {
+            objectOutputStream.writeObject(student);
+        }
+
+        byte[] serialized = byteArrayOutputStream.toByteArray();
+        objectOutputStream.close();
+
+        // deserialization
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serialized);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+
+        Object object;
+        try {
+            while ((object = objectInputStream.readObject()) != null) {
+                System.out.println(object);
+            }
+        } catch (EOFException e) {
+            // ignored
+        }
+
+        objectInputStream.close();
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
