@@ -5,6 +5,7 @@ import service.LectureService;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static service.AddMaterialsService.createAddMaterials1;
 
@@ -190,6 +191,47 @@ public class Main {
         }
 
         objectInputStream.close();
+
+
+        // Home assignment 27
+        List<AddMaterials> allAddMaterials = addMaterialsRepository.getAll();
+        Map<Integer, List<AddMaterials>> addMaterialsByLecture;
+        addMaterialsByLecture = allAddMaterials
+                .stream().collect(Collectors.groupingBy(
+                        AddMaterials::getLectureId,
+                        Collectors.mapping((AddMaterials a) -> a, Collectors.toList())));
+        System.out.println(addMaterialsByLecture);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date startDate = calendar.getTime();
+
+        calendar.set(Calendar.MONTH, Calendar.DECEMBER);
+        calendar.set(Calendar.DAY_OF_MONTH, 31);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        Date endDate = calendar.getTime();
+
+        // after given date
+        System.out.println(lectureRepository.getAll().stream().filter(
+                lecture -> lecture.getDate() != null && lecture.getDate().after(startDate)
+        ).collect(Collectors.toList()));
+
+        // before given date
+        System.out.println(lectureRepository.getAll().stream().filter(
+                lecture -> lecture.getDate() != null && lecture.getDate().before(endDate)
+        ).collect(Collectors.toList()));
+
+        // between given dates
+        System.out.println(lectureRepository.getAll().stream().filter(
+                lecture -> lecture.getDate() != null
+                        && lecture.getDate().after(startDate) && lecture.getDate().before(endDate)
+        ).collect(Collectors.toList()));
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,

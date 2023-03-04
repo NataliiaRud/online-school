@@ -1,5 +1,7 @@
 package comparator;
+
 import models.Course;
+
 import java.util.Comparator;
 
 
@@ -9,4 +11,3 @@ public class CourseComparator implements Comparator<Course> {
         return o1.getName().compareTo(o2.getName());
     }
 }
-
