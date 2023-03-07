@@ -1,5 +1,6 @@
 import utility.Log;
 import utility.LogFactory;
+import utility.LogLevel;
 import utility.LogService;
 
 import java.io.IOException;
@@ -19,5 +20,10 @@ public class HW20 {
 
         Log[] fromLogFile = logService.read();
         System.out.println(Arrays.toString(fromLogFile));
+
+        // Home assignment 28, task 3
+        Arrays.stream(fromLogFile).forEach(log -> {
+            System.out.println(log.getMessage());
+        });
     }
 }

@@ -44,7 +44,7 @@ public class HW22 {
             public void run() {
                 boolean poll = true;
                 while (poll) {
-                    WatchKey key = null;
+                    WatchKey key;
                     try {
                         key = watchService.take();
                     } catch (InterruptedException e) {
