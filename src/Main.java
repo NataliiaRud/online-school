@@ -219,19 +219,37 @@ public class Main {
 
         // after given date
         System.out.println(lectureRepository.getAll().stream().filter(
-                lecture -> lecture.getDate() != null && lecture.getDate().after(startDate)
+                lecture -> {
+                    Optional<Date> date = Optional.ofNullable(lecture.getDate());
+                    return date.isPresent() && date.get().after(startDate);
+                }
         ).collect(Collectors.toList()));
 
         // before given date
         System.out.println(lectureRepository.getAll().stream().filter(
-                lecture -> lecture.getDate() != null && lecture.getDate().before(endDate)
+                lecture -> {
+                    Optional<Date> date = Optional.ofNullable(lecture.getDate());
+                    return date.isPresent() && date.get().before(endDate);
+                }
         ).collect(Collectors.toList()));
 
         // between given dates
         System.out.println(lectureRepository.getAll().stream().filter(
-                lecture -> lecture.getDate() != null
-                        && lecture.getDate().after(startDate) && lecture.getDate().before(endDate)
+                lecture -> {
+                    Optional<Date> date = Optional.ofNullable(lecture.getDate());
+                    return date.isPresent()
+                            && date.get().after(startDate) && date.get().before(endDate);}
         ).collect(Collectors.toList()));
+
+        // Home assignment 28, task 2
+        System.out.println(teacherRepository.getAll().stream().filter(teacher -> {
+            Optional<String> lastName = Optional.ofNullable(teacher.getLastName());
+
+            return lastName.isPresent()
+                    && lastName.get().length() > 0
+                    && Character.isAlphabetic(lastName.get().charAt(0))
+                    && lastName.get().toUpperCase().charAt(0) < 'N';
+        }).collect(Collectors.toList()));
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
@@ -395,6 +413,7 @@ public class Main {
         }
     }
 }
+
 
 
 

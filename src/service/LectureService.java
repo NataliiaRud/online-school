@@ -5,6 +5,7 @@ import models.Lecture;
 import repository.LectureRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class LectureService {
     private LectureRepository lectureRepository;
@@ -14,21 +15,20 @@ public class LectureService {
     }
 
     public void printLectureIds() {
-
-        ArrayList<Lecture> lectures = new ArrayList<>();
+        ArrayList<Lecture> lectures;
         lectures = (ArrayList<Lecture>) lectureRepository.getAll();
 
         for (int i = 0; i < lectures.size(); i++) {
-            Base lecture = lectures.get(i);
+            Optional<Base> lecture = Optional.ofNullable(lectures.get(i));
 
-            if (lecture == null) {
+            if (lecture.isEmpty()) {
                 break;
             }
 
             if (i > 0) {
                 System.out.print(" ");
             }
-            System.out.print(lecture.getId());
+            System.out.print(lecture.get().getId());
         }
     }
 }

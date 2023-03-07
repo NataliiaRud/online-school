@@ -3,10 +3,14 @@ package models;
 import exceptions.ValidationExceptions;
 import utility.LogService;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Person extends Base {
     private static final LogService logService = new LogService(Person.class.getName());
+
+    private static final Set<String> emails = new HashSet<>();
 
     private int courseId;
     private final Role role;
@@ -35,9 +39,18 @@ public abstract class Person extends Base {
         this.counter++;
     }
     public static Person createPerson(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
+        if (emailCheck(email)) {
+            return null;
+        }
 
-        if (emailCheck(email)) {return null;}
-        if (phoneCheck(phone)) {return null;}
+        if (emails.contains(email)) {
+            return null;
+        }
+        emails.add(email);
+
+        if (phoneCheck(phone)) {
+            return null;
+        }
         if (role == Role.TEACHER) {
             return new Teacher(id, firstName, lastName, role, courseId, phone, email);
 
