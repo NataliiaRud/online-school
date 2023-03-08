@@ -250,6 +250,31 @@ public class Main {
                     && Character.isAlphabetic(lastName.get().charAt(0))
                     && lastName.get().toUpperCase().charAt(0) < 'N';
         }).collect(Collectors.toList()));
+
+        // Home assignment 29, task 1
+        Optional<Person> personCreationTest1 = Optional.ofNullable(Person.createPerson(2, "Jack", "Smith",
+                Role.STUDENT, 1, "38067123456", "jack.smith@email.com"));
+        System.out.println("Person added: " + personCreationTest1.isPresent());
+        Optional<Person> personCreationTest2 = Optional.ofNullable(Person.createPerson(3, "Jack", "Smith",
+                Role.STUDENT, 1, "38067123456", "jack.smith@email.com"));
+        System.out.println("Person added: " + personCreationTest2.isPresent());
+
+        // Home assignment 29, task 2
+        List<Lecture> copyOfLectures = new ArrayList<>(lectureRepository.getAll());
+        if (!copyOfLectures.isEmpty()) {
+            copyOfLectures.sort((lecture1, lecture2) -> {
+                if (lecture1.getDate().compareTo(lecture2.getDate()) == 0) {
+                    return Integer.compare(lecture2.getHomeAssignments().length, lecture1.getHomeAssignments().length);
+                }
+
+                return lecture1.getDate().compareTo(lecture2.getDate());
+            });
+            System.out.println(
+                    "The lecture that was created the earliest and has the most addition materials is: "
+                            + copyOfLectures.get(0)
+            );
+        }
+
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
