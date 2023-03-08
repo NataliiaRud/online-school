@@ -4,7 +4,10 @@ import repository.*;
 import service.LectureService;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static service.AddMaterialsService.createAddMaterials1;
@@ -275,6 +278,38 @@ public class Main {
             );
         }
 
+
+        // Home assignment 31, task 1
+        Map<Integer, List<Lecture>> lecturesGroupedByTeacher =
+                copyOfLectures.stream().collect(
+                        Collectors.groupingBy(
+                                lecture -> lecture.getTeacher().getId()
+                        )
+                );
+        System.out.println("Home assignment 31, task 1: grouping lectures by teacher");
+        System.out.println(lecturesGroupedByTeacher);
+
+        // Home assignment 31, task 2
+        Map<Integer, List<AddMaterials>> additionalMaterialsByLecture =
+                addMaterialsRepository.getAll().stream().collect(
+                        Collectors.groupingBy(
+                                AddMaterials::getLectureId
+                        )
+                );
+        System.out.println("Home assignment 31, task 2: grouping additional materials by lecture");
+        System.out.println(additionalMaterialsByLecture);
+
+        // Home assignment 31, task 3
+        Map<String, String> emailTonameMap = teacherRepository.getAll().stream().collect(
+                Collectors.toMap(Person::getEmail, teacher -> teacher.getFirstName() + " " + teacher.getLastName())
+        );
+        System.out.println("Home assignment 31, task 3: email -> first + last name");
+        System.out.println(emailTonameMap);
+
+        // Home assignment 31, task 4
+        Files.write(Paths.get("students.txt"),
+                studentsRepository.getAll().stream().map(Person::getEmail).collect(Collectors.toList())
+        );
     }
 
     private static void sorting(TeacherRepository teacherRepository, StudentsRepository studentsRepository,
