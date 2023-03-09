@@ -43,6 +43,10 @@ public class Lecture extends Base implements Serializable {
         return new Lecture(id, name, teacher, student, courseId, personId, description, homeAssignments, addMaterials);
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
     public HomeAssignment[] getHomeAssignments() {
         return homeAssignments;
     }
