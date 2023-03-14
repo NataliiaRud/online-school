@@ -15,7 +15,7 @@ public class LogFactory {
         log(name, level, message, exceptionAsString);
     }
 
-    public void log(String name, LogLevel level, String message, String stacktrace) {
+    private void log(String name, LogLevel level, String message, String stacktrace) {
         Log[] newLogs = new Log[logs.length + 1];
         System.arraycopy(logs, 0, newLogs, 0, logs.length);
         logs = newLogs;
