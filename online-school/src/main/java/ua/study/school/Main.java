@@ -18,33 +18,26 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
         TeacherRepository teacherRepository = new TeacherRepository();
-        Teacher teacher1 = new Teacher(1, "John", "Doe", Role.TEACHER, 1, "11111111111", "@1111");
-        Teacher teacher2 = new Teacher(2, "Larry", "Paige", Role.TEACHER, 1, "22222222222", "@2222");
-        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", Role.TEACHER, 1, "33333333333", "@3333");
+        Teacher teacher1 = new Teacher(1, "John", "Doe", 1, "11111111111", "@1111");
+        Teacher teacher2 = new Teacher(2, "Larry", "Paige", 1, "22222222222", "@2222");
+        Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", 1, "33333333333", "@3333");
         teacherRepository.add(teacher1);
         teacherRepository.add(teacher2);
         teacherRepository.add(teacher3);
 
         StudentsRepository studentsRepository = new StudentsRepository();
-        Students student1 = new Students(1, "Alex", "Smith", Role.STUDENT,1, "44444444444", "@4444");
-        Students student2 = new Students(2, "Xi", "Lee", Role.STUDENT, 1, "55555555555", "@5555");
-        Students student3 = new Students(3, "Wishi", "Anan", Role.STUDENT, 1, "66666666666", "@6666");
+        Student student1 = new Student(1, "Alex", "Smith", 1, "44444444444", "@4444");
+        Student student2 = new Student(2, "Xi", "Lee", 1, "55555555555", "@5555");
+        Student student3 = new Student(3, "Wishi", "Anan", 1, "66666666666", "@6666");
         studentsRepository.add(student1);
         studentsRepository.add(student2);
         studentsRepository.add(student3);
 
         CourseRepository courseRepository = new CourseRepository();
-
-        Course course1 = Course.createCourse(1, "Java Basic");
-        Course course2 = Course.createCourse(2, "Java Advanced");
-        Course course3 = Course.createCourse(3, "Java Pro");
-        Course course4 = Course.createCourse(4, "Java 18");
-
-        courseRepository.add(course1);
-        courseRepository.add(course2);
-        courseRepository.add(course3);
-        courseRepository.add(course4);
-
+        System.out.println("Number of courses in the database: " + courseRepository.getSize());
+        Course course1 = courseRepository.getById(1);
+        Course course2 = courseRepository.getById(2);
+        Course course3 = courseRepository.getById(3);
 
         HomeAssignmentRepository homeAssignmentRepository = new HomeAssignmentRepository();
         HomeAssignment homeAssignment1 = new HomeAssignment(1, "hw", 1, "task1");
@@ -55,16 +48,16 @@ public class Main {
         homeAssignmentRepository.add(homeAssignment3);
 
         AddMaterialsRepository addMaterialsRepository = new AddMaterialsRepository();
-        AddMaterials addMaterial1 = createAddMaterials1();
-        AddMaterials addMaterial2 = createAddMaterials1();
-        AddMaterials addMaterial3 = createAddMaterials1();
+        AdditionalMaterial addMaterial1 = createAddMaterials1();
+        AdditionalMaterial addMaterial2 = createAddMaterials1();
+        AdditionalMaterial addMaterial3 = createAddMaterials1();
         addMaterialsRepository.add(addMaterial1);
         addMaterialsRepository.add(addMaterial2);
         addMaterialsRepository.add(addMaterial3);
 
 
         HomeAssignment[] homeAssignments1 = {homeAssignment1, homeAssignment2, homeAssignment3};
-        AddMaterials[] addMaterials1 = {addMaterial1, addMaterial2, addMaterial3};
+        AdditionalMaterial[] additionalMaterial1 = {addMaterial1, addMaterial2, addMaterial3};
 
         LectureRepository lectureRepository = new LectureRepository();
 
@@ -82,7 +75,7 @@ public class Main {
                     course3,
                     counter,
                     homeAssignments1,
-                    addMaterials1);
+                    additionalMaterial1);
             // using counter (1-3) as category number
 
             Lecture firstLecture = createLecture(wrapper);
@@ -114,7 +107,7 @@ public class Main {
                     course3,
                     categoryNumber,
                     homeAssignments1,
-                    addMaterials1);
+                    additionalMaterial1);
 
             Lecture firstLecture = createLecture(wrapper);
             lectureRepository.add(firstLecture);
@@ -166,15 +159,15 @@ public class Main {
             objectOutputStream.writeObject(homeAssignment);
         }
 
-        for (AddMaterials addMaterials : addMaterialsRepository.getAll()) {
-            objectOutputStream.writeObject(addMaterials);
+        for (AdditionalMaterial additionalMaterial : addMaterialsRepository.getAll()) {
+            objectOutputStream.writeObject(additionalMaterial);
         }
 
         for (Teacher teacher : teacherRepository.getAll()) {
             objectOutputStream.writeObject(teacher);
         }
 
-        for (Students student : studentsRepository.getAll()) {
+        for (Student student : studentsRepository.getAll()) {
             objectOutputStream.writeObject(student);
         }
 
@@ -198,12 +191,12 @@ public class Main {
 
 
         // Home assignment 27
-        List<AddMaterials> allAddMaterials = addMaterialsRepository.getAll();
-        Map<Integer, List<AddMaterials>> addMaterialsByLecture;
+        List<AdditionalMaterial> allAddMaterials = addMaterialsRepository.getAll();
+        Map<Integer, List<AdditionalMaterial>> addMaterialsByLecture;
         addMaterialsByLecture = allAddMaterials
                 .stream().collect(Collectors.groupingBy(
-                        AddMaterials::getLectureId,
-                        Collectors.mapping((AddMaterials a) -> a, Collectors.toList())));
+                        AdditionalMaterial::getLectureId,
+                        Collectors.mapping((AdditionalMaterial a) -> a, Collectors.toList())));
         System.out.println(addMaterialsByLecture);
 
         Calendar calendar = Calendar.getInstance();
@@ -224,7 +217,7 @@ public class Main {
         // after given date
         System.out.println(lectureRepository.getAll().stream().filter(
                 lecture -> {
-                    Optional<Date> date = Optional.ofNullable(lecture.getDate());
+                    Optional<Date> date = Optional.ofNullable(lecture.getLectureDate());
                     return date.isPresent() && date.get().after(startDate);
                 }
         ).collect(Collectors.toList()));
@@ -232,7 +225,7 @@ public class Main {
         // before given date
         System.out.println(lectureRepository.getAll().stream().filter(
                 lecture -> {
-                    Optional<Date> date = Optional.ofNullable(lecture.getDate());
+                    Optional<Date> date = Optional.ofNullable(lecture.getLectureDate());
                     return date.isPresent() && date.get().before(endDate);
                 }
         ).collect(Collectors.toList()));
@@ -240,7 +233,7 @@ public class Main {
         // between given dates
         System.out.println(lectureRepository.getAll().stream().filter(
                 lecture -> {
-                    Optional<Date> date = Optional.ofNullable(lecture.getDate());
+                    Optional<Date> date = Optional.ofNullable(lecture.getLectureDate());
                     return date.isPresent()
                             && date.get().after(startDate) && date.get().before(endDate);}
         ).collect(Collectors.toList()));
@@ -267,11 +260,11 @@ public class Main {
         List<Lecture> copyOfLectures = new ArrayList<>(lectureRepository.getAll());
         if (!copyOfLectures.isEmpty()) {
             copyOfLectures.sort((lecture1, lecture2) -> {
-                if (lecture1.getDate().compareTo(lecture2.getDate()) == 0) {
+                if (lecture1.getLectureDate().compareTo(lecture2.getLectureDate()) == 0) {
                     return Integer.compare(lecture2.getHomeAssignments().length, lecture1.getHomeAssignments().length);
                 }
 
-                return lecture1.getDate().compareTo(lecture2.getDate());
+                return lecture1.getLectureDate().compareTo(lecture2.getLectureDate());
             });
             System.out.println(
                     "The lecture that was created the earliest and has the most addition materials is: "
@@ -284,17 +277,17 @@ public class Main {
         Map<Integer, List<Lecture>> lecturesGroupedByTeacher =
                 copyOfLectures.stream().collect(
                         Collectors.groupingBy(
-                                lecture -> lecture.getTeacher().getId()
+                                lecture -> lecture.getId()
                         )
                 );
         System.out.println("Home assignment 31, task 1: grouping lectures by teacher");
         System.out.println(lecturesGroupedByTeacher);
 
         // Home assignment 31, task 2
-        Map<Integer, List<AddMaterials>> additionalMaterialsByLecture =
+        Map<Integer, List<AdditionalMaterial>> additionalMaterialsByLecture =
                 addMaterialsRepository.getAll().stream().collect(
                         Collectors.groupingBy(
-                                AddMaterials::getLectureId
+                                AdditionalMaterial::getLectureId
                         )
                 );
         System.out.println("Home assignment 31, task 2: grouping additional materials by lecture");
@@ -333,15 +326,15 @@ public class Main {
         System.out.println();
 
         System.out.println("18-2 Sorting a copy of the list of students by name");
-        List<Students> copyOfStudentsList = new ArrayList<>(studentsRepository.getAll());
-        copyOfStudentsList.sort(new StudentComparator());
+        List<Student> copyOfStudentList = new ArrayList<>(studentsRepository.getAll());
+        copyOfStudentList.sort(new StudentComparator());
         System.out.println("Printing the sorted copy of the list of students");
-        System.out.println(copyOfStudentsList);
+        System.out.println(copyOfStudentList);
         System.out.println();
 
         System.out.println("Please select additional materials sorting mode:");
         System.out.println("1 - by id (default), 2 - by lecture number, 3 - by type");
-        List<AddMaterials> copyOfAdMaterials = new ArrayList<>(addMaterialsRepository.getAll());
+        List<AdditionalMaterial> copyOfAdMaterials = new ArrayList<>(addMaterialsRepository.getAll());
         String selection = scanner.next();
         if ("2".equals(selection)) {
             copyOfAdMaterials.sort(new AdMaterialsByLectureIdComparator());
@@ -399,6 +392,8 @@ public class Main {
             int id = scanner.nextInt();
             System.out.println("Enter new additional assignment name: ");
             String name = scanner.next();
+            System.out.println("Enter new additional assignment description: ");
+            String description = scanner.next();
             System.out.println("Enter new additional assignment type (default - URL): ");
             String type = scanner.next();
             ResourceType resourceType = ResourceType.URL;
@@ -408,8 +403,8 @@ public class Main {
                 resourceType = ResourceType.VIDEO;
             }
 
-            AddMaterials addMaterials = new AddMaterials(id, name, lectureId, resourceType);
-            addMaterialsRepository.add(addMaterials);
+            AdditionalMaterial additionalMaterial = new AdditionalMaterial(id, name, description, lectureId, resourceType);
+            addMaterialsRepository.add(additionalMaterial);
 
             System.out.println("Additional materials belonging to lecture " + lectureId + " has been updated: ");
             System.out.println(addMaterialsRepository.getByLectureId(lectureId));
@@ -431,19 +426,19 @@ public class Main {
         try {
             switch (createLectureWrapper.categoryNumber()) {
                 case 1:
-                    lecture = Lecture.createLecture(1, "Java Chapter1", createLectureWrapper.teacher1(), createLectureWrapper.student1(),
-                            createLectureWrapper.course1().getId(), createLectureWrapper.teacher1().getId(), "first lecture description",
-                            createLectureWrapper.homeAssignments1, createLectureWrapper.addMaterials1);
+                    lecture = Lecture.createLecture(1, "Java Chapter1", "first lecture description", createLectureWrapper.teacher1().getId(),
+                            createLectureWrapper.course1().getId(),
+                            createLectureWrapper.homeAssignments1, createLectureWrapper.additionalMaterial1);
                     break;
                 case 2:
-                    lecture = Lecture.createLecture(2, "Java Chapter2", createLectureWrapper.teacher2(), createLectureWrapper.student2(),
-                            createLectureWrapper.course2().getId(), createLectureWrapper.teacher2().getId(), "second lecture description",
-                            createLectureWrapper.homeAssignments1, createLectureWrapper.addMaterials1);
+                    lecture = Lecture.createLecture(2, "Java Chapter2", "second lecture description", createLectureWrapper.teacher2().getId(),
+                            createLectureWrapper.course2().getId(),
+                            createLectureWrapper.homeAssignments1, createLectureWrapper.additionalMaterial1);
                     break;
                 case 3:
-                    lecture = Lecture.createLecture(3, "Java Chapter3", createLectureWrapper.teacher3(), createLectureWrapper.student3(),
-                            createLectureWrapper.course3().getId(), createLectureWrapper.teacher3().getId(), "third lecture description",
-                            createLectureWrapper.homeAssignments1, createLectureWrapper.addMaterials1);
+                    lecture = Lecture.createLecture(3, "Java Chapter3", "third lecture description", createLectureWrapper.teacher3().getId(),
+                            createLectureWrapper.course3().getId(),
+                            createLectureWrapper.homeAssignments1, createLectureWrapper.additionalMaterial1);
                     break;
                 default:
                     throw new IllegalArgumentException("test exception");
@@ -455,10 +450,10 @@ public class Main {
         }
     }
 
-    private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Students student1,
-                                        Students student2, Students student3, Course course1, Course course2, Course course3,
+    private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Student student1,
+                                        Student student2, Student student3, Course course1, Course course2, Course course3,
                                         int categoryNumber, HomeAssignment[] homeAssignments1,
-                                        AddMaterials[] addMaterials1) {
+                                        AdditionalMaterial[] additionalMaterial1) {
 
         @Override
         public boolean equals(Object o) {

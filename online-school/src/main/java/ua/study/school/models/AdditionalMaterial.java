@@ -1,30 +1,30 @@
 package ua.study.school.models;
 
+import java.io.Serial;
 import java.io.Serializable;
 
-public class AddMaterials extends Base implements Serializable {
+public class AdditionalMaterial extends Base implements Serializable {
+    @Serial
     private static final long serialVersionUID = 688325859070780787L;
 
     private String name;
+    private String description;
     private Integer lectureId;
     private ResourceType resourceType;
     private static int counter;
 
-    public AddMaterials() {
-        super(0);
-    }
-
-    public AddMaterials(Integer id, String name, Integer lectureId, ResourceType resourceType) {
+    public AdditionalMaterial(Integer id, String name, String description, Integer lectureId, ResourceType resourceType) {
         super(id);
         this.name = name;
+        this.description = description;
         this.lectureId = lectureId;
         this.resourceType = resourceType;
         counter++;
     }
 
-
-    public static AddMaterials createAddMaterials(Integer id, String name, Integer lectureId, ResourceType resourceType) {
-        return new AddMaterials(id, name, lectureId, resourceType);
+    public static AdditionalMaterial createAddMaterials(Integer id, String name, String description,
+                                                        Integer lectureId, ResourceType resourceType) {
+        return new AdditionalMaterial(id, name, description, lectureId, resourceType);
     }
     @Override
     public String getName() {
@@ -34,6 +34,14 @@ public class AddMaterials extends Base implements Serializable {
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getLectureId() {
@@ -58,7 +66,7 @@ public class AddMaterials extends Base implements Serializable {
     }
 
     public static void setCounter(int counter) {
-        AddMaterials.counter = counter;
+        AdditionalMaterial.counter = counter;
     }
 
     @Override

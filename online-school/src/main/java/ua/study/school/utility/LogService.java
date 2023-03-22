@@ -90,6 +90,16 @@ public class LogService {
         return list.toArray(new Log[0]);
     }
 
+    public void error(String message) {
+        LogFactory logFactory = new LogFactory();
+        logFactory.error(name, message, "");
+        try {
+            write(logFactory.getLogs());
+        } catch (Throwable th) {
+            // ignored
+        }
+    }
+
     public void error(String message, Throwable t) {
         LogFactory logFactory = new LogFactory();
         logFactory.error(name, message, t);

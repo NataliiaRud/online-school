@@ -2,8 +2,12 @@ package ua.study.school.models;
 
 public class Course extends Base {
     private static int counter;
-    public Course(Integer id, String name) {
+
+    private int schoolId;
+
+    private Course(Integer id, String name, int schoolId) {
         super(id, name);
+        this.schoolId = schoolId;
         counter++;
     }
 
@@ -15,12 +19,16 @@ public class Course extends Base {
         Course.counter = counter;
     }
 
-    public static Course createCourse(int id, String name) {
-        return new Course(id, name);
+    public static Course createCourse(int id, String name, int schoolId) {
+        return new Course(id, name, schoolId);
     }
 
     @Override
     public String toString() {
-        return "Course{" + getName() + "}";
+        return "Course{" +
+                "id=" + getId() +
+                ", name=" + getName() +
+                ", schoolId=" + schoolId +
+                '}';
     }
 }

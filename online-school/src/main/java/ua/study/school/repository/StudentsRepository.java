@@ -1,14 +1,14 @@
 package ua.study.school.repository;
 
 
-import ua.study.school.models.Students;
+import ua.study.school.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class StudentsRepository implements BaseRepository<Students> {
-    ArrayList<Students> students = new ArrayList<>();
+public class StudentsRepository implements BaseRepository<Student> {
+    ArrayList<Student> students = new ArrayList<>();
 
     public Integer getSize() {
         return students.size();
@@ -20,23 +20,23 @@ public class StudentsRepository implements BaseRepository<Students> {
     }
 
     @Override
-    public Students getByIndex(Integer indexToGet) {
+    public Student getByIndex(Integer indexToGet) {
         return null;
     }
 
     @Override
-    public void add(Students student) {
+    public void add(Student student) {
         students.add(student);
     }
 
     @Override
-    public void add(Integer id, Students student) {
+    public void add(Integer id, Student student) {
 
     }
 
     @Override
-    public Students getById(Integer id) {
-        for (Students student : students) {
+    public Student getById(Integer id) {
+        for (Student student : students) {
             if (student.getId() == id) {
                 return student;
             }
@@ -45,7 +45,7 @@ public class StudentsRepository implements BaseRepository<Students> {
     }
 
     @Override
-    public List<Students> getAll() {
+    public List<Student> getAll() {
         return this.students;
     }
 
