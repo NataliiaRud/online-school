@@ -1,34 +1,27 @@
 package ua.study.school.models;
 
-
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Lecture extends Base implements Serializable {
+    @Serial
     private static final long serialVersionUID = 2394135373501585452L;
 
-    public Lecture() {
-        super(0);
-    }
-
-    private Teacher teacher;
-    private Students student;
+    private int teacherId;
     private int courseId;
-    private int personId;
     private String description;
-    private Date date = new Date();
+    private Date lectureDate = new Date();
 
     private HomeAssignment[] homeAssignments;
-    private AddMaterials[] addMaterials;
+    private AdditionalMaterial[] addMaterials;
     private static int counter;
 
 
-    public Lecture(Integer id, String name, Teacher teacher, Students student, int courseId, int personId, String description, HomeAssignment[] homeAssignments, AddMaterials[] addMaterials) {
+    public Lecture(Integer id, String name, String description, int teacherId, int courseId, HomeAssignment[] homeAssignments, AdditionalMaterial[] addMaterials) {
         super(id, name);
-        this.teacher = teacher;
-        this.student = student;
+        this.teacherId = teacherId;
         this.courseId = courseId;
-        this.personId = personId;
         this.description = description;
         this.homeAssignments = homeAssignments;
         this.addMaterials = addMaterials;
@@ -39,12 +32,12 @@ public class Lecture extends Base implements Serializable {
         return this.courseId;
     }
 
-    public static Lecture createLecture(Integer id, String name, Teacher teacher, Students student, Integer courseId, Integer personId, String description, HomeAssignment[] homeAssignments, AddMaterials[] addMaterials) {
-        return new Lecture(id, name, teacher, student, courseId, personId, description, homeAssignments, addMaterials);
+    public static Lecture createLecture(Integer id, String name, String description, int teacherId, Integer courseId, HomeAssignment[] homeAssignments, AdditionalMaterial[] addMaterials) {
+        return new Lecture(id, name, description, teacherId, courseId, homeAssignments, addMaterials);
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public int getTeacherId() {
+        return teacherId;
     }
 
     public HomeAssignment[] getHomeAssignments() {
@@ -55,12 +48,12 @@ public class Lecture extends Base implements Serializable {
         this.homeAssignments = homeAssignments;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getLectureDate() {
+        return lectureDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setLectureDate(Date lectureDate) {
+        this.lectureDate = lectureDate;
     }
 
     public static int getCounter() {
@@ -77,11 +70,9 @@ public class Lecture extends Base implements Serializable {
         return "Lecture{" +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
-                ", teacher=" + this.teacher.getLastName() +
-                ", student=" + this.student.getLastName() +
-                ", courseId=" + courseId +
-                ", personId=" + personId +
                 ", description=" + description +
+                ", teacherId=" + this.teacherId +
+                ", courseId=" + courseId +
                 ", addMaterials=" + addMaterials +
                 '}';
     }

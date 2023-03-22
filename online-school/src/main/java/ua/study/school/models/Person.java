@@ -12,7 +12,7 @@ public abstract class Person extends Base {
 
     private static final Set<String> emails = new HashSet<>();
 
-    private int courseId;
+    private int schoolId;
     private final Role role;
     private String firstName;
     private String lastName;
@@ -27,16 +27,16 @@ public abstract class Person extends Base {
         this.role = role;
     }
 
-    protected Person(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
+    protected Person(Integer id, String firstName, String lastName, Role role, int schoolId, String phone, String email) {
 
         super(id);
-        this.courseId = courseId;
+        this.schoolId = schoolId;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.counter++;
+        counter++;
     }
     public static Person createPerson(Integer id, String firstName, String lastName, Role role, int courseId, String phone, String email) {
         if (emailCheck(email)) {
@@ -52,22 +52,22 @@ public abstract class Person extends Base {
             return null;
         }
         if (role == Role.TEACHER) {
-            return new Teacher(id, firstName, lastName, role, courseId, phone, email);
+            return new Teacher(id, firstName, lastName, courseId, phone, email);
 
         } else if (role == Role.STUDENT) {
-            return new Students(id, firstName, lastName, role, courseId, phone, email);
+            return new Student(id, firstName, lastName, courseId, phone, email);
         } else {
             System.out.println("You've entered the wrong role");
             return null;
         }
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getSchoolId() {
+        return schoolId;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
     }
 
     public Role getRole() {
@@ -160,12 +160,12 @@ public abstract class Person extends Base {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return courseId == person.courseId && role == person.role && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
+        return schoolId == person.schoolId && role == person.role && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseId, role, firstName, lastName);
+        return Objects.hash(schoolId, role, firstName, lastName);
     }
 
 

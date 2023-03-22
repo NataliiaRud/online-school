@@ -1,11 +1,13 @@
 package ua.study.school.models;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class HomeAssignment extends Base implements Serializable {
+    @Serial
     private static final long serialVersionUID = 2281629061527663261L;
 
-    private String assignment;
+    private String name;
     private int lectureId;
     private String task;
     private static int counter;
@@ -14,20 +16,20 @@ public class HomeAssignment extends Base implements Serializable {
         super(0);
     }
 
-    public HomeAssignment(Integer id, String assignment, int lectureId, String task) {
+    public HomeAssignment(Integer id, String name, int lectureId, String task) {
         super(id);
-        this.assignment = assignment;
+        this.name = name;
         this.lectureId = lectureId;
         this.task = task;
         counter++;
     }
 
-    public String getAssignment() {
-        return assignment;
+    public String getName() {
+        return name;
     }
 
-    public void setAssignment(String assignment) {
-        this.assignment = assignment;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getLectureId() {
@@ -58,7 +60,7 @@ public class HomeAssignment extends Base implements Serializable {
     public String toString() {
         return "HomeAssignment{" +
                 "id='" + getId() + '\'' +
-                ", assignment='" + assignment + '\'' +
+                ", name='" + name + '\'' +
                 ", lectureId=" + lectureId +
                 ", task='" + task + '\'' +
                 '}';

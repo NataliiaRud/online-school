@@ -1,34 +1,34 @@
 package ua.study.school.service;
 
-import ua.study.school.models.AddMaterials;
+import ua.study.school.models.AdditionalMaterial;
 import ua.study.school.models.ResourceType;
 
 import java.util.Scanner;
 
 public class AddMaterialsService {
-    public static AddMaterials createAddMaterials1() {
+    public static AdditionalMaterial createAddMaterials1() {
         System.out.println("To create an AddMaterials object, choose a category, type the proper number (1, 2 or 3):");
-        AddMaterials addMaterials;
+        AdditionalMaterial additionalMaterial;
         Scanner scanner1 = new Scanner(System.in);
         int categoryNumber = scanner1.nextInt();
         try {
             switch (categoryNumber) {
                 case 1:
-                    addMaterials = AddMaterials.createAddMaterials(1, "chapter1", 2, ResourceType.URL);
+                    additionalMaterial = AdditionalMaterial.createAddMaterials(1, "chapter1", "description 1", 2, ResourceType.URL);
                     System.out.println("You have created an AddMaterials object, type " + categoryNumber);
                     break;
                 case 2:
-                    addMaterials = AddMaterials.createAddMaterials(2, "chapter1", 1, ResourceType.VIDEO);
+                    additionalMaterial = AdditionalMaterial.createAddMaterials(2, "chapter1", "description 2", 1, ResourceType.VIDEO);
                     System.out.println("You have created an AddMaterials object, type " + categoryNumber);
                     break;
                 case 3:
-                    addMaterials = AddMaterials.createAddMaterials(3, "chapter1", 3, ResourceType.BOOK);
+                    additionalMaterial = AdditionalMaterial.createAddMaterials(3, "chapter1", "description 3",3, ResourceType.BOOK);
                     System.out.println("You have created an AddMaterials object, type " + categoryNumber);
                     break;
                 default:
                     throw new IllegalArgumentException("test exception");
             }
-            return addMaterials;
+            return additionalMaterial;
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,6 @@
 package ua.study.school.repository;
 
-import ua.study.school.models.AddMaterials;
+import ua.study.school.models.AdditionalMaterial;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
-    private final ArrayList<AddMaterials> addMaterials = new ArrayList<>();
-    private final Map<Integer, List<AddMaterials>> byLectureMap = new HashMap<>();
+public class AddMaterialsRepository implements BaseRepository<AdditionalMaterial> {
+    private final ArrayList<AdditionalMaterial> addMaterials = new ArrayList<>();
+    private final Map<Integer, List<AdditionalMaterial>> byLectureMap = new HashMap<>();
 
     public Integer getSize() {
         return addMaterials.size();
@@ -22,33 +22,33 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     }
 
     @Override
-    public AddMaterials getByIndex(Integer indexToGet) {
+    public AdditionalMaterial getByIndex(Integer indexToGet) {
         return indexToGet < addMaterials.size() ? addMaterials.get(indexToGet) : null;
     }
 
     @Override
-    public void add(AddMaterials addMaterial) {
+    public void add(AdditionalMaterial addMaterial) {
         addMaterials.add(addMaterial);
 
-        List<AddMaterials> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
+        List<AdditionalMaterial> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
         list.add(addMaterial);
     }
 
-    public List<AddMaterials> getByLectureId(int lectureId) {
+    public List<AdditionalMaterial> getByLectureId(int lectureId) {
         return byLectureMap.computeIfAbsent(lectureId, k -> new ArrayList<>());
     }
 
     @Override
-    public void add(Integer id, AddMaterials addMaterial) {
+    public void add(Integer id, AdditionalMaterial addMaterial) {
         addMaterials.add(addMaterial);
 
-        List<AddMaterials> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
+        List<AdditionalMaterial> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
         list.add(addMaterial);
     }
 
     @Override
-    public AddMaterials getById(Integer id) {
-        for (AddMaterials addMaterial : addMaterials) {
+    public AdditionalMaterial getById(Integer id) {
+        for (AdditionalMaterial addMaterial : addMaterials) {
             if (addMaterial.getId() == id) {
                 return addMaterial;
             }
@@ -57,7 +57,7 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
     }
 
     @Override
-    public List<AddMaterials> getAll() {
+    public List<AdditionalMaterial> getAll() {
         return this.addMaterials;
     }
 
@@ -66,7 +66,7 @@ public class AddMaterialsRepository implements BaseRepository<AddMaterials> {
         addMaterials.removeIf(addMaterials -> addMaterials.getId() == id);
 
         for (Integer lectureId : byLectureMap.keySet()) {
-            List<AddMaterials> list = byLectureMap.get(lectureId);
+            List<AdditionalMaterial> list = byLectureMap.get(lectureId);
             list.removeIf(addMaterials -> addMaterials.getId() == id);
         }
     }
