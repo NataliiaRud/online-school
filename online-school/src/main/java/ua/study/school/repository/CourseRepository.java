@@ -102,10 +102,22 @@ public class CourseRepository implements BaseRepository<Course> {
         return null;
     }
 
+    /*
+CREATE PROC get_records_from_table
+    @table_name VARCHAR(50)
+AS
+BEGIN
+    SELECT *
+    FROM @table_name
+END
+     */
+
+    // https://www.digitalocean.com/community/tutorials/callablestatement-in-java-example
+
     @Override
     public List<Course> getAll() {
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM course")) {
+             CallableStatement statement = connection.prepareCall("{call get_records_from_table('course')}")) {
             ResultSet rs = statement.executeQuery();
 
             List<Course> ret = new ArrayList<>();
