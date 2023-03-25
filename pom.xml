@@ -14,5 +14,6 @@
     <!-- sub modules -->
     <modules>
         <module>online-school</module>
+        <module>web-api</module>
     </modules>
 </project>
