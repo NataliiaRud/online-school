@@ -2,6 +2,7 @@
 %><%@ page import="ua.study.school.repository.AddMaterialsRepository,java.util.List" %><%
        AddMaterialsRepository addMaterialsRepository = new AddMaterialsRepository();
        List<List<Object>> am = addMaterialsRepository.getLecturesAndAdditionalMaterials();
+       request.setAttribute("current", "additional-materials");
   %>
 <%@include file="include/header.jsp" %>
 
@@ -9,7 +10,7 @@
   <section class="container section-part">
     <div class="container">
         <h1>Кількість додаткових матеріалів по кожній категорії</h1>
-        <ul>
+        <ul class="list">
 <%
     for (List<Object> list : am) {
 %>

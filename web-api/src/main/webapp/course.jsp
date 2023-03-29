@@ -3,6 +3,7 @@
     CourseRepository courseRepository = new CourseRepository();
     int courseId = Integer.parseInt(request.getParameter("id"));
     Course course = courseRepository.getById(courseId);
+    request.setAttribute("current", "courses");
 %>
 <%@include file="include/header.jsp" %>
 

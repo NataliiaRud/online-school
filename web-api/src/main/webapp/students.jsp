@@ -3,13 +3,14 @@
        StudentsRepository studentsRepository = new StudentsRepository();
        List<Student> students = studentsRepository.getAll();
        students.sort((s1, s2) -> s1.getLastName().compareTo(s2.getLastName()));
+       request.setAttribute("current", "students");
   %>
 <%@include file="include/header.jsp" %>
 
 <main>
   <section class="container section-part">
     <div class="container">
-        <ul>
+        <ul class="list">
 <%
     for (Student student : students) {
 %>

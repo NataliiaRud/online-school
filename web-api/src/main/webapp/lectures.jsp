@@ -3,6 +3,7 @@
        LectureRepository lectureRepository = new LectureRepository();
        List<List<Object>> lecturesBefore2023 = lectureRepository.getLecturesAndAdditionalMaterials();
        List<Object> earliest = lectureRepository.getEarliestLecture();
+       request.setAttribute("current", "lectures");
   %>
 <%@include file="include/header.jsp" %>
 
@@ -10,7 +11,7 @@
   <section class="container section-part">
     <div class="container">
         <h1>Назва лекції та кількість додаткових матеріалів, яка вона містить, відсортовані за датою та які проодили до 2023 року.</h1>
-        <ul>
+        <ul class="list">
 <%
     for (List<Object> list : lecturesBefore2023) {
 %>

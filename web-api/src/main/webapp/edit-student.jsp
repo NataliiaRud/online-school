@@ -20,6 +20,7 @@
            response.sendRedirect("students.jsp");
            return;
        }
+       request.setAttribute("current", "students");
 %>
 <%@include file="include/header.jsp" %>
 
