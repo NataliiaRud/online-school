@@ -9,8 +9,8 @@ public class Student extends Person implements Serializable {
 
     private static int counter;
 
-    public Student(Integer id, String firstName, String lastName, int courseId, String phone, String email) {
-        super(id, firstName, lastName, Role.STUDENT, courseId, phone, email);
+    public Student(Integer id, String firstName, String lastName, int schoolId, String phone, String email) {
+        super(id, firstName, lastName, Role.STUDENT, schoolId, phone, email);
 
         counter++;
     }

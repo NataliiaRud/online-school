@@ -51,7 +51,7 @@ public class CourseRepository implements BaseRepository<Course> {
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
-            logService.error("Error occurred while getting course by id", e);
+            logService.error("Error occurred while getting number of courses", e);
             throw new RuntimeException(e);
         }
     }
@@ -70,7 +70,7 @@ public class CourseRepository implements BaseRepository<Course> {
     @Override
     public void add(Course course) {
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO course (school_id, name)")) {
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO course (school_id, name) VALUES (?, ?)")) {
             statement.setInt(1, course.getId());
             statement.setString(2, course.getName());
             statement.executeUpdate();

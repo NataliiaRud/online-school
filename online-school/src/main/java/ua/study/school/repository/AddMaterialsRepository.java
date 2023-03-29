@@ -1,14 +1,33 @@
 package ua.study.school.repository;
 
+import ua.study.school.PropertiesLoader;
 import ua.study.school.models.AdditionalMaterial;
+import ua.study.school.utility.LogService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 
 public class AddMaterialsRepository implements BaseRepository<AdditionalMaterial> {
+    private static final LogService logService = new LogService();
+
+    private final String url;
+    private final String user;
+    private final String password;
+
+    public AddMaterialsRepository() {
+        Properties properties = PropertiesLoader.loadProperties();
+        try {
+            Class.forName(properties.getProperty("db.driver"));
+        } catch (ClassNotFoundException e) {
+            logService.error("", e);
+            throw new RuntimeException(e);
+        }
+        url = properties.getProperty("db.url");
+        user = properties.getProperty("db.user");
+        password = properties.getProperty("db.password");
+    }
+
     private final ArrayList<AdditionalMaterial> addMaterials = new ArrayList<>();
     private final Map<Integer, List<AdditionalMaterial>> byLectureMap = new HashMap<>();
 
@@ -69,5 +88,25 @@ public class AddMaterialsRepository implements BaseRepository<AdditionalMaterial
             List<AdditionalMaterial> list = byLectureMap.get(lectureId);
             list.removeIf(addMaterials -> addMaterials.getId() == id);
         }
+    }
+
+    public List<List<Object>> getLecturesAndAdditionalMaterials() {
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareCall("SELECT type, count(type) FROM additional_material GROUP BY type")) {
+            ResultSet rs = statement.executeQuery();
+
+            List<List<Object>> ret = new ArrayList<>();
+            while (rs.next()) {
+                List<Object> list = new ArrayList<>();
+                list.add(rs.getString(1));
+                list.add(rs.getInt(2));
+                ret.add(list);
+            }
+            return ret;
+        } catch (SQLException e) {
+            logService.error("Error occurred while getting additional materials", e);
+        }
+
+        throw new RuntimeException();
     }
 }
