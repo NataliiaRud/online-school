@@ -3,10 +3,13 @@
     CourseRepository courseRepository = new CourseRepository();
     int courseId = Integer.parseInt(request.getParameter("id"));
     Course course = courseRepository.getById(courseId);
+    request.setAttribute("current", "courses");
 %>
-<html>
-<head><title>Перегляд курсу</title></head>
-<body>
+<%@include file="include/header.jsp" %>
+
+  <section class="container section-part">
+    <div class="container">
+
 <%
     if (course != null) {
 %>
@@ -21,5 +24,7 @@
     }
 %>
 
-</body>
-</html>
+  </section>
+</main>
+
+<%@include file="include/footer.jsp" %>
