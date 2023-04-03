@@ -3,7 +3,7 @@ package ua.study.school;
 import ua.study.school.utility.Log;
 import ua.study.school.utility.LogFactory;
 import ua.study.school.utility.LogLevel;
-import ua.study.school.utility.LogService;
+import ua.study.school.utility.Logger;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,10 +17,10 @@ public class HW20 {
         logFactory.warning("ua.study.school.HW20", "This is a warning message", "Warning stack trace");
         logFactory.error("ua.study.school.HW20", "This is an error message", "Error stack trace");
 
-        LogService logService = new LogService();
-        logService.write(logFactory.getLogs());
+        Logger logger = new Logger();
+        logger.write(logFactory.getLogs());
 
-        Log[] fromLogFile = logService.read();
+        Log[] fromLogFile = logger.read();
         System.out.println(Arrays.toString(fromLogFile));
 
         // Home assignment 28, task 3

@@ -1,7 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"
-%><%@ page import="ua.study.school.repository.CourseRepository,ua.study.school.models.Course,java.util.List" %><%
-     CourseRepository courseRepository = new CourseRepository();
-     List<Course> courses = courseRepository.getAll();
+%><%@ page import="ua.study.school.service.CourseService,
+                   ua.study.school.models.Course,
+                   ua.study.school.util.Config,
+                   org.springframework.context.ApplicationContext,
+                   java.util.List" %><%
+    ApplicationContext context = Config.get();
+    CourseService courseService = context.getBean(CourseService.class);
+    List<Course> courses = courseService.getAll();
     request.setAttribute("current", "courses");
 %>
 <%@include file="include/header.jsp" %>

@@ -1,6 +1,7 @@
 package ua.study.school.repository;
 
 
+import org.springframework.stereotype.Repository;
 import ua.study.school.models.HomeAssignment;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Repository
 public class HomeAssignmentRepository implements BaseRepository<HomeAssignment> {
     private final ArrayList<HomeAssignment> homeAssignments = new ArrayList<>();
     private final Map<Integer, List<HomeAssignment>> byLectureMap = new HashMap<>();

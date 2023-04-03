@@ -1,9 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8"
-%><%@ page import="ua.study.school.repository.LectureRepository,ua.study.school.models.Lecture,java.util.List" %><%
-       LectureRepository lectureRepository = new LectureRepository();
-       List<List<Object>> lecturesBefore2023 = lectureRepository.getLecturesAndAdditionalMaterials();
-       List<Object> earliest = lectureRepository.getEarliestLecture();
-       request.setAttribute("current", "lectures");
+%><%@ page import="ua.study.school.service.LectureService,
+                   ua.study.school.models.Lecture,
+                   java.util.List,
+                   ua.study.school.util.Config,
+                   org.springframework.context.ApplicationContext" %><%
+    ApplicationContext context = Config.get();
+    LectureService lectureService = context.getBean(LectureService.class);
+    List<List<Object>> lecturesBefore2023 = lectureService.getLecturesAndAdditionalMaterials();
+    List<Object> earliest = lectureService.getEarliestLecture();
+    request.setAttribute("current", "lectures");
   %>
 <%@include file="include/header.jsp" %>
 

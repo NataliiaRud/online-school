@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"
-%><%@ page import="ua.study.school.repository.AddMaterialsRepository,java.util.List" %><%
-       AddMaterialsRepository addMaterialsRepository = new AddMaterialsRepository();
-       List<List<Object>> am = addMaterialsRepository.getLecturesAndAdditionalMaterials();
+%><%@ page import="ua.study.school.service.AddMaterialsService,
+                   java.util.List,
+                   ua.study.school.util.Config,
+                   org.springframework.context.ApplicationContext" %><%
+       ApplicationContext context = Config.get();
+       AddMaterialsService addMaterialsService = context.getBean(AddMaterialsService.class);
+       List<List<Object>> am = addMaterialsService.getLecturesAndAdditionalMaterials();
        request.setAttribute("current", "additional-materials");
   %>
 <%@include file="include/header.jsp" %>

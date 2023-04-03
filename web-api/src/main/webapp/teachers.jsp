@@ -1,7 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"
-%><%@ page import="ua.study.school.repository.TeacherRepository,ua.study.school.models.Teacher,java.util.List" %><%
-       TeacherRepository teacherRepository = new TeacherRepository();
-       List<Teacher> teachers = teacherRepository.getTeachersStartingFromCharacter("N");
+%><%@ page import="ua.study.school.service.TeacherService,
+                   ua.study.school.models.Teacher,
+                   java.util.List,
+                   ua.study.school.util.Config,
+                   org.springframework.context.ApplicationContext" %><%
+       ApplicationContext context = Config.get();
+       TeacherService teacherService = context.getBean(TeacherService.class);
+       List<Teacher> teachers = teacherService.getTeachersStartingFromCharacter("N");
        request.setAttribute("current", "teachers");
   %>
 <%@include file="include/header.jsp" %>

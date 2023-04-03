@@ -1,34 +1,38 @@
 package ua.study.school.repository;
 
-import ua.study.school.PropertiesLoader;
-import ua.study.school.models.Student;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import ua.study.school.configuration.ApplicationProperties;
 import ua.study.school.models.Teacher;
-import ua.study.school.utility.LogService;
+import ua.study.school.utility.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+@Repository
+public class TeacherRepository implements BaseRepository<Teacher>, InitializingBean {
+    private static final Logger LOGGER = new Logger();
 
-public class TeacherRepository implements BaseRepository<Teacher> {
-    private static final LogService logService = new LogService();
+    @Autowired
+    private ApplicationProperties properties;
 
-    private final String url;
-    private final String user;
-    private final String password;
+    private String url;
+    private String user;
+    private String password;
 
-    public TeacherRepository() {
-        Properties properties = PropertiesLoader.loadProperties();
+    @Override
+    public void afterPropertiesSet() throws Exception {
         try {
-            Class.forName(properties.getProperty("db.driver"));
+            Class.forName(properties.getDriver());
         } catch (ClassNotFoundException e) {
-            logService.error("", e);
+            LOGGER.error("", e);
             throw new RuntimeException(e);
         }
-        url = properties.getProperty("db.url");
-        user = properties.getProperty("db.user");
-        password = properties.getProperty("db.password");
+        url = properties.getUrl();
+        user = properties.getUser();
+        password = properties.getPassword();
     }
 
     private Teacher readSTeacher(ResultSet rs) throws SQLException {
@@ -110,7 +114,7 @@ public class TeacherRepository implements BaseRepository<Teacher> {
             }
             return ret;
         } catch (SQLException e) {
-            logService.error("Error occurred while getting teachers", e);
+            LOGGER.error("Error occurred while getting teachers", e);
         }
 
         throw new RuntimeException();

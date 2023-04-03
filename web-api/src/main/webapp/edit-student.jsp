@@ -1,21 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8"
-%><%@ page import="ua.study.school.repository.StudentsRepository,
+%><%@ page import="ua.study.school.service.StudentsService,
                    ua.study.school.models.Student,
-                   ua.study.school.repository.SchoolRepository,
+                   ua.study.school.service.SchoolService,
                    ua.study.school.models.School,
-                   java.util.List" %><%
-       StudentsRepository studentsRepository = new StudentsRepository();
-       SchoolRepository schoolRepository = new SchoolRepository();
+                   java.util.List,
+                   ua.study.school.util.Config,
+                   org.springframework.context.ApplicationContext" %><%
+       ApplicationContext context = Config.get();
+       StudentsService studentsService = context.getBean(StudentsService.class);
+       SchoolService schoolService = context.getBean(SchoolService.class);
        if (request.getParameter("user-first-name") != null) {
            String firstName = request.getParameter("user-first-name");
            String lastName = request.getParameter("user-last-name");
            String phone = request.getParameter("user-phone");
            String email = request.getParameter("user-email");
-           List<School> schools = schoolRepository.getAll();
+           List<School> schools = schoolService.getAll();
            if (schools.size() > 0) {
                schools.sort((s1, s2) -> Integer.compare(s1.getId(), s2.getId()));
                Student student = new Student(0, firstName, lastName, schools.get(0).getId(), phone, email);
-               studentsRepository.add(student);
+               studentsService.add(student);
            }
            response.sendRedirect("students.jsp");
            return;

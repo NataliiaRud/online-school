@@ -1,14 +1,14 @@
 package ua.study.school.models;
 
 import ua.study.school.exceptions.ValidationExceptions;
-import ua.study.school.utility.LogService;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import ua.study.school.utility.Logger;
 
 public abstract class Person extends Base {
-    private static final LogService logService = new LogService(Person.class.getName());
+    private static final Logger LOGGER = new Logger(Person.class.getName());
 
     private static final Set<String> emails = new HashSet<>();
 
@@ -111,7 +111,7 @@ public abstract class Person extends Base {
                 throw new ValidationExceptions("Wrong email format");
             }
         } catch(ValidationExceptions e) {
-            logService.error("Email validation error", e);
+            LOGGER.error("Email validation error", e);
         }
         if(email.indexOf('@')== -1) {
             System.out.println("Email error");
@@ -127,7 +127,7 @@ public abstract class Person extends Base {
                 throw new ValidationExceptions("Wrong phone number");
         }
         catch(ValidationExceptions e) {
-            logService.error("Email phone error", e);
+            LOGGER.error("Email phone error", e);
 
         }
         boolean areNumbers = false;
