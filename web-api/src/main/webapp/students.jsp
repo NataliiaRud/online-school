@@ -1,7 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"
-%><%@ page import="ua.study.school.repository.StudentsRepository,ua.study.school.models.Student,java.util.List" %><%
-       StudentsRepository studentsRepository = new StudentsRepository();
-       List<Student> students = studentsRepository.getAll();
+%><%@ page import="ua.study.school.service.StudentsService,
+                   ua.study.school.models.Student,
+                   java.util.List,
+                   ua.study.school.util.Config,
+                   org.springframework.context.ApplicationContext" %><%
+       ApplicationContext context = Config.get();
+       StudentsService studentsService = context.getBean(StudentsService.class);
+       List<Student> students = studentsService.getAll();
        students.sort((s1, s2) -> s1.getLastName().compareTo(s2.getLastName()));
        request.setAttribute("current", "students");
   %>

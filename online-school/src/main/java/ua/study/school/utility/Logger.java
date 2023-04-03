@@ -8,16 +8,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogService {
+public class Logger {
     private static final String LOG_FILE_NAME = "log-file.log";
 
     private String name;
 
-    public LogService() {
+    public Logger() {
         this.name = getClass().getName();
     }
 
-    public LogService(String name) {
+    public Logger(String name) {
         this.name = name;
     }
 

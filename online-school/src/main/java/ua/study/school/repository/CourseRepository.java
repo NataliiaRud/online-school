@@ -1,38 +1,38 @@
 package ua.study.school.repository;
 
-import ua.study.school.InitializeDatabase;
-import ua.study.school.PropertiesLoader;
-import ua.study.school.exceptions.EntityNotFoundException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import ua.study.school.configuration.ApplicationProperties;
 import ua.study.school.models.Course;
-import ua.study.school.utility.LogService;
+import ua.study.school.utility.Logger;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+@Repository
+public class CourseRepository implements BaseRepository<Course>, InitializingBean {
+    private static final Logger LOGGER = new Logger();
 
-public class CourseRepository implements BaseRepository<Course> {
-    private static final LogService logService = new LogService();
+    @Autowired
+    private ApplicationProperties properties;
 
-    private final String url;
-    private final String user;
-    private final String password;
+    private String url;
+    private String user;
+    private String password;
 
-    public CourseRepository() {
-        Properties properties = PropertiesLoader.loadProperties();
+    @Override
+    public void afterPropertiesSet() throws Exception {
         try {
-            Class.forName(properties.getProperty("db.driver"));
+            Class.forName(properties.getDriver());
         } catch (ClassNotFoundException e) {
-            logService.error("", e);
+            LOGGER.error("", e);
             throw new RuntimeException(e);
         }
-        url = properties.getProperty("db.url");
-        user = properties.getProperty("db.user");
-        password = properties.getProperty("db.password");
+        url = properties.getUrl();
+        user = properties.getUser();
+        password = properties.getPassword();
     }
 
     private Course readCourse(ResultSet rs) throws SQLException {
@@ -51,7 +51,7 @@ public class CourseRepository implements BaseRepository<Course> {
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
-            logService.error("Error occurred while getting number of courses", e);
+            LOGGER.error("Error occurred while getting number of courses", e);
             throw new RuntimeException(e);
         }
     }
@@ -75,7 +75,7 @@ public class CourseRepository implements BaseRepository<Course> {
             statement.setString(2, course.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logService.error("Error occurred while adding course", e);
+            LOGGER.error("Error occurred while adding course", e);
         }
     }
 
@@ -96,7 +96,7 @@ public class CourseRepository implements BaseRepository<Course> {
                 return readCourse(rs);
             }
         } catch (SQLException e) {
-            logService.error("Error occurred while getting course by id", e);
+            LOGGER.error("Error occurred while getting course by id", e);
         }
 
         return null;
@@ -114,7 +114,7 @@ public class CourseRepository implements BaseRepository<Course> {
             }
             return ret;
         } catch (SQLException e) {
-            logService.error("Error occurred while getting all courses", e);
+            LOGGER.error("Error occurred while getting all courses", e);
         }
 
         throw new RuntimeException();
@@ -127,7 +127,7 @@ public class CourseRepository implements BaseRepository<Course> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logService.error("Error occurred while deleting course by id", e);
+            LOGGER.error("Error occurred while deleting course by id", e);
         }
     }
 }

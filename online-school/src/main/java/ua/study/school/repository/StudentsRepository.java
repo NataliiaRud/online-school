@@ -1,35 +1,39 @@
 package ua.study.school.repository;
 
 
-import ua.study.school.PropertiesLoader;
-import ua.study.school.models.Course;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import ua.study.school.configuration.ApplicationProperties;
 import ua.study.school.models.Student;
-import ua.study.school.utility.LogService;
+import ua.study.school.utility.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
+@Repository
+public class StudentsRepository implements BaseRepository<Student>, InitializingBean {
+    private static final Logger LOGGER = new Logger();
 
-public class StudentsRepository implements BaseRepository<Student> {
-    private static final LogService logService = new LogService();
+    @Autowired
+    private ApplicationProperties properties;
 
-    private final String url;
-    private final String user;
-    private final String password;
+    private String url;
+    private String user;
+    private String password;
 
-    public StudentsRepository() {
-        Properties properties = PropertiesLoader.loadProperties();
+    @Override
+    public void afterPropertiesSet() throws Exception {
         try {
-            Class.forName(properties.getProperty("db.driver"));
+            Class.forName(properties.getDriver());
         } catch (ClassNotFoundException e) {
-            logService.error("", e);
+            LOGGER.error("", e);
             throw new RuntimeException(e);
         }
-        url = properties.getProperty("db.url");
-        user = properties.getProperty("db.user");
-        password = properties.getProperty("db.password");
+        url = properties.getUrl();
+        user = properties.getUser();
+        password = properties.getPassword();
     }
 
     private Student readStudent(ResultSet rs) throws SQLException {
@@ -51,7 +55,7 @@ public class StudentsRepository implements BaseRepository<Student> {
             rs.next();
             return rs.getInt(1);
         } catch (SQLException e) {
-            logService.error("Error occurred while getting students count", e);
+            LOGGER.error("Error occurred while getting students count", e);
             throw new RuntimeException(e);
         }
     }
@@ -79,7 +83,7 @@ public class StudentsRepository implements BaseRepository<Student> {
             statement.setString(5, student.getEmail());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logService.error("Error occurred while adding student", e);
+            LOGGER.error("Error occurred while adding student", e);
         }
     }
 
@@ -100,7 +104,7 @@ public class StudentsRepository implements BaseRepository<Student> {
                 return readStudent(rs);
             }
         } catch (SQLException e) {
-            logService.error("Error occurred while getting a student by id", e);
+            LOGGER.error("Error occurred while getting a student by id", e);
         }
 
         return null;
@@ -118,7 +122,7 @@ public class StudentsRepository implements BaseRepository<Student> {
             }
             return ret;
         } catch (SQLException e) {
-            logService.error("Error occurred while getting all students", e);
+            LOGGER.error("Error occurred while getting all students", e);
         }
 
         throw new RuntimeException();
@@ -131,7 +135,7 @@ public class StudentsRepository implements BaseRepository<Student> {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logService.error("Error occurred while deleting student by id", e);
+            LOGGER.error("Error occurred while deleting student by id", e);
         }
     }
 }

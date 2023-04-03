@@ -1,28 +1,32 @@
 package ua.study.school;
 
-import ua.study.school.utility.LogService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ua.study.school.configuration.ApplicationConfiguration;
+import ua.study.school.configuration.ApplicationProperties;
+import ua.study.school.utility.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 
 public class InitializeDatabase {
-    private static final LogService logService = new LogService();
+    private static final Logger LOGGER = new Logger();
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Properties properties = PropertiesLoader.loadProperties();
+        ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+        ApplicationProperties properties = context.getBean(ApplicationProperties.class);
 
-        Class.forName(properties.getProperty("db.driver"));
+        Class.forName(properties.getDriver());
 
         Connection connection = null;
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection(properties.getProperty("db.url"),
-                    properties.getProperty("db.user"),
-                    properties.getProperty("db.password"));
+            connection = DriverManager.getConnection(properties.getUrl(),
+                    properties.getUser(),
+                    properties.getPassword());
 
             statement = connection.createStatement();
 
@@ -49,7 +53,7 @@ public class InitializeDatabase {
             String sql = schema + "\r\n" + data;
             statement.execute(sql);
         } catch (SQLException | IOException e) {
-            logService.error("Error occurred while initializing H2 database", e);
+            LOGGER.error("Error occurred while initializing H2 database", e);
             e.printStackTrace();
         } finally {
             if (statement != null) {

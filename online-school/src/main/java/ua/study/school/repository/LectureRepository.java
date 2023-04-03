@@ -1,34 +1,39 @@
 package ua.study.school.repository;
 
-import ua.study.school.PropertiesLoader;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import ua.study.school.configuration.ApplicationProperties;
 import ua.study.school.exceptions.EntityNotFoundException;
 import ua.study.school.models.Lecture;
-import ua.study.school.models.School;
-import ua.study.school.utility.LogService;
+import ua.study.school.utility.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-public class LectureRepository implements BaseRepository<Lecture>{
-    private static final LogService logService = new LogService();
+@Repository
+public class LectureRepository implements BaseRepository<Lecture>, InitializingBean {
+    private static final Logger LOGGER = new Logger();
 
-    private final String url;
-    private final String user;
-    private final String password;
+    @Autowired
+    private ApplicationProperties properties;
 
-    public LectureRepository() {
-        Properties properties = PropertiesLoader.loadProperties();
+    private String url;
+    private String user;
+    private String password;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
         try {
-            Class.forName(properties.getProperty("db.driver"));
+            Class.forName(properties.getDriver());
         } catch (ClassNotFoundException e) {
-            logService.error("", e);
+            LOGGER.error("", e);
             throw new RuntimeException(e);
         }
-        url = properties.getProperty("db.url");
-        user = properties.getProperty("db.user");
-        password = properties.getProperty("db.password");
+        url = properties.getUrl();
+        user = properties.getUser();
+        password = properties.getPassword();
     }
 
     ArrayList <Lecture> lectures = new ArrayList<>();
@@ -63,7 +68,7 @@ public class LectureRepository implements BaseRepository<Lecture>{
                 throw new EntityNotFoundException("Lecture with id = " + id + " doesn't exist in repo");
             }
         } catch(EntityNotFoundException e) {
-            logService.error("Lecture not found: " + id, e);
+            LOGGER.error("Lecture not found: " + id, e);
         }
     }
 
@@ -125,7 +130,7 @@ public class LectureRepository implements BaseRepository<Lecture>{
             }
             return ret;
         } catch (SQLException e) {
-            logService.error("Error occurred while getting lectures before 2023", e);
+            LOGGER.error("Error occurred while getting lectures before 2023", e);
         }
 
         throw new RuntimeException();
@@ -152,7 +157,7 @@ public class LectureRepository implements BaseRepository<Lecture>{
             }
             return null;
         } catch (SQLException e) {
-            logService.error("Error occurred while getting lectures before 2023", e);
+            LOGGER.error("Error occurred while getting lectures before 2023", e);
         }
 
         throw new RuntimeException();
