@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 @Table(name = "student")
@@ -12,6 +13,17 @@ public class Student extends Person implements Serializable {
     private static final long serialVersionUID = 2167609860155503448L;
 
     private static int counter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "school_id", referencedColumnName = "id")
+    private School school;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_course",
+            joinColumns = { @JoinColumn(name = "student_id") },
+            inverseJoinColumns = { @JoinColumn(name = "course_id") }
+    )
+    private Collection<Course> courses;
 
     public Student() {
         super(Role.STUDENT);

@@ -16,6 +16,10 @@ public class AdditionalMaterial extends Base implements Serializable {
     private ResourceType resourceType;
     private static int counter;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id", referencedColumnName = "id")
+    private Lecture lecture;
+
     public AdditionalMaterial() {
         super(0);
     }

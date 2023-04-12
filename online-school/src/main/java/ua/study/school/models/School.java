@@ -2,10 +2,19 @@ package ua.study.school.models;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "school")
 public class School extends Base {
     private static int counter;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "school")
+    private Collection<Course> courses;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "school")
+    private Collection<Teacher> teachers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "school")
+    private Collection<Student> students;
 
     public School() {
         super(0);
