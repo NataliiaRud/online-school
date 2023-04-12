@@ -60,8 +60,8 @@ public class Main {
         addMaterialsService.add(addMaterial3);
 
 
-        HomeAssignment[] homeAssignments1 = {homeAssignment1, homeAssignment2, homeAssignment3};
-        AdditionalMaterial[] additionalMaterial1 = {addMaterial1, addMaterial2, addMaterial3};
+        Collection<HomeAssignment> homeAssignments1 = Arrays.asList(homeAssignment1, homeAssignment2, homeAssignment3);
+        Collection<AdditionalMaterial> additionalMaterial1 = Arrays.asList(addMaterial1, addMaterial2, addMaterial3);
 
         // creating 3 lectures automatically
         int i = 0;
@@ -262,7 +262,7 @@ public class Main {
         if (!copyOfLectures.isEmpty()) {
             copyOfLectures.sort((lecture1, lecture2) -> {
                 if (lecture1.getLectureDate().compareTo(lecture2.getLectureDate()) == 0) {
-                    return Integer.compare(lecture2.getHomeAssignments().length, lecture1.getHomeAssignments().length);
+                    return Integer.compare(lecture2.getHomeAssignments().size(), lecture1.getHomeAssignments().size());
                 }
 
                 return lecture1.getLectureDate().compareTo(lecture2.getLectureDate());
@@ -453,8 +453,8 @@ public class Main {
 
     private record CreateLectureWrapper(Teacher teacher1, Teacher teacher2, Teacher teacher3, Student student1,
                                         Student student2, Student student3, Course course1, Course course2, Course course3,
-                                        int categoryNumber, HomeAssignment[] homeAssignments1,
-                                        AdditionalMaterial[] additionalMaterial1) {
+                                        int categoryNumber, Collection<HomeAssignment> homeAssignments1,
+                                        Collection<AdditionalMaterial> additionalMaterial1) {
 
         @Override
         public boolean equals(Object o) {

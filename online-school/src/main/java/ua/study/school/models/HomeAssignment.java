@@ -1,8 +1,12 @@
 package ua.study.school.models;
 
+import jakarta.persistence.*;
+
 import java.io.Serial;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "home_assignment")
 public class HomeAssignment extends Base implements Serializable {
     @Serial
     private static final long serialVersionUID = 2281629061527663261L;
@@ -11,6 +15,10 @@ public class HomeAssignment extends Base implements Serializable {
     private int lectureId;
     private String task;
     private static int counter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lecture_id", referencedColumnName = "id")
+    private Lecture lecture;
 
     public HomeAssignment() {
         super(0);
@@ -24,6 +32,20 @@ public class HomeAssignment extends Base implements Serializable {
         counter++;
     }
 
+    @Override
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getId() {
+        return super.getId();
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+    }
+
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -32,6 +54,7 @@ public class HomeAssignment extends Base implements Serializable {
         this.name = name;
     }
 
+    @Column(name = "lecture_id")
     public int getLectureId() {
         return lectureId;
     }
@@ -40,6 +63,7 @@ public class HomeAssignment extends Base implements Serializable {
         this.lectureId = lectureId;
     }
 
+    @Column(name = "task")
     public String getTask() {
         return task;
     }

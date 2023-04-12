@@ -2,12 +2,33 @@ package ua.study.school.models;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+
 @Entity
 @Table(name = "course")
 public class Course extends Base {
     private static int counter;
 
     private int schoolId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "school_id", referencedColumnName = "id")
+    private School school;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
+    private Collection<Lecture> lectures;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "teacher_course",
+            joinColumns = { @JoinColumn(name = "course_id") },
+            inverseJoinColumns = { @JoinColumn(name = "teacher_id") }
+    )
+    private Collection<Teacher> teachers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_course",
+            joinColumns = { @JoinColumn(name = "course_id") },
+            inverseJoinColumns = { @JoinColumn(name = "student_id") }
+    )
+    private Collection<Student> students;
 
     public Course() {
         super(0);
