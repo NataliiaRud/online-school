@@ -1,10 +1,13 @@
 package ua.study.school.models;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "school")
 public class School extends Base {
     private static int counter;

@@ -1,58 +1,25 @@
 package ua.study.school.repository;
 
-import org.springframework.beans.factory.InitializingBean;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.study.school.configuration.ApplicationProperties;
 import ua.study.school.models.Course;
-import ua.study.school.utility.Logger;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CourseRepository implements BaseRepository<Course>, InitializingBean {
-    private static final Logger LOGGER = new Logger();
-
+public class CourseRepository implements BaseRepository<Course> {
     @Autowired
-    private ApplicationProperties properties;
-
-    private String url;
-    private String user;
-    private String password;
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        try {
-            Class.forName(properties.getDriver());
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("", e);
-            throw new RuntimeException(e);
-        }
-        url = properties.getUrl();
-        user = properties.getUser();
-        password = properties.getPassword();
-    }
-
-    private Course readCourse(ResultSet rs) throws SQLException {
-        return Course.createCourse(
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getInt("school_id")
-        );
-    }
+    private SessionFactory sessionFactory;
 
     @Override
     public Integer getSize() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT count(*) FROM course")) {
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while getting number of courses", e);
-            throw new RuntimeException(e);
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("SELECT count(*) FROM Course", Long.class);
+            return query.list().get(0).intValue();
         }
     }
 
@@ -69,13 +36,16 @@ public class CourseRepository implements BaseRepository<Course>, InitializingBea
 
     @Override
     public void add(Course course) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO course (school_id, name) VALUES (?, ?)")) {
-            statement.setInt(1, course.getId());
-            statement.setString(2, course.getName());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while adding course", e);
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            session.save(course);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
         }
     }
 
@@ -87,47 +57,30 @@ public class CourseRepository implements BaseRepository<Course>, InitializingBea
 
     @Override
     public Course getById(Integer id) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM course WHERE id = ?")) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
+        try (Session session = sessionFactory.openSession()) {
+            Query<Course> query = session.createQuery("from Course where id = :id", Course.class);
+            query.setParameter("id", id);
 
-            if (rs.next()) {
-                return readCourse(rs);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while getting course by id", e);
+            List<Course> courses = query.list();
+
+            return courses.isEmpty() ? null : courses.get(0);
         }
-
-        return null;
     }
 
     @Override
     public List<Course> getAll() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             CallableStatement statement = connection.prepareCall("{call get_records_from_table('course')}")) {
-            ResultSet rs = statement.executeQuery();
-
-            List<Course> ret = new ArrayList<>();
-            while (rs.next()) {
-                ret.add(readCourse(rs));
-            }
-            return ret;
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while getting all courses", e);
+        try (Session session = sessionFactory.openSession()) {
+            Query<Course> query = session.createNativeQuery("{call get_records_from_table('course')}", Course.class);
+            return query.list();
         }
-
-        throw new RuntimeException();
     }
 
     @Override
     public void deleteById(Integer id) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM course WHERE id = ?")) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while deleting course by id", e);
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("delete from Course where id= :id");
+            query.setParameter("id", id);
+            query.executeUpdate();
         }
     }
 }

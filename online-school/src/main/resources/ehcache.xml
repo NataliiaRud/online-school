@@ -1,0 +1,4 @@
+<ehcache>
+    <cache name="ua.study.school.models.School" maxElementsInMemory="10" />
+    <cache name="ua.study.school.models.Course" maxElementsInMemory="1000" />
+</ehcache>
