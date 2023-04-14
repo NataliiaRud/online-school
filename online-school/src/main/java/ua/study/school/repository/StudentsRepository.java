@@ -1,62 +1,26 @@
 package ua.study.school.repository;
 
 
-import org.springframework.beans.factory.InitializingBean;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.study.school.configuration.ApplicationProperties;
 import ua.study.school.models.Student;
-import ua.study.school.utility.Logger;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class StudentsRepository implements BaseRepository<Student>, InitializingBean {
-    private static final Logger LOGGER = new Logger();
-
+public class StudentsRepository implements BaseRepository<Student> {
     @Autowired
-    private ApplicationProperties properties;
-
-    private String url;
-    private String user;
-    private String password;
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        try {
-            Class.forName(properties.getDriver());
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("", e);
-            throw new RuntimeException(e);
-        }
-        url = properties.getUrl();
-        user = properties.getUser();
-        password = properties.getPassword();
-    }
-
-    private Student readStudent(ResultSet rs) throws SQLException {
-        return new Student(
-                rs.getInt("id"),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
-                rs.getInt("school_id"),
-                rs.getString("phone"),
-                rs.getString("email")
-        );
-    }
+    private SessionFactory sessionFactory;
 
     @Override
     public Integer getSize() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT count(*) FROM student")) {
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while getting students count", e);
-            throw new RuntimeException(e);
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("SELECT count(*) FROM Student", Long.class);
+            return query.list().get(0).intValue();
         }
     }
 
@@ -73,17 +37,16 @@ public class StudentsRepository implements BaseRepository<Student>, Initializing
 
     @Override
     public void add(Student student) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(
-                     "INSERT INTO student (school_id, first_name, last_name, phone, email) VALUES (?, ?, ?, ?, ?)")) {
-            statement.setInt(1, student.getSchoolId());
-            statement.setString(2, student.getFirstName());
-            statement.setString(3, student.getLastName());
-            statement.setString(4, student.getPhone());
-            statement.setString(5, student.getEmail());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while adding student", e);
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            session.save(student);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
         }
     }
 
@@ -95,47 +58,30 @@ public class StudentsRepository implements BaseRepository<Student>, Initializing
 
     @Override
     public Student getById(Integer id) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM student WHERE id = ?")) {
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
+        try (Session session = sessionFactory.openSession()) {
+            Query<Student> query = session.createQuery("from Student where id = :id", Student.class);
+            query.setParameter("id", id);
 
-            if (rs.next()) {
-                return readStudent(rs);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while getting a student by id", e);
+            List<Student> students = query.list();
+
+            return students.isEmpty() ? null : students.get(0);
         }
-
-        return null;
     }
 
     @Override
     public List<Student> getAll() {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             CallableStatement statement = connection.prepareCall("{call get_records_from_table('student')}")) {
-            ResultSet rs = statement.executeQuery();
-
-            List<Student> ret = new ArrayList<>();
-            while (rs.next()) {
-                ret.add(readStudent(rs));
-            }
-            return ret;
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while getting all students", e);
+        try (Session session = sessionFactory.openSession()) {
+            Query<Student> query = session.createNativeQuery("{call get_records_from_table('student')}", Student.class);
+            return query.list();
         }
-
-        throw new RuntimeException();
     }
 
     @Override
     public void deleteById(Integer id) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM student WHERE id = ?")) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            LOGGER.error("Error occurred while deleting student by id", e);
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery("delete from Student where id= :id");
+            query.setParameter("id", id);
+            query.executeUpdate();
         }
     }
 }
