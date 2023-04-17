@@ -5,33 +5,75 @@ import org.springframework.stereotype.Service;
 import ua.study.school.models.AdditionalMaterial;
 import ua.study.school.models.ResourceType;
 import ua.study.school.repository.AddMaterialsRepository;
+import ua.study.school.repository.BaseService;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @Service
-public class AddMaterialsService {
+public class AddMaterialsService implements BaseService<AdditionalMaterial> {
     @Autowired
-    private AddMaterialsRepository addMaterialsRepository;
+    private AddMaterialsRepository<AdditionalMaterial> addMaterialsRepository;
 
-    public void add(AdditionalMaterial addMaterial) {
-        addMaterialsRepository.add(addMaterial);
+    private final ArrayList<AdditionalMaterial> addMaterials = new ArrayList<>();
+    private final Map<Integer, List<AdditionalMaterial>> byLectureMap = new HashMap<>();
+
+    public Integer getSize() {
+        return addMaterials.size();
     }
 
-    public List<AdditionalMaterial> getAll() {
-        return addMaterialsRepository.getAll();
+    @Override
+    public boolean isEmpty() {
+        return addMaterials.isEmpty();
+    }
+
+    @Override
+    public AdditionalMaterial getByIndex(Integer indexToGet) {
+        return indexToGet < addMaterials.size() ? addMaterials.get(indexToGet) : null;
+    }
+
+    @Override
+    public void add(AdditionalMaterial addMaterial) {
+        addMaterials.add(addMaterial);
+
+        List<AdditionalMaterial> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
+        list.add(addMaterial);
     }
 
     public List<AdditionalMaterial> getByLectureId(int lectureId) {
-        return addMaterialsRepository.getByLectureId(lectureId);
+        return byLectureMap.computeIfAbsent(lectureId, k -> new ArrayList<>());
     }
 
+    @Override
+    public void add(Integer id, AdditionalMaterial addMaterial) {
+        addMaterials.add(addMaterial);
+
+        List<AdditionalMaterial> list = byLectureMap.computeIfAbsent(addMaterial.getLectureId(), k -> new ArrayList<>());
+        list.add(addMaterial);
+    }
+
+    @Override
+    public AdditionalMaterial getById(Integer id) {
+        for (AdditionalMaterial addMaterial : addMaterials) {
+            if (addMaterial.getId() == id) {
+                return addMaterial;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<AdditionalMaterial> getAll() {
+        return this.addMaterials;
+    }
+
+    @Override
     public void deleteById(Integer id) {
-        addMaterialsRepository.deleteById(id);
-    }
+        addMaterials.removeIf(addMaterials -> addMaterials.getId() == id);
 
-    public List<List<Object>> getLecturesAndAdditionalMaterials() {
-        return addMaterialsRepository.getLecturesAndAdditionalMaterials();
+        for (Integer lectureId : byLectureMap.keySet()) {
+            List<AdditionalMaterial> list = byLectureMap.get(lectureId);
+            list.removeIf(addMaterials -> addMaterials.getId() == id);
+        }
     }
 
     public AdditionalMaterial createAddMaterials1() {
@@ -60,6 +102,21 @@ public class AddMaterialsService {
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<List<Object>> getLecturesAndAdditionalMaterials() {
+        Collection<Object[]> collection = addMaterialsRepository.getLecturesAndAdditionalMaterials();
+
+        List<List<Object>> ret = new ArrayList<>();
+        for (Object[] objects : collection) {
+            List<Object> list = new ArrayList<>();
+            for (Object object : objects) {
+                list.add(object);
+            }
+            ret.add(list);
+        }
+
+        return ret;
     }
 }
 
