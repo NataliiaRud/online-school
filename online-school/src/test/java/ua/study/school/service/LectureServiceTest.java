@@ -18,6 +18,6 @@ public class LectureServiceTest {
     public void testPrintLectureIds() {
         LectureService lectureService = new LectureService(lectureRepository);
         lectureService.printLectureIds();
-        verify(lectureRepository, times(1)).getAll();
+        verify(lectureRepository, times(1)).findAll();
     }
 }

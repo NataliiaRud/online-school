@@ -3,7 +3,7 @@ package ua.study.school.repository;
 
 import java.util.List;
 
-public interface BaseRepository<T> {
+public interface BaseService<T> {
     Integer getSize();
 
     boolean isEmpty();

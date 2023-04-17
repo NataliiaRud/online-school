@@ -19,6 +19,7 @@
         <hibernate-ehcache.version>5.6.15.Final</hibernate-ehcache.version>
         <springframework.version>6.0.7</springframework.version>
         <cglib.version>3.3.0</cglib.version>
+        <spring-data-jpa.version>3.0.4</spring-data-jpa.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
         </dependency>
 
         <dependency>
