@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Перелік курсів онлайн школи</title>
+</head>
+<body>
+<div class="container">
+    <header class="head">
+        <div>
+            <a class="logo link" href="/">Онлайн Школа</a>
+        </div>
+
+        <nav class="navigation">
+            <ul class="menu site-nav list">
+                <li><a class="menu__nav-link link" href="/">Онлайн Школа</a></li>
+                <li><a class="menu__nav-link link current" href="/course">Курси</a></li>
+                <li><a class="menu__nav-link link" href="/students">Студенти</a></li>
+                <li><a class="menu__nav-link link" href="/teachers">Вчителі</a><li>
+                <li><a class="menu__nav-link link" href="/lectures">Лекції</a></li>
+                <li><a class="menu__nav-link link" href="/additional-materials">Додаткові матеріали</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container section-part">
+            <div class="container">
+                <table>
+                    <tr th:each="course : ${courses}">
+                        <td class="align-middle" th:text="${course.id}"></td>
+                        <td class="align-middle">
+                            <a th:href="@{'/view-course?id=' + ${course.id}}" th:text="${course.name}"></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot footer-part" th:insert="~{fragments/footer :: footer}">
+
+    </footer>
+</div>
+</body>
+</html>

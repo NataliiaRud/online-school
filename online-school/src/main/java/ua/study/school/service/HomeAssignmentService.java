@@ -37,7 +37,7 @@ public class HomeAssignmentService implements BaseService<HomeAssignment> {
     public void add(HomeAssignment homeAssignment) {
         homeAssignments.add(homeAssignment);
 
-        List<HomeAssignment> list = byLectureMap.computeIfAbsent(homeAssignment.getLectureId(), k -> new ArrayList<>());
+        List<HomeAssignment> list = byLectureMap.computeIfAbsent(homeAssignment.getLecture().getId(), k -> new ArrayList<>());
         list.add(homeAssignment);
     }
 
@@ -49,7 +49,7 @@ public class HomeAssignmentService implements BaseService<HomeAssignment> {
     public void add(Integer id, HomeAssignment homeAssignment) {
         homeAssignments.add(homeAssignment);
 
-        List<HomeAssignment> list = byLectureMap.computeIfAbsent(homeAssignment.getLectureId(), k -> new ArrayList<>());
+        List<HomeAssignment> list = byLectureMap.computeIfAbsent(homeAssignment.getLecture().getId(), k -> new ArrayList<>());
         list.add(homeAssignment);
     }
 

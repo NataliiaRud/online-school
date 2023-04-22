@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Перелік студентів</title>
+</head>
+<body>
+<div class="container">
+    <header class="head">
+        <div>
+            <a class="logo link" href="/">Онлайн Школа</a>
+        </div>
+
+        <nav class="navigation">
+            <ul class="menu site-nav list">
+                <li><a class="menu__nav-link link" href="/">Онлайн Школа</a></li>
+                <li><a class="menu__nav-link link" href="/course">Курси</a></li>
+                <li><a class="menu__nav-link link current" href="/students">Студенти</a></li>
+                <li><a class="menu__nav-link link" href="/teachers">Вчителі</a><li>
+                <li><a class="menu__nav-link link" href="/lectures">Лекції</a></li>
+                <li><a class="menu__nav-link link" href="/additional-materials">Додаткові матеріали</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container section-part">
+            <div class="container">
+                <h1>Перелік студентів</h1>
+                <table>
+                    <tr th:each="student : ${students}">
+                        <td class="align-middle" th:text="${student.id}"></td>
+                        <td class="align-middle" th:text="${student.firstName}"></td>
+                        <td class="align-middle" th:text="${student.lastName}"></td>
+                        <td class="align-middle" th:text="${student.phone}"></td>
+                        <td class="align-middle" th:text="${student.email}"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div><a href="/edit-student">Створити обліковий запис студента</a></div>
+        </section>
+    </main>
+
+    <footer class="foot footer-part" th:insert="~{fragments/footer :: footer}">
+
+    </footer>
+</div>
+</body>
+</html>

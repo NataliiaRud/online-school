@@ -24,7 +24,6 @@ public class Lecture extends Base implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lecture")
     private Collection<HomeAssignment> homeAssignments;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "lecture")
     private Collection<AdditionalMaterial> addMaterials;
@@ -110,6 +109,7 @@ public class Lecture extends Base implements Serializable {
         this.lectureDate = lectureDate;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lecture")
     public Collection<HomeAssignment> getHomeAssignments() {
         return homeAssignments;
     }

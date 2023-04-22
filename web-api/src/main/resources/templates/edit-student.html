@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Створити обліковий запис студента</title>
+</head>
+<body>
+<div class="container">
+    <header class="head">
+        <div>
+            <a class="logo link" href="/">Онлайн Школа</a>
+        </div>
+
+        <nav class="navigation">
+            <ul class="menu site-nav list">
+                <li><a class="menu__nav-link link" href="/">Онлайн Школа</a></li>
+                <li><a class="menu__nav-link link" href="/course">Курси</a></li>
+                <li><a class="menu__nav-link link current" href="/students">Студенти</a></li>
+                <li><a class="menu__nav-link link" href="/teachers">Вчителі</a><li>
+                <li><a class="menu__nav-link link" href="/lectures">Лекції</a></li>
+                <li><a class="menu__nav-link link" href="/additional-materials">Додаткові матеріали</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container section-part">
+            <h2 class="title">Створити обліковий запис студента</h2>
+            <form class="modal-form" method="POST" action="/edit-student">
+                <div class="modal-field">
+                    <label for="user-first-name" class="input-label">First Name</label>
+                    <div class="input-wrap">
+                        <input
+                                type="text"
+                                name="user-first-name"
+                                class="modal-input"
+                                id="user-first-name"
+                                required />
+                        <svg class="modal-input-icon" width="18" height="18">
+                            <use href="./images/symbol-defs.svg#icon-person"></use>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="modal-field">
+                    <label for="user-last-name" class="input-label">Last Name</label>
+                    <div class="input-wrap">
+                        <input
+                                type="text"
+                                name="user-last-name"
+                                class="modal-input"
+                                id="user-last-name"
+                                required />
+                        <svg class="modal-input-icon" width="18" height="18">
+                            <use href="./images/symbol-defs.svg#icon-person"></use>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="modal-field">
+                    <label for="tel" class="input-label">Phone</label>
+                    <div class="input-wrap">
+                        <input
+                                type="tel"
+                                name="user-phone"
+                                class="modal-input"
+                                id="tel"
+                                required />
+                        <svg class="modal-input-icon" width="18" height="18">
+                            <use href="./images/symbol-defs.svg#icon-phone-modal"></use>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="modal-field">
+                    <label for="email" class="input-label">Email</label>
+                    <div class="input-wrap">
+                        <input
+                                type="email"
+                                name="user-email"
+                                class="modal-input"
+                                id="email"
+                                required />
+                        <svg class="modal-input-icon" width="18" height="18">
+                            <use href="./images/symbol-defs.svg#icon-email"></use>
+                        </svg>
+                    </div>
+                </div>
+                <p class="title">Once you have filled all the fields, click the "Submit" button</p>
+                <button class="check-button btn" type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="foot footer-part" th:insert="~{fragments/footer :: footer}">
+
+    </footer>
+</div>
+</body>
+</html>
