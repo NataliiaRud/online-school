@@ -1,7 +1,14 @@
-package ua.study.school;
+package ua.study.app;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.Import;
+import ua.study.school.HW20;
+import ua.study.school.HW21;
+import ua.study.school.HW22;
 import ua.study.school.comparator.*;
 import ua.study.school.configuration.ApplicationConfiguration;
 import ua.study.school.models.*;
@@ -13,19 +20,33 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Main {
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+@Import({ ApplicationConfiguration.class})
+public class Main implements CommandLineRunner {
     public static final String CHOOSE_LECTURE_PARAMETERS = "%s: Course %s, Teacher: %s, Student: %s%n";
 
-    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+    @Autowired
+    private AddMaterialsService addMaterialsService;
 
-        AddMaterialsService addMaterialsService = context.getBean(AddMaterialsService.class);
-        CourseService courseService = context.getBean(CourseService.class);
-        HomeAssignmentService homeAssignmentService = context.getBean(HomeAssignmentService.class);
-        LectureService lectureService = context.getBean(LectureService.class);
-        StudentsService studentsService = context.getBean(StudentsService.class);
-        TeacherService teacherService = context.getBean(TeacherService.class);
+    @Autowired
+    private CourseService courseService;
 
+    @Autowired
+    private HomeAssignmentService homeAssignmentService;
+
+    @Autowired
+    private LectureService lectureService;
+
+    @Autowired
+    private StudentsService studentsService;
+
+    @Autowired
+    private TeacherService teacherService;
+
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
+    public void run(String... args) throws IOException, InterruptedException, ClassNotFoundException {
         Teacher teacher1 = new Teacher(1, "John", "Doe", 1, "11111111111", "@1111");
         Teacher teacher2 = new Teacher(2, "Larry", "Paige", 1, "22222222222", "@2222");
         Teacher teacher3 = new Teacher(3, "Brandon", "Walsh", 1, "33333333333", "@3333");
@@ -470,11 +491,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-
-
-
-

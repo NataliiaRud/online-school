@@ -42,29 +42,12 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ua.study.school.models");
-        sessionFactory.setHibernateProperties(hibernateProperties());
-
-        return sessionFactory;
-    }
-
-    @Bean
     public DataSource dataSource() {
         DataSource dataSource = new DriverManagerDataSource(
                 env.getProperty("db.url"),
                 env.getProperty("db.user"),
                 env.getProperty("db.password"));
         return dataSource;
-    }
-
-    @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
     }
 
     private final Properties hibernateProperties() {
