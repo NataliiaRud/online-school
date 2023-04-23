@@ -29,6 +29,15 @@
     <main>
         <section class="container section-part">
             <h2 class="title">Створити обліковий запис студента</h2>
+
+            <div th:if="${errorMessages != null}">
+                <table>
+                    <tr th:each="errorMessage : ${errorMessages}">
+                        <td class="align-middle" style="color: red;" th:text="${errorMessage}"></td>
+                    </tr>
+                </table>
+            </div>
+
             <form class="modal-form" method="POST" action="/edit-student">
                 <div class="modal-field">
                     <label for="user-first-name" class="input-label">First Name</label>
@@ -38,7 +47,9 @@
                                 name="user-first-name"
                                 class="modal-input"
                                 id="user-first-name"
-                                required />
+                                required
+                                th:value="${student != null ? student.firstName : ''}"
+                        />
                         <svg class="modal-input-icon" width="18" height="18">
                             <use href="./images/symbol-defs.svg#icon-person"></use>
                         </svg>
@@ -53,7 +64,9 @@
                                 name="user-last-name"
                                 class="modal-input"
                                 id="user-last-name"
-                                required />
+                                required
+                                th:value="${student != null ? student.lastName : ''}"
+                        />
                         <svg class="modal-input-icon" width="18" height="18">
                             <use href="./images/symbol-defs.svg#icon-person"></use>
                         </svg>
@@ -68,7 +81,9 @@
                                 name="user-phone"
                                 class="modal-input"
                                 id="tel"
-                                required />
+                                required
+                                th:value="${student != null ? student.phone : ''}"
+                        />
                         <svg class="modal-input-icon" width="18" height="18">
                             <use href="./images/symbol-defs.svg#icon-phone-modal"></use>
                         </svg>
@@ -83,7 +98,9 @@
                                 name="user-email"
                                 class="modal-input"
                                 id="email"
-                                required />
+                                required
+                                th:value="${student != null ? student.email : ''}"
+                        />
                         <svg class="modal-input-icon" width="18" height="18">
                             <use href="./images/symbol-defs.svg#icon-email"></use>
                         </svg>

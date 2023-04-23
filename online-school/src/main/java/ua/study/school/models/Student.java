@@ -1,6 +1,9 @@
 package ua.study.school.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -61,6 +64,7 @@ public class Student extends Person implements Serializable {
     }
 
     @Override
+    @NotBlank(message = "student.first.name.blank.message")
     @Column(name = "first_name")
     public String getFirstName() {
         return super.getFirstName();
@@ -72,6 +76,7 @@ public class Student extends Person implements Serializable {
     }
 
     @Override
+    @NotBlank(message = "student.last.name.blank.message")
     @Column(name = "last_name")
     public String getLastName() {
         return super.getLastName();
@@ -83,6 +88,7 @@ public class Student extends Person implements Serializable {
     }
 
     @Override
+    @Pattern(regexp = "[0-9]{5,12}", message = "student.phone.invalid.message")
     @Column(name = "phone")
     public String getPhone() {
         return super.getPhone();
@@ -94,6 +100,7 @@ public class Student extends Person implements Serializable {
     }
 
     @Override
+    @Email(message = "student.email.invalid.message")
     @Column(name = "email")
     public String getEmail() {
         return super.getEmail();
