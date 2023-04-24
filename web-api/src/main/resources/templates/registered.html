@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
-    <title>Перелік курсів онлайн школи</title>
+    <title>Створити обліковий запис</title>
 </head>
 <body>
 <div class="container">
@@ -16,8 +16,8 @@
 
         <nav class="navigation">
             <ul class="menu site-nav list">
-                <li><a class="menu__nav-link link" href="/">Онлайн Школа</a></li>
-                <li><a class="menu__nav-link link current" href="/course">Курси</a></li>
+                <li><a class="menu__nav-link link current" href="/">Онлайн Школа</a></li>
+                <li><a class="menu__nav-link link" href="/course">Курси</a></li>
                 <li><a class="menu__nav-link link" href="/students">Студенти</a></li>
                 <li><a class="menu__nav-link link" href="/teachers">Вчителі</a><li>
                 <li><a class="menu__nav-link link" href="/lectures">Лекції</a></li>
@@ -29,15 +29,9 @@
 
     <main>
         <section class="container section-part">
+            <h1>Обліковий запис створено</h1>
             <div class="container">
-                <table>
-                    <tr th:each="course : ${courses}">
-                        <td class="align-middle" th:text="${course.id}"></td>
-                        <td class="align-middle">
-                            <a th:href="@{'/view-course?id=' + ${course.id}}" th:text="${course.name}"></a>
-                        </td>
-                    </tr>
-                </table>
+                <a href="/login">Увійти в систему</a>
             </div>
         </section>
     </main>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
-    <title>Перелік курсів онлайн школи</title>
+    <title>Додаткові матеріали</title>
 </head>
 <body>
 <div class="container">
@@ -17,12 +17,12 @@
         <nav class="navigation">
             <ul class="menu site-nav list">
                 <li><a class="menu__nav-link link" href="/">Онлайн Школа</a></li>
-                <li><a class="menu__nav-link link current" href="/course">Курси</a></li>
+                <li><a class="menu__nav-link link" href="/course">Курси</a></li>
                 <li><a class="menu__nav-link link" href="/students">Студенти</a></li>
                 <li><a class="menu__nav-link link" href="/teachers">Вчителі</a><li>
                 <li><a class="menu__nav-link link" href="/lectures">Лекції</a></li>
                 <li><a class="menu__nav-link link" href="/additional-materials">Додаткові матеріали</a></li>
-                <li><a class="menu__nav-link link" href="/settings">Налаштування</a></li>
+                <li><a class="menu__nav-link link current" href="/settings">Налаштування</a></li>
             </ul>
         </nav>
     </header>
@@ -30,14 +30,11 @@
     <main>
         <section class="container section-part">
             <div class="container">
-                <table>
-                    <tr th:each="course : ${courses}">
-                        <td class="align-middle" th:text="${course.id}"></td>
-                        <td class="align-middle">
-                            <a th:href="@{'/view-course?id=' + ${course.id}}" th:text="${course.name}"></a>
-                        </td>
-                    </tr>
-                </table>
+                <h1>Налаштування</h1>
+                <h1 th:inline="text">Доброго дня, <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Вийти з системи"/>
+                </form>
             </div>
         </section>
     </main>
