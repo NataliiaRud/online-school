@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
-    <title>Перелік курсів онлайн школи</title>
+    <title>Увійти в систему</title>
 </head>
 <body>
 <div class="container">
@@ -28,9 +28,24 @@
     </header>
 
     <main>
-        <section class="hero hero-part section">
+        <section class="container section-part">
+            <h1>Увійти в систему</h1>
             <div class="container">
-                <h1 class="hero__title">Welcome to our <br>online-school</br></h1>
+                <div th:if="${param.error}" style="color: red;">
+                    Імʼя користувача або пароль не зареєстровано в системі.
+                </div>
+                <div th:if="${param.logout}">
+                    Ви вийшли з системи.
+                </div>
+                <div th:if="${session.registered}">
+                    Обліковий запис зареестровано. Увійдіть до системи.
+                </div>
+                <form th:action="@{/login}" method="post">
+                    <div><label> Імʼя користувача: <input type="text" name="username"/> </label></div>
+                    <div><label> Пароль: <input type="password" name="password"/> </label></div>
+                    <div><input type="submit" value="Увійти в систему"/></div>
+                    <div><a href="/register">Створити обліковий запис</a></div>
+                </form>
             </div>
         </section>
     </main>
